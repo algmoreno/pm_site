@@ -3,8 +3,13 @@ import "../styles/globals.css";
 
 const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 w-full sm:p-20">
-      <h1>Home Page</h1>
+    <div className="block justify-items-center min-h-screen gap-16 w-full"> 
+      <div className="min-h-[500px] bg-slate-300 w-full">
+        Home Page Component
+      </div>
+      <div className="min-h-[500px] bg-slate-500 w-full">
+        About Component
+      </div>
     </div>
   );
 }
