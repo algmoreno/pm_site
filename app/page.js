@@ -1,14 +1,15 @@
 import Image from "next/image";
 import "../styles/globals.css";
+import { Main, About } from '../components';
 
 const Home = () => {
   return (
-    <div className="block justify-items-center min-h-screen gap-16 w-full"> 
-      <div className="min-h-[500px] bg-slate-300 w-full">
-        Home Page Component
+    <div className="block min-h-screen w-full"> 
+      <div >
+        <Main />
       </div>
-      <div className="min-h-[500px] bg-slate-500 w-full">
-        About Component
+      <div>
+        <About />
       </div>
     </div>
   );
