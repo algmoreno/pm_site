@@ -20,7 +20,7 @@
 }
 
 .bg-1 {
-  background-image: url('../public/assets/bg_1.jpg');
+  background-image: linear-gradient(to bottom, #ffffff 50% ,#c1ffcd 53%);
   background-size: cover;
   background-repeat: no-repeat;
 }
