@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +11,12 @@
 
 ::-webkit-scrollbar {
   width: 0px;
+}
+
+.font-primary {
+  font-family: "Gowun Dodum", serif;
+  font-weight: 800;
+  font-style: normal;
 }
 
 .bg-1 {
