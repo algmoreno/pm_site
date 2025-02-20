@@ -5,7 +5,7 @@ import { CiMenuBurger } from "react-icons/ci";
 
 const Navbar = () => {
   return (
-    <div className="h-[100px] border-b-2 border-black grid grid-cols-3 max-md:grid-cols-2 gap-4">
+    <div className="h-[100px] border-b border-black grid grid-cols-3 max-md:grid-cols-2 gap-4">
       <div className="text-xl m-auto">
         <h1>
           <Link href='/'>Paula Moreno</Link>
