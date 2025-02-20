@@ -4,8 +4,10 @@ import Link from 'next/link';
 
 const Navbar = () => {
   return (
-    <div className="bg-slate-500 h-[50px]">
-      Navbar
+    <div className="h-[100px] border-b-2 border-black">
+      <h1 className="text-xl ">
+        <Link className="" href="/">Paula Moreno</Link>
+      </h1>
     </div>
   )
 }

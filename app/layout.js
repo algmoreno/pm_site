@@ -2,7 +2,6 @@ import React from 'react'
 import "../styles/globals.css";
 import { Navbar, Footer } from '../components';
 
-
 const Layout = ({ children }) => {
   return (
     <html lang="en">
@@ -10,7 +9,7 @@ const Layout = ({ children }) => {
         <header>
           <Navbar />
         </header>
-        <main className="bg-white">
+        <main >
           {children}
         </main>
         <footer>
