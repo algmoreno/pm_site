@@ -1,12 +1,24 @@
-import "./globals.css";
+import React from 'react'
+import "../styles/globals.css";
+import { Navbar, Footer } from '../components';
 
 
-export default function RootLayout({ children }) {
+const Layout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        {children}
+        <header>
+          <Navbar />
+        </header>
+        <main className="bg-white">
+          {children}
+        </main>
+        <footer>
+          <Footer/>
+        </footer>
       </body>
     </html>
   );
 }
+
+export default Layout;
