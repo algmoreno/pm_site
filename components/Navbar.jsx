@@ -24,7 +24,7 @@ const Menu = ({ navOptions }) => {
                 <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                   
                 </div>
-                <div>
+                <div className="align-middle my-auto">
                   <a href={item.href} className="font-semibold text-gray-900">
                     {item.name}
                     <span className="absolute inset-0" />
