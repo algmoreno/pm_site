@@ -4,7 +4,7 @@ import { Main, About } from '../components';
 
 const Home = () => {
   return (
-    <div className="bg-1"> 
+    <div > 
         <Main />
         <About />
     </div>
