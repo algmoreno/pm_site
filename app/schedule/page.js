@@ -4,7 +4,7 @@ import { Calendar } from '../../components'
 const Schedule = () => {
   return (
     <div className="flex flex-wrap m-auto"> 
-      <div className="m-auto my-20 w-[500px] h-[700px] bg-slate-300">
+      <div className="m-auto my-20 w-[800px] h-[700px] bg-slate-300">
         <Calendar />
       </div>
 

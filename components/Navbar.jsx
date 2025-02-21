@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { CiMenuBurger } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 
 const Menu = ({ navOptions }) => {
@@ -22,7 +23,6 @@ const Menu = ({ navOptions }) => {
             {navOptions.map((item) => (
               <div key={item.name} className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                 <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                  
                 </div>
                 <div className="align-middle my-auto">
                   <a href={item.href} className="font-semibold text-gray-900">
@@ -59,26 +59,34 @@ const Navbar = () => {
     {
       name: "Contact",
       href: "contact"
+    },
+    {
+      name: "Sign In",
+      href: "sign-in",
+      icon: <CgProfile className="m-auto"/>
     }
   ]
 
   return (
 
-    <div className="h-[100px] grid grid-cols-3 max-md:grid-cols-2 gap-4 font-primary">
+    <div className="h-[100px]  gap-4 font-primary flex flex-wrap">
       <div className="text-[30px] m-auto">
         <h1>
           <Link href='/'>PM Yoga</Link>
         </h1>
       </div>
 
-      <div className="text-lg m-auto gap-20 max-md:hidden flex">
+      <div className="text-lg mr-auto gap-20 max-md:hidden flex">
         {navOptions.map((option) => (
-          <Link key={option.name} href={option.href}>{option.name}</Link>
+        <div className="m-auto">
+          <p >{option.icon}</p>
+          <Link className="m-auto" key={option.name} href={option.href}>{option.name}</Link>
+        </div>
         ))}
       </div>
 
       <div className="md:hidden align-middle flex m-auto">
-          <Menu navOptions={navOptions}/>
+        <Menu navOptions={navOptions}/>
       </div>
     </div>
   )
