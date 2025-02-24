@@ -15,11 +15,11 @@ export const navOptions = [
     href: "schedule",
     icon: <RiCalendarLine size={25} className="m-auto"/>
   },
-  {
-    name: "Shop",
-    href: "shop",
-    icon: <RiShoppingBag2Line size={25} className="m-auto"/>
-  },
+  // {
+  //   name: "Shop",
+  //   href: "shop",
+  //   icon: <RiShoppingBag2Line size={25} className="m-auto"/>
+  // },
   {
     name: "Contact",
     href: "contact",
