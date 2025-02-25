@@ -26,8 +26,8 @@ export const navOptions = [
     icon: <TiContacts size={25} className="m-auto"/>
   },
   {
-    name: "Sign In",
-    href: "sign-in",
+    name: "Log In",
+    href: "/login",
     icon: <CgProfile size={25} className="m-auto"/>
   }
 ]

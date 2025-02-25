@@ -55,7 +55,7 @@ const Navbar = () => {
       <div className="text-lg mr-auto gap-20 max-md:hidden flex">
         {navOptions.map((option) => (
         <div key={option.name} className="m-auto">
-          {option.name === "Sign In" 
+          {option.name === "Log In" 
           && <p>{option.icon}</p>}
           <Link href={option.href}>{option.name}</Link>
         </div>
