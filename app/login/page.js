@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoginForm } from '../../components';
 
-const Login = () => {
+const Login = async () => {
   
   return (
     <div className="flex flex-wrap m-auto"> 
