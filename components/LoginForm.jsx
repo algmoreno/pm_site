@@ -1,12 +1,26 @@
-'use client';
-import React from 'react'
+"use client"
+import axios from 'axios';
 
 const LoginForm = () => {
+  const data = {
+    name: 'test7',
+    email: 'test@email.com'
+  };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/users', data)
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="w-[800px] h-auto mx-auto my-20 bg-slate-300 rounded-md">
 
-      <form className="w-[70%] my-20 mx-auto" >
+      <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Sign In</h2>

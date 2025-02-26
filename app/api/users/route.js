@@ -1,17 +1,16 @@
 import { ObjectId } from "mongodb";
-import mongoClient from "@/lib/mongodb";
-import User from "@/models/User";
+import mongoClient from "@/app/lib/mongodb";
+import User from "@/app/models/User";
 import { NextResponse } from 'next/server';
 
-export async function POST(request){
+export async function POST(req){
   try {
-    await mongoClient()
-    const {name, email} = await request.json()
-    const newUser = new User({name, email})
-    await newUser.save()
-    return NextResponse.json(newUser, {status: 201})
+    await mongoClient(); 
+    const body = await req.json();
+    const newUser = await User.create(body); 
+    return new Response(JSON.stringify({ message: 'User added', user: newUser }), { status: 201 });
   } catch (err) {
-    console.log(err);
+    console.error('Error inserting user:', err);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }
-
