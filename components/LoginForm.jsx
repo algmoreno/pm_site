@@ -3,15 +3,13 @@ import { useState } from 'react';
 import axios from 'axios';
 
 const LoginForm = () => {
+  // make into object
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(27);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("name", name);
-    console.log("email", email);
-    console.log("age", age);
     try {
       const response = await axios.post('/api/users', {name, email, age})
       console.log(response)
