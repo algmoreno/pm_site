@@ -30,9 +30,20 @@ const Calendar = () => {
   }
   
   const handleSubmit = async(e) => {
-    e.preventDefault();    
+    e.preventDefault();
+    // add appt
+    // try {
+    //   const response = await axios.post('/api/appointments', appointment)
+    //   console.log(response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    // edit appt
+
+    // delete appt 
     try {
-      const response = await axios.post('/api/appointments', appointment)
+      const apptId = "67c0ef1fcd5f489cd878059a";
+      const response = await axios.delete(`/api/appointments/${apptId}`)
       console.log(response)
     } catch (err) {
       console.log(err);

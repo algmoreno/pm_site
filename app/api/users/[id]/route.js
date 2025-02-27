@@ -4,11 +4,10 @@ import User from "@/app/models/User";
 import { NextResponse } from 'next/server';
 
 // Get user
-export async function GET(req, context) {
+export async function GET(req, { params }) {
   try {
     await mongoClient();
-    const { params } = await context;
-    const user = await User.findById(params.id);
+    const user = await User.findById(params?.id);
 
     return new Response(JSON.stringify(user), { status: 200 });
   } catch (err) {

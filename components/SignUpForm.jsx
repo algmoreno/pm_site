@@ -2,16 +2,31 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const LoginForm = () => {  
+const LoginForm = () => { 
+
+  const [user, setUser] = useState({
+    
+  })
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    // add user
     try {
-      const response = await axios.post('/api/users', {name, email, age})
+      const response = await axios.post('/api/users', appointment)
       console.log(response)
     } catch (err) {
       console.log(err);
     }
+    // edit user
+
+    // delete user 
+    // try {
+    //   const userId = "67bfa682ed7cd42fea640613"
+    //   const user = await axios.delete(`/api/users/${userId}`);
+    //   console.log(response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 
   return (

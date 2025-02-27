@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 export async function GET(req, { params }) {
   try {
     await mongoClient();
-    const appointment = await Apointment.findById(params.id);
+    const appointment = await Appointment.findById(params.id);
 
     if (!appointment) {
       return new Response(JSON.stringify({ error: 'Appointment not found' }), { status: 404 });
@@ -25,7 +25,7 @@ export async function PUT(req, { params }){
   try {
     await mongoClient();
     const body = await req.json();
-    const updatedAppointment = await User.findByIdAndUpdate(params.id, body, { new: true });
+    const updatedAppointment = await Appointment.findByIdAndUpdate(params.id, body, { new: true });
 
     if (!updatedAppointment) {
       return new Response(JSON.stringify({ error: 'Appointment not found' }), { status: 404 });
@@ -42,7 +42,7 @@ export async function PUT(req, { params }){
 export async function DELETE(req, { params }){
   try {
     await mongoClient();
-    const deletedAppointment = await User.findByIdAndDelete(params.id);
+    const deletedAppointment = await Appointment.findByIdAndDelete(params.id);
 
     if (!deletedAppointment) {
       return new Response(JSON.stringify({ error: 'Appointment not found' }), { status: 404 });
