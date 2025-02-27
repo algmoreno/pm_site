@@ -1,11 +1,11 @@
 import { Schema, model, models } from 'mongoose';
+import Appointment from '@/models/Appointment';
 
 const userSchema = new Schema({
-  // _id: {type: Number, unique: true},
   name: {type: String},
   email: {type: String, required: true, unique: true},
   age: {type: Number, min: 18},
-  // appointments: [Appointments] // separate schema?
+  appointments: [Appointments] 
 })
 
 const User = models.User || model("User", userSchema);

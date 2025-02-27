@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const LoginForm = () => {
   // make into object
-  const [name, setName] = useState("");
+  const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(27);
 
