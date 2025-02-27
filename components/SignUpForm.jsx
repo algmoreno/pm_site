@@ -2,14 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const LoginForm = () => {
-  
-  const [user, setUser] = useState({
-    name: name,
-    email: email,
-    age: 27,
-    appointments: 
-  });
+const LoginForm = () => {  
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -34,7 +27,7 @@ const LoginForm = () => {
                 <div className="sm:col-span-4">
                   <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                     Name
-                  </label>
+                  </label> 
                   <div className="mt-2">
                     <input
                       id="last-name"

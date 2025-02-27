@@ -1,8 +1,8 @@
 import { Schema, model, models } from 'mongoose';
-import User from '@models/User'
+import User from '@/app/models/User'
 
 const appointmentSchema = new Schema({
-  user: User,
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
   date: { type: Date },
   duration: { type: Number, min: 30, max: 90 },
   price: { type: Number }
