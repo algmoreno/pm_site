@@ -5,6 +5,8 @@ import { format } from 'date-fns';
 
 const Calendar = () => {
   const [appointment, setAppointment] = useState({
+    date: '',
+    duration: '',
     price: 50,
     userId: "67c0f8af5abae355f627a20a"
   });
@@ -28,20 +30,20 @@ const Calendar = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     // get appts
-    try { 
-      const response = await axios.get('/api/appointments')
-      console.log(response)
-    } catch (err) {
-      console.log(err);
-    }
-
-    // add appt
-    // try {
-    //   const response = await axios.post('/api/appointments', appointment)
-    //   console.log("appt response", response)
+    // try { 
+    //   const response = await axios.get('/api/appointments')
+    //   console.log(response)
     // } catch (err) {
     //   console.log(err);
     // }
+
+    // add appt
+    try {
+      const response = await axios.post('/api/appointments', appointment)
+      console.log("appt response", response)
+    } catch (err) {
+      console.log(err);
+    }
 
     // edit appt
     // try {
