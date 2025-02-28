@@ -7,7 +7,6 @@ import { NextResponse } from 'next/server';
 // Create new appointment
 export async function POST(req){
   try {
-    console.log("POST Appt");
     await mongoClient(); 
     const { userId, date, duration, price } = await req.json();
 
@@ -32,6 +31,7 @@ export async function POST(req){
 
 // Get all appointments 
 export async function GET() {
+  console.log("GET");
   try {
     await mongoClient();
     const appointments = await Appointment.find();

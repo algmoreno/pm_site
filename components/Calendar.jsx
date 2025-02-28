@@ -28,12 +28,12 @@ const Calendar = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     // get appts
-    // try {
-    //   const response = await axios.get('/api/appointments')
-    //   console.log(response)
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try { 
+      const response = await axios.get('/api/appointments')
+      console.log(response)
+    } catch (err) {
+      console.log(err);
+    }
 
     // add appt
     // try {
@@ -44,13 +44,13 @@ const Calendar = () => {
     // }
 
     // edit appt
-    try {
-      const apptId = "67c2115c505d146318777094";
-      const response = await axios.put(`/api/appointments/${apptId}`, appointment);
-      console.log("put response", response);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const apptId = "67c2115c505d146318777094";
+    //   const response = await axios.put(`/api/appointments/${apptId}`, appointment);
+    //   console.log("put response", response);
+    // } catch (err) {
+    //   console.log(err);
+    // }
 
     // delete appt 
     // try {

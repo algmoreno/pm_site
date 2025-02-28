@@ -25,7 +25,7 @@ const SignUpForm = () => {
     // }
     // get users
     // try {
-    //   const response = await axios.get('/api/users')
+    //   const response = await axios.get('/api/users') 
     //   console.log(response)
     // } catch (err) {
     //   console.log(err);

@@ -23,12 +23,10 @@ export async function GET(req, context) {
 
 // Edit appointment
 export async function PUT(req, context) {
-  console.log("PUT Appt");
   const params = await context.params;
   try {
     await mongoClient();
     const update = await req.json();
-    console.log("update", update);
     const updatedAppointment = await Appointment.findByIdAndUpdate(params.id, update, { new: true });
 
     if (!updatedAppointment) {
