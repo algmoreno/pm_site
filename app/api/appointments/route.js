@@ -18,7 +18,7 @@ export async function POST(req){
     //creating new appointment 
     const newAppointment = await Appointment.create({ user: userId, date, duration, price }); 
 
-    // pushing appointment object ref to user appointment array -- also need to push all appointments to admin account
+    // pushing appointment object ref to user appointment array
     user.appointments.push(newAppointment._id);
     await user.save();
 

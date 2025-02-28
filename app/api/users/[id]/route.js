@@ -21,11 +21,12 @@ export async function PUT(req, { params }){
   try {
     await mongoClient();
     const update = await req.json();
-    if (!params || !params.id) {
-      return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 });
-    }
+    const { id } = await params.id;
+    // if (!params || !params.id) {
+    //   return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 });
+    // }
 
-    const updatedUser = await User.findByIdAndUpdate(params.id, update, { new: true })
+    const updatedUser = await User.findByIdAndUpdate(id, update, { new: true })
 
     return new Response(JSON.stringify({ message: 'User updated', user: updatedUser }), { status: 200 });
   } catch (err) {

@@ -10,7 +10,7 @@ const SignUpForm = () => {
     email: "test@example.com",
     age: 27,
     gender: "male",
-    description: "original website admin"
+    description: "website admin1"
   })
 
   const handleSubmit = async(e) => {
