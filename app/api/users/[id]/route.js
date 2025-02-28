@@ -4,7 +4,8 @@ import User from "@/app/models/User";
 import { NextResponse } from 'next/server';
 
 // Get user
-export async function GET(req, { params }) {
+export async function GET(req, context) {
+  const params = await context.params;
   try {
     await mongoClient();
     const user = await User.findById(params.id).populate("appointments");;
@@ -17,16 +18,17 @@ export async function GET(req, { params }) {
 }
 
 // Edit user
-export async function PUT(req, { params }){
+export async function PUT(req, context) {
+  const params = await context.params;
   try {
     await mongoClient();
     const update = await req.json();
-    const { id } = await params.id;
-    // if (!params || !params.id) {
-    //   return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 });
-    // }
 
-    const updatedUser = await User.findByIdAndUpdate(id, update, { new: true })
+    if (!params || !params.id) {
+      return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(params.id, update, { new: true })
 
     return new Response(JSON.stringify({ message: 'User updated', user: updatedUser }), { status: 200 });
   } catch (err) {
@@ -36,7 +38,8 @@ export async function PUT(req, { params }){
 }
 
 // Delete user
-export async function DELETE(req, { params }){
+export async function DELETE(req, context) {
+  const params = await context.params;
   try {
     await mongoClient();
     const deletedUser = await User.findByIdAndDelete(params.id);

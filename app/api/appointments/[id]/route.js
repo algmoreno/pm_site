@@ -4,7 +4,8 @@ import Appointment from "@/app/models/Appointment";
 import { NextResponse } from 'next/server';
 
 // Get user appointments
-export async function GET(req, { params }) {
+export async function GET(req, context) {
+  const params = await context.params;
   try {
     await mongoClient();
     const appointment = await Appointment.findById(params.id);
@@ -21,7 +22,8 @@ export async function GET(req, { params }) {
 }
 
 // Edit appointment
-export async function PUT(req, { params }){
+export async function PUT(req, context) {
+  const params = await context.params;
   try {
     await mongoClient();
     const body = await req.json();
@@ -39,7 +41,8 @@ export async function PUT(req, { params }){
 }
 
 // Delete appointment
-export async function DELETE(req, { params }){
+export async function DELETE(req, context) {
+  const params = await context.params;
   try {
     await mongoClient();
     const deletedAppointment = await Appointment.findByIdAndDelete(params.id);
