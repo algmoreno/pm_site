@@ -1,14 +1,26 @@
 import { ObjectId } from "mongodb";
 import mongoClient from "@/app/lib/mongodb";
 import Appointment from "@/app/models/Appointment";
+import User from "@/app/models/User";
 import { NextResponse } from 'next/server';
 
 // Create new appointment
 export async function POST(req){
   try {
     await mongoClient(); 
-    const body = await req.json();
-    const newAppointment = await Appointment.create(body); 
+    const { userId, date, duration, price } = await req.json();
+
+    // Find the user
+    const user = await User.findById(userId);
+    if (!user) {
+      return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+    }
+    //creating new appointment 
+    const newAppointment = await Appointment.create({ user: userId, date, duration, price }); 
+
+    // pushing appointment object ref to user appointment array 
+    user.appointments.push(newAppointment._id);
+    await user.save();
 
     return new Response(JSON.stringify({ message: 'Appointment added', appointment: newAppointment }), { status: 201 });
   } catch (err) {

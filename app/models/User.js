@@ -8,7 +8,7 @@ const userSchema = new Schema({
   age: {type: Number, min: 18, required: true },
   gender: {type: String}, 
   description: {type: String},
-  appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
+  appointments: [{ type: Schema.Types.ObjectId, ref: "Appointment" }]
 })
 
 const User = models.User || model("User", userSchema);

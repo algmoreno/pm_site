@@ -5,7 +5,8 @@ import { format } from 'date-fns';
 
 const Calendar = () => {
   const [appointment, setAppointment] = useState({
-    price: 50
+    price: 50,
+    userId: "67c0f8af5abae355f627a20a"
   });
 
   const [user, setUser] = useState({
@@ -15,21 +16,7 @@ const Calendar = () => {
     age: 27,
     gender: "male",
     description: "website administrator 2",
-  })
-
-  useEffect(() => {
-    const getUser = async () => {
-      // retrieve userId from params
-      const userId = "67c0f8af5abae355f627a20a"
-      const user = await axios.get(`/api/users/${userId}`);
-      console.log(user)
-      setAppointment({
-        ...appointment,
-        user: user.data
-      });
-    }
-    getUser();
-  }, [])
+  });
 
   function handleChange(e) {
     setAppointment({
@@ -47,19 +34,11 @@ const Calendar = () => {
     // } catch (err) {
     //   console.log(err);
     // }
+
     // add appt
     try {
       const response = await axios.post('/api/appointments', appointment)
-      console.log(response)
-      
-      // edit user appts property
-      setUser({
-        ...user,
-        appointments: [appointment]
-      });
-      const userId = "67c0f8af5abae355f627a20a"
-      const putResponse = await axios.put(`/api/users/${userId}`, user)
-      console.log(putResponse)
+      console.log("appt response", response)
     } catch (err) {
       console.log(err);
     }
