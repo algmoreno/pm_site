@@ -23,11 +23,13 @@ export async function GET(req, context) {
 
 // Edit appointment
 export async function PUT(req, context) {
+  console.log("PUT Appt");
   const params = await context.params;
   try {
     await mongoClient();
-    const body = await req.json();
-    const updatedAppointment = await Appointment.findByIdAndUpdate(params.id, body, { new: true });
+    const update = await req.json();
+    console.log("update", update);
+    const updatedAppointment = await Appointment.findByIdAndUpdate(params.id, update, { new: true });
 
     if (!updatedAppointment) {
       return new Response(JSON.stringify({ error: 'Appointment not found' }), { status: 404 });

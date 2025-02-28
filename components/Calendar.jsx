@@ -36,13 +36,21 @@ const Calendar = () => {
     // }
 
     // add appt
+    // try {
+    //   const response = await axios.post('/api/appointments', appointment)
+    //   console.log("appt response", response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    // edit appt
     try {
-      const response = await axios.post('/api/appointments', appointment)
-      console.log("appt response", response)
+      const apptId = "67c2115c505d146318777094";
+      const response = await axios.put(`/api/appointments/${apptId}`, appointment);
+      console.log("put response", response);
     } catch (err) {
       console.log(err);
     }
-    // edit appt
 
     // delete appt 
     // try {
