@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 export async function GET(req, { params }) {
   try {
     await mongoClient();
-    const user = await User.findById(params?.id);
+    const user = await User.findById(params.id);
 
     return new Response(JSON.stringify(user), { status: 200 });
   } catch (err) {
@@ -21,7 +21,7 @@ export async function PUT(req, { params }){
   try {
     await mongoClient();
     const body = await req.json();
-    const updatedUser = await User.findByIdAndUpdate(params.id, body, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(params.id, body);
 
     if (!updatedUser) {
       return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });

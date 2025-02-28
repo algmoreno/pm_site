@@ -23,7 +23,7 @@ export async function GET() {
     await mongoClient();
     const users = await User.find();
 
-    return new Response(JSON.stringify({ message: 'Found users', user: newUser }), { status: 201 });
+    return new Response(JSON.stringify(users), { status: 201 });
   } catch (err) {
     console.error('Error finding users:', err);
     return new Response(JSON.stringify({ error: err.message }), { status: 500 });

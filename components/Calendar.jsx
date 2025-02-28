@@ -8,10 +8,19 @@ const Calendar = () => {
     price: 50
   });
 
+  const [user, setUser] = useState({
+    firstName: "Alan",
+    lastName: "Moreno",
+    email: "alan@example.com",
+    age: 27,
+    gender: "male",
+    description: "website administrator 2",
+  })
+
   useEffect(() => {
     const getUser = async () => {
       // retrieve userId from params
-      const userId = "67bfa682ed7cd42fea640613"
+      const userId = "67c0f8af5abae355f627a20a"
       const user = await axios.get(`/api/users/${userId}`);
       console.log(user)
       setAppointment({
@@ -31,23 +40,39 @@ const Calendar = () => {
   
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // add appt
+    // get appts
     // try {
-    //   const response = await axios.post('/api/appointments', appointment)
+    //   const response = await axios.get('/api/appointments')
     //   console.log(response)
     // } catch (err) {
     //   console.log(err);
     // }
-    // edit appt
-
-    // delete appt 
+    // add appt
     try {
-      const apptId = "67c0ef1fcd5f489cd878059a";
-      const response = await axios.delete(`/api/appointments/${apptId}`)
+      const response = await axios.post('/api/appointments', appointment)
       console.log(response)
+      
+      // edit user appts property
+      setUser({
+        ...user,
+        appointments: [appointment]
+      });
+      const userId = "67c0f8af5abae355f627a20a"
+      const putResponse = await axios.put(`/api/users/${userId}`, user)
+      console.log(putResponse)
     } catch (err) {
       console.log(err);
     }
+    // edit appt
+
+    // delete appt 
+    // try {
+    //   const apptId = "67c0ef1fcd5f489cd878059a";
+    //   const response = await axios.delete(`/api/appointments/${apptId}`)
+    //   console.log(response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 
   return (

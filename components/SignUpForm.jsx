@@ -2,23 +2,41 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const LoginForm = () => { 
+const SignUpForm = () => { 
 
   const [user, setUser] = useState({
-    
+    firstName: "Alan",
+    lastName: "Moreno",
+    email: "alan@example.com",
+    age: 27,
+    gender: "male",
+    description: "website administrator"
   })
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // add user
+    // get users
     try {
-      const response = await axios.post('/api/users', appointment)
+      const response = await axios.get('/api/users')
       console.log(response)
     } catch (err) {
       console.log(err);
     }
+    // add user
+    // try {
+    //   const response = await axios.post('/api/users', user)
+    //   console.log(response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
     // edit user
-
+    // try {
+    //   const userId = "67c0f8af5abae355f627a20a"
+    //   const response = await axios.put(`/api/users/${userId}`, user)
+    //   console.log(response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
     // delete user 
     // try {
     //   const userId = "67bfa682ed7cd42fea640613"
@@ -107,4 +125,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default SignUpForm
