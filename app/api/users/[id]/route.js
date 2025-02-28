@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 export async function GET(req, { params }) {
   try {
     await mongoClient();
-    const user = await User.findById(params.id);
+    const user = await User.findById(params.id).populate("appointments");;
 
     return new Response(JSON.stringify(user), { status: 200 });
   } catch (err) {
@@ -20,33 +20,12 @@ export async function GET(req, { params }) {
 export async function PUT(req, { params }){
   try {
     await mongoClient();
-
+    const update = await req.json();
     if (!params || !params.id) {
       return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 });
     }
 
-    const updates = await req.json(); // Get fields to update
-    console.log("updates", updates);
-    let updateQuery = { ...updates }; // Prepare update object
-    console.log("updateQuery1", updateQuery)
-    // If the request includes an appointment, append it instead of replacing
-    if (updates.appointment) {
-      updateQuery = { 
-        ...updates, 
-        $push: { appointments: updates.appointment } 
-      };
-      delete updateQuery.appointment; // Remove to avoid conflict
-    }
-    console.log("updateQuery2", updateQuery)
-    const updatedUser = await User.findByIdAndUpdate(
-      params.id,
-      updateQuery,
-      { new: true, runValidators: true } 
-    );
-
-    if (!updatedUser) {
-      return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });
-    }
+    const updatedUser = await User.findByIdAndUpdate(params.id, update, { new: true })
 
     return new Response(JSON.stringify({ message: 'User updated', user: updatedUser }), { status: 200 });
   } catch (err) {

@@ -7,21 +7,29 @@ const SignUpForm = () => {
   const [user, setUser] = useState({
     firstName: "Alan",
     lastName: "Moreno",
-    email: "alan@example.com",
+    email: "test@example.com",
     age: 27,
     gender: "male",
-    description: "website administrator"
+    description: "original website admin"
   })
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    // get user
+    // try {
+    //   const userId = "67c0f8af5abae355f627a20a";
+    //   const response = await axios.get(`/api/users/${userId}`)
+    //   console.log(response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
     // get users
-    try {
-      const response = await axios.get('/api/users')
-      console.log(response)
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const response = await axios.get('/api/users')
+    //   console.log(response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
     // add user
     // try {
     //   const response = await axios.post('/api/users', user)
@@ -30,13 +38,13 @@ const SignUpForm = () => {
     //   console.log(err);
     // }
     // edit user
-    // try {
-    //   const userId = "67c0f8af5abae355f627a20a"
-    //   const response = await axios.put(`/api/users/${userId}`, user)
-    //   console.log(response)
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const userId = "67c0f8af5abae355f627a20a"
+      const response = await axios.put(`/api/users/${userId}`, user)
+      console.log("PUT user response", response)
+    } catch (err) {
+      console.log(err);
+    }
     // delete user 
     // try {
     //   const userId = "67bfa682ed7cd42fea640613"
