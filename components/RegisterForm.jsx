@@ -1,19 +1,19 @@
-"use client"
+ "use client"
 import { useState } from 'react';
 import axios from 'axios';
 
 const SignUpForm = () => { 
-
   const [user, setUser] = useState({
     firstName: "Alan",
     lastName: "Moreno",
     email: "test@example.com",
     age: 27,
+    password: "password123",
     gender: "male",
     description: "website admin1"
   })
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async(e) => {     
     e.preventDefault();
     // get user
     // try {
@@ -31,20 +31,20 @@ const SignUpForm = () => {
     //   console.log(err);
     // }
     // add user
-    // try {
-    //   const response = await axios.post('/api/users', user)
-    //   console.log(response)
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    // edit user
     try {
-      const userId = "67c0f8af5abae355f627a20a"
-      const response = await axios.put(`/api/users/${userId}`, user)
-      console.log("PUT user response", response)
+      const response = await axios.post('/api/users', user)
+      console.log(response)
     } catch (err) {
       console.log(err);
     }
+    // edit user
+    // try {
+    //   const userId = "67c0f8af5abae355f627a20a"
+    //   const response = await axios.put(`/api/users/${userId}`, user)
+    //   console.log("PUT user response", response)
+    // } catch (err) {
+    //   console.log(err);
+    // }
     // delete user 
     // try {
     //   const userId = "67bfa682ed7cd42fea640613"
@@ -74,7 +74,6 @@ const SignUpForm = () => {
                       id="last-name"
                       name="last-name"
                       type="text"
-                      onChange={(e) => setName(e.target.value)}
                       autoComplete="family-name"
                       className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                       outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
@@ -89,7 +88,6 @@ const SignUpForm = () => {
                       id="email"
                       name="email"
                       type="name"
-                      onChange={(e) => setEmail(e.target.value)}
                       autoComplete="email"
                       className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                               outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>

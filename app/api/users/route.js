@@ -3,6 +3,7 @@ import mongoClient from "@/app/lib/mongodb";
 import User from "@/app/models/User";
 import { NextResponse } from 'next/server';
 
+
 // Create new user
 export async function POST(req){
   try {
@@ -10,10 +11,10 @@ export async function POST(req){
     const body = await req.json();
     const newUser = await User.create(body); 
 
-    return new Response(JSON.stringify({ message: 'User added', user: newUser }), { status: 201 });
+    return NextResponse.json({ message: "User registered" }, { status: 201 });
   } catch (err) {
     console.error('Error inserting user:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return NextResponse.json({ error: err.message },  { status: 500 });
   }
 }
 
@@ -22,10 +23,9 @@ export async function GET() {
   try {
     await mongoClient();
     const users = await User.find();
-
-    return new Response(JSON.stringify(users), { status: 201 });
+    return NextResponse.json({ users },  { status: 201 });
   } catch (err) {
     console.error('Error finding users:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

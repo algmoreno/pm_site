@@ -25,7 +25,7 @@ export async function POST(req){
     return new Response(JSON.stringify({ message: 'Appointment added', appointment: newAppointment }), { status: 201 });
   } catch (err) {
     console.error('Error inserting appointment:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new NextResponse.json({ error: err.message, status: 500 });
   }
 }
 
@@ -39,6 +39,6 @@ export async function GET() {
     return new Response(JSON.stringify(appointments), { status: 201 });
   } catch (err) {
     console.error('Error finding appointments:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new NextResponse.json({ error: err.message, status: 500 });
   }
 }
