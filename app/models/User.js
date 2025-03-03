@@ -7,8 +7,8 @@ const userSchema = new Schema({
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true },
   age: {type: Number, min: 18, required: true },
-  gender: {type: String}, 
   description: {type: String},
+  role: {type: String, required: true },
   appointments: [{ type: Schema.Types.ObjectId, ref: "Appointment" }]
 })
 

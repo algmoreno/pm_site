@@ -39,7 +39,7 @@ const Calendar = () => {
 
     // add appt
     try {
-      const response = await axios.post('/api/appointments', appointment)
+      const response = await axios.post('/api/auth/appointments', appointment)
       console.log("appt response", response)
     } catch (err) {
       console.log(err);

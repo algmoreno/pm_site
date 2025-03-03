@@ -11,7 +11,8 @@ const LoginForm = () => {
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Sign In</h2>
-            <p className="mt-1 text-sm/6 text-gray-600">Not a member? Create account here.</p>
+            <p className="mt-1 text-sm/6 text-gray-600">Not a member? Create account</p>
+            <a className="mt-1 text-sm/6 text-gray-600" href="/register">here</a>
             <div className="mt-10 ">
 
               <div className="sm:col-span-3">
