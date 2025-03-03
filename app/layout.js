@@ -1,6 +1,6 @@
 import React from 'react'
 import "../styles/globals.css";
-import { Navbar, Footer } from '../components';
+import { Navbar, Footer, Toaster } from '@/components/index';
 
 const Layout = ({ children }) => {
   return (
@@ -10,6 +10,7 @@ const Layout = ({ children }) => {
           <Navbar />
         </header>
         <main >
+          <Toaster />
           {children}
         </main>
         <footer>

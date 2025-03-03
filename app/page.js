@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { Main, About } from '../components';
+import { Main, About } from '@/components/index';
 
 const Home = () => {
   return (
