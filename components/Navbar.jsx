@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { CiMenuBurger } from "react-icons/ci";
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
-import { navOptions } from '../constants'
+import { navOptions } from '../constants';
+import { SessionProvider } from 'next-auth/react';
+import { UserLink } from '@/components/index';
 
 const Menu = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -51,7 +53,9 @@ const Navbar = () => {
           <Link href='/'>PM Yoga</Link>
         </h1>
       </div>
-
+      <SessionProvider>
+        <UserLink />
+      </SessionProvider>
       <div className="text-lg mr-auto gap-20 max-md:hidden flex">
         {navOptions.map((option) => (
         <div key={option.name} className="m-auto">

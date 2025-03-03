@@ -35,7 +35,7 @@ const SignUpForm = () => {
       console.log("response", response)
       setPending(false);
       toast.success(response.data.message);
-      //router.push("/")
+      router.push("/")
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);
@@ -73,7 +73,7 @@ const SignUpForm = () => {
                 </p>
               </div>
             )}
-            <div className="mt-10 col-span-4">
+            <div className="mt-10">
 
               <div className="col-span-4">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
