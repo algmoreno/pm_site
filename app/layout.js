@@ -1,6 +1,5 @@
 import React from 'react'
 import "../styles/globals.css";
-import { SessionProvider } from 'next-auth/react';
 import { Navbar, Footer, Toaster } from '@/components/index';
 
 const Layout = ({ children }) => {

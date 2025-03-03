@@ -5,7 +5,6 @@ import { CiMenuBurger } from "react-icons/ci";
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { navOptions } from '../constants';
 import { SessionProvider } from 'next-auth/react';
-import { UserLink } from '@/components/index';
 
 const Menu = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -48,27 +47,27 @@ const Navbar = () => {
 
   return (
     <div className="h-[100px]  gap-4 font-primary flex flex-wrap">
-      <div className="text-[30px] m-auto">
-        <h1>
-          <Link href='/'>PM Yoga</Link>
-        </h1>
-      </div>
       <SessionProvider>
-        <UserLink />
-      </SessionProvider>
-      <div className="text-lg mr-auto gap-20 max-md:hidden flex">
-        {navOptions.map((option) => (
-        <div key={option.name} className="m-auto">
-          {option.name === "Log In" 
-          && <p>{option.icon}</p>}
-          <Link href={option.href}>{option.name}</Link>
+        <div className="text-[30px] m-auto">
+          <h1>
+            <Link href='/'>PM Yoga</Link>
+          </h1>
         </div>
-        ))}
-      </div>
 
-      <div className="md:hidden align-middle flex m-auto">
-        <Menu />
-      </div>
+        <div className="text-lg mr-auto gap-20 max-md:hidden flex">
+          {navOptions.map((option) => (
+          <div key={option.name} className="m-auto">
+            {option.name === "Log In" 
+            && <p>{option.icon}</p>}
+            <Link href={option.href}>{option.name}</Link>
+          </div>
+          ))}
+        </div>
+
+        <div className="md:hidden align-middle flex m-auto">
+          <Menu />
+        </div>
+      </SessionProvider>
     </div>
   )
 }
