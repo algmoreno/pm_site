@@ -9,7 +9,6 @@ const SignUpForm = () => {
     firstName: "",
     lastName: "",
     email: "",
-    age: "",
     password: "",
     confirmPassword: "",
     role: "member",
@@ -60,12 +59,12 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="w-[1000px] h-auto mx-auto my-20 bg-slate-400 rounded-md">
+    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md">
       <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Register</h2>
-            <p className="mt-1 text-sm/6 text-gray-300">Join the club.</p>
+            <p className="mt-1 text-sm/6 text-gray-200">Join the club.</p>
             {!!error && (
               <div className="bg-red-500 p-3 rounded-md flex items-center gap-x-2 text-sm text-red-200 my-6">
                 <p>
@@ -101,22 +100,6 @@ const SignUpForm = () => {
                     type="text"
                     value={user.lastName}
                     onChange={(e) => setUser({...user, lastName:e.target.value})}
-                    required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
-                    outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
-                </div>
-              </div>
-
-              <div className="sm:col-span-4">
-                <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
-                  Age
-                </label> 
-                <div className="mt-2">
-                  <input
-                    disabled={pending}
-                    type="text"
-                    value={user.age}
-                    onChange={(e) => setUser({...user, age:e.target.value})}
                     required
                     className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
