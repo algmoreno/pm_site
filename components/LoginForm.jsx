@@ -75,7 +75,7 @@ const LoginForm = () => {
                 <div className="mt-2">
                   <input
                     disabled={pending}
-                    type="text"
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -95,7 +95,7 @@ const LoginForm = () => {
           <button
             type="submit"
             disabled={pending}
-            className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
+            className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-700 focus-visible:outline-2 f
                         ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
             Submit
           </button>

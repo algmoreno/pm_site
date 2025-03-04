@@ -31,7 +31,6 @@ const SignUpForm = () => {
     // add user
     try {
       const response = await axios.post('/api/auth/users', user)
-      console.log("response", response)
       setPending(false);
       toast.success(response.data.message);
       router.push("/login")
@@ -129,7 +128,7 @@ const SignUpForm = () => {
                 <div className="mt-2">
                   <input
                     disabled={pending}
-                    type="text"
+                    type="password"
                     value={user.password}
                     onChange={(e) => setUser({...user, password:e.target.value})}
                     required
@@ -145,7 +144,7 @@ const SignUpForm = () => {
                 <div className="mt-2">
                   <input
                     disabled={pending}
-                    type="text"
+                    type="password"
                     value={user.confirmPassword}
                     onChange={(e) => setUser({...user, confirmPassword:e.target.value})}
                     required

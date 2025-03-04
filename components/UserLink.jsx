@@ -11,8 +11,6 @@ import { toast } from "sonner";
 import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-
-
 const UserLink = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -41,7 +39,7 @@ const UserLink = () => {
             <div className="flex gap-4 items-center">
               <span>{session.user?.firstName}</span>
               <Avatar className="size-10 hover:opacity-75 transition">
-                <AvatarFallback className="bg-orange-500 text-white">
+                <AvatarFallback className="bg-orange-400 text-white">
                   {avatarFallback}
                 </AvatarFallback>
               </Avatar>
