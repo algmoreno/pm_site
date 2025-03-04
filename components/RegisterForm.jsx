@@ -60,12 +60,12 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="w-[1000px] h-auto mx-auto my-20 bg-slate-300 rounded-md">
+    <div className="w-[1000px] h-auto mx-auto my-20 bg-slate-400 rounded-md">
       <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Register</h2>
-            <p className="mt-1 text-sm/6 text-gray-600">Become a Member</p>
+            <p className="mt-1 text-sm/6 text-gray-300">Join the club.</p>
             {!!error && (
               <div className="bg-red-500 p-3 rounded-md flex items-center gap-x-2 text-sm text-red-200 my-6">
                 <p>
