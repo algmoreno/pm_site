@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { CiMenuBurger } from "react-icons/ci";
+import { RiLogoutBoxLine } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { navOptions } from '../constants';
+import { toast } from "sonner";
 import { signOut } from 'next-auth/react';
 import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -14,7 +17,14 @@ const NavbarMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();
 
-  // if session include signout and profile links. If no session include signout
+  const handleSignOut = async () => {
+    await signOut({
+      redirect: false,
+    });    
+    router.push("/");
+    toast.success("Successfully logged out.");
+}
+
   return (
     <Popover className="relative">
       <PopoverButton className="inline-flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 border-none ml-auto focus:outline-none">
@@ -55,13 +65,13 @@ const NavbarMenu = () => {
               </div>
               <div className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                 <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                  L
+                  <RiLogoutBoxLine size={25} className="m-auto"/>
                 </div>
                 <div className="align-middle my-auto">
-                  <a href="/profile" className="font-semibold text-gray-900">
+                  <span onClick={() => handleSignOut()} className="font-semibold text-gray-900">
                     Log Out
                     <span className="absolute inset-0" />
-                  </a>
+                  </span>
                 </div>
               </div>
           </div>
@@ -82,7 +92,7 @@ const NavbarMenu = () => {
             ))}          
             <div className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
               <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                L
+                <CgProfile size={25} className="m-auto"/>
               </div>
               <div className="align-middle my-auto">
                 <a href="/login" className="font-semibold text-gray-900">
