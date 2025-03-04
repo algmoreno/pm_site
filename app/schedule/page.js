@@ -1,5 +1,5 @@
 import "../../styles/globals.css";
-import { Calendar } from '../../components'
+import { Calendar } from '@/components/index'
 
 const Schedule = () => {
   return (

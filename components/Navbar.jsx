@@ -47,13 +47,13 @@ const Navbar = () => {
 
   return (
     <div className="h-[100px]  gap-4 font-primary flex flex-wrap">
-      <SessionProvider>
         <div className="text-[30px] m-auto">
           <h1>
             <Link href='/'>PM Yoga</Link>
           </h1>
         </div>
 
+      <SessionProvider>
         <div className="text-lg mr-auto gap-20 max-md:hidden flex">
           {navOptions.map((option) => (
           <div key={option.name} className="m-auto">
