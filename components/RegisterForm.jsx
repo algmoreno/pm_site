@@ -35,7 +35,7 @@ const SignUpForm = () => {
       console.log("response", response)
       setPending(false);
       toast.success(response.data.message);
-      router.push("/")
+      router.push("/login")
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);

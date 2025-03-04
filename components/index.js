@@ -1,4 +1,5 @@
 export { default as Navbar } from './Navbar';
+export { default as NavbarMenu } from './NavbarMenu';
 export { default as Toaster } from './Sonner';
 export { default as UserLink } from './UserLink';
 export { default as LoginForm } from './LoginForm';

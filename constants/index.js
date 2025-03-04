@@ -22,9 +22,9 @@ export const navOptions = [
     href: "contact",
     icon: <TiContacts size={25} className="m-auto"/>
   },
-  {
-    href: "/login",
-    name: <UserLink />,
-    icon: <CgProfile size={25} className="m-auto"/>
-  }
+  // {
+  //   href: "",
+  //   name: <UserLink />,
+  //   icon: <CgProfile size={25} className="m-auto"/>
+  // }
 ]
