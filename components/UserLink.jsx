@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
+import { toast } from "sonner";
 import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -23,20 +24,20 @@ const UserLink = () => {
     )
   }
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();
-  console.log(session)
 
   const handleSignOut = async () => {
       await signOut({
         redirect: false,
-      });
+      });    
       router.push("/");
+      toast.success("Successfully logged out.");
   }
 
   return (
     <div className="m-auto">
       {session ? (
         <DropdownMenu modal={false}>
-          <DropdownMenuTrigger className="outline-none relative  p-4 md:p-8">
+          <DropdownMenuTrigger className="outline-none relative">
             <div className="flex gap-4 items-center">
               <span>{session.user?.firstName}</span>
               <Avatar className="size-10 hover:opacity-75 transition">
