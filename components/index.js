@@ -2,6 +2,7 @@ export { default as Navbar } from './Navbar';
 export { default as NavbarMenu } from './NavbarMenu';
 export { default as Toaster } from './Sonner';
 export { default as UserLink } from './UserLink';
+export { default as UserDetails } from './UserDetails';
 export { default as LoginForm } from './LoginForm';
 export { default as RegisterForm } from './RegisterForm';
 export { default as Main } from './Main';

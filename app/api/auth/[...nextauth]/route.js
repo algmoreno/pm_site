@@ -49,6 +49,7 @@ const handler = NextAuth({
     async session({ session, token }) {
       if (token) {
         session.user = {
+          id: token.id,
           email: token.email,
           firstName: token.firstName,
           role: token.role,

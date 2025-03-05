@@ -13,12 +13,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 const UserLink = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  console.log(session)
 
-  if (status === "loading"){
-    return (
-      <div className="m-auto">Loading...</div>
-    )
-  }
+  // if (status === "loading"){
+  //   return (
+  //     <div className="m-auto">Loading...</div>
+  //   )
+  // }
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();
 
   const handleSignOut = async () => {
@@ -28,6 +29,10 @@ const UserLink = () => {
       router.push("/");
       toast.success("Successfully logged out.");
   }
+
+  const goToProfile = () => {
+    router.push(`/profile/${session.user.id}`);
+  };
 
   return (
     <div className="m-auto">
@@ -44,11 +49,11 @@ const UserLink = () => {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="center" side="bottom" className="w-50">
+            <DropdownMenuItem onClick={goToProfile} className="h-10">
+              Profile
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleSignOut()} className="h-10">
               Log Out
-            </DropdownMenuItem>
-            <DropdownMenuItem className="h-10">
-              <Link href="/login">Profile</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
