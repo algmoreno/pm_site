@@ -11,13 +11,12 @@ export async function GET(req, context) {
     const appointment = await Appointment.findById(params.id);
 
     if (!appointment) {
-      return new Response(JSON.stringify({ error: 'Appointment not found' }), { status: 404 });
+      return NextResponse.json({ message: "Appointment not found" }, { status: 404 });
     }
 
-    return new Response(JSON.stringify(appointment), { status: 201 });
+    return NextResponse.json({ appointment }, { status: 201 });
   } catch (err) {
-    console.error('Error finding appointment:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
@@ -30,13 +29,12 @@ export async function PUT(req, context) {
     const updatedAppointment = await Appointment.findByIdAndUpdate(params.id, update, { new: true });
 
     if (!updatedAppointment) {
-      return new Response(JSON.stringify({ error: 'Appointment not found' }), { status: 404 });
+      return NextResponse.json({ message: "Appointment not found" }, { status: 404 });
     }
 
-    return new Response(JSON.stringify({ message: 'Appointment updated', appointment: updatedAppointment }), { status: 200 });
+    return NextResponse.json({ message: "Appointment updated" }, { status: 200 });
   } catch (err) {
-    console.error('Error updating user:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
@@ -48,12 +46,11 @@ export async function DELETE(req, context) {
     const deletedAppointment = await Appointment.findByIdAndDelete(params.id);
 
     if (!deletedAppointment) {
-      return new Response(JSON.stringify({ error: 'Appointment not found' }), { status: 404 });
+      return NextResponse.json({ message: "Appointment not found" }, { status: 404 });
     }
 
-    return new Response(JSON.stringify({ message: 'Appointment deleted' }), { status: 200 });
+    return NextResponse.json({ message: "Appointment deleted" }, { status: 200 });
   } catch (err) {
-    console.error('Error deleting appointment:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

@@ -13,7 +13,7 @@ export async function POST(req){
     // Find the user
     const user = await User.findById(userId);
     if (!user) {
-      return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     //creating new appointment 
     const newAppointment = await Appointment.create({ user: userId, date, duration, price }); 
@@ -22,23 +22,19 @@ export async function POST(req){
     user.appointments.push(newAppointment._id);
     await user.save();
 
-    return new Response(JSON.stringify({ message: 'Appointment added', appointment: newAppointment }), { status: 201 });
+    return NextResponse.json({ message: "Appointment added!" }, { status: 201 });
   } catch (err) {
-    console.error('Error inserting appointment:', err);
-    return new NextResponse.json({ error: err.message, status: 500 });
+    return NextResponse.json({ error: err.message, status: 500 });
   }
 }
 
 // Get all appointments 
 export async function GET() {
-  console.log("GET");
   try {
     await mongoClient();
     const appointments = await Appointment.find();
-
-    return new Response(JSON.stringify(appointments), { status: 201 });
+    return NextResponse.json({ appointments },  { status: 201 });
   } catch (err) {
-    console.error('Error finding appointments:', err);
     return new NextResponse.json({ error: err.message, status: 500 });
   }
 }

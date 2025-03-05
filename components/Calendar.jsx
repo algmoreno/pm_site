@@ -6,11 +6,12 @@ import { format } from 'date-fns';
 
 const Calendar = () => {
   const { data: session } = useSession();
+  const id = session.user.id
   const [appointment, setAppointment] = useState({
     date: '',
     duration: '',
     price: 50,
-    userId: ''
+    userId: id
   });
 
   function handleChange(e) {
