@@ -6,10 +6,11 @@ import SessionProvider from "@/lib/SessionProvider";
 
 const Layout = async ({ children }) => {
   const session = await getServerSession();
+
   return (
     <html lang="en">
       <body>
-      <SessionProvider session={session}>
+      <SessionProvider>
         <header>
           <Navbar />
         </header>

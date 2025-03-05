@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt"; // Helps extract the session token
 
 export async function middleware(request) {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-
+  console.log("token", token)
   // If token exists, user is authenticated → Allow access
   if (token) {
     return NextResponse.next();

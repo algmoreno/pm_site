@@ -13,7 +13,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 const UserLink = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  console.log(session)
+  console.log("userlink session", session);
 
   // if (status === "loading"){
   //   return (

@@ -14,11 +14,11 @@ const UserDetails = () => {
   useEffect(() => {
     if (id) {
       axios.get(`/api/auth/users/${id}`)
-        .then(res => setUser(res.data))
+        .then(res =>{setUser(res.data.user)})
         .catch(err => console.error(err));
     }
   }, [id]);
-
+  console.log(user);
   if (!user) return <div>Insert loading wheel...</div>;
 
   const handleSubmit = async(e) => {     

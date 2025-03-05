@@ -1,11 +1,13 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { format } from 'date-fns';
 
 const Calendar = () => {
   const { data: session } = useSession();
+
   const id = session.user.id
   const [appointment, setAppointment] = useState({
     date: '',
@@ -33,8 +35,8 @@ const Calendar = () => {
 
     // add appt
     try {
-      const response = await axios.post('/api/auth/appointments', appointment)
-      console.log("appt response", response)
+      const response = await axios.post('/api/auth/appointments', appointment);
+      console.log("appt response", response);
     } catch (err) {
       console.log(err);
     }
