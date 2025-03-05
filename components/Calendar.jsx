@@ -1,9 +1,11 @@
 "use client"
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { format } from 'date-fns';
 
 const Calendar = () => {
+
   const [appointment, setAppointment] = useState({
     date: '',
     duration: '',
@@ -65,7 +67,7 @@ const Calendar = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-300 rounded-md">
+    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md">
 
       <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">

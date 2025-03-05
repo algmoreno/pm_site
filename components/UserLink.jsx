@@ -1,20 +1,18 @@
 "use client";
 import React from 'react'
-import { CgProfile } from "react-icons/cg";
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger 
-} from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { toast } from "sonner";
 import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { toast } from "sonner";
+import { CgProfile } from "react-icons/cg";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } 
+        from '@/components/ui/dropdown-menu';
 
 const UserLink = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  // pass session to dropdown menu -> if logged provide logout, profile page option. if not display only login option
 
   if (status === "loading"){
     return (
