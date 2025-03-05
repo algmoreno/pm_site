@@ -1,12 +1,15 @@
 import React from 'react'
 import "../styles/globals.css";
 import { Navbar, Footer, Toaster } from '@/components/index';
+import { getServerSession } from "next-auth";
+import SessionProvider from "@/lib/SessionProvider";
 
 const Layout = async ({ children }) => {
-
+  const session = await getServerSession();
   return (
     <html lang="en">
       <body>
+      <SessionProvider session={session}>
         <header>
           <Navbar />
         </header>
@@ -17,6 +20,7 @@ const Layout = async ({ children }) => {
         <footer>
           <Footer/>
         </footer>
+      </SessionProvider>
       </body>
     </html>
   );

@@ -4,23 +4,13 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { format } from 'date-fns';
 
-
 const Calendar = () => {
-
+  const { data: session } = useSession();
   const [appointment, setAppointment] = useState({
     date: '',
     duration: '',
     price: 50,
-    userId: "67c0f8af5abae355f627a20a"
-  });
-
-  const [user, setUser] = useState({
-    firstName: "Alan",
-    lastName: "Moreno",
-    email: "alan@example.com",
-    age: 27,
-    gender: "male",
-    description: "website administrator 2",
+    userId: ''
   });
 
   function handleChange(e) {
