@@ -1,15 +1,24 @@
 "use client"; 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useSession } from 'next-auth/react';
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 
 const UserDetails = () => {
-  const { id } = useParams(); 
+  const router = useRouter();
+  const { data: session } = useSession();
+  const { id } = useParams();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
   const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
   const validPassword = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$');
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/login")
+    }
+  }, [session])
 
   useEffect(() => {
     if (id) {

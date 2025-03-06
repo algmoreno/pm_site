@@ -32,7 +32,7 @@ export async function POST(req){
 export async function GET() {
   try {
     await mongoClient();
-    const appointments = await Appointment.find();
+    const appointments = await Appointment.find().populate("user");
     return NextResponse.json({ appointments },  { status: 201 });
   } catch (err) {
     return new NextResponse.json({ error: err.message, status: 500 });

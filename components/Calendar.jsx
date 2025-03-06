@@ -16,9 +16,12 @@ const Calendar = () => {
     userId: id
   });
   
-  if (!session) {
-    router.push("/login")
-  }
+  useEffect(() => {
+    if (!session) {
+      router.push("/login")
+    }
+  }, [session])
+
 
   function handleChange(e) {
     setAppointment({
