@@ -13,22 +13,26 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 const UserLink = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  console.log("userlink session", session);
+  const isAdmin = session?.user.role === "admin";
 
-  // if (status === "loading"){
-  //   return (
-  //     <div className="m-auto">Loading...</div>
-  //   )
-  // }
+  if (status === "loading"){
+    return (
+      <div className="m-auto">Loading...</div>
+    )
+  }
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();
 
   const handleSignOut = async () => {
-      await signOut({
-        redirect: false,
-      });    
-      router.push("/");
-      toast.success("Successfully logged out.");
+    await signOut({
+      redirect: false,
+    });    
+    router.push("/");
+    toast.success("Successfully logged out.");
   }
+
+  const goToAdmin = () => {
+    router.push(`/admin`);
+  };
 
   const goToProfile = () => {
     router.push(`/profile/${session.user.id}`);
@@ -36,7 +40,37 @@ const UserLink = () => {
 
   return (
     <div className="m-auto">
-      {session ? (
+      {!session ? (
+        <Link href="/login">
+          <CgProfile size={25} className="m-auto"/>
+          Login
+        </Link>
+      ) : (
+      isAdmin ? (
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger className="outline-none relative">
+            <div className="flex gap-4 items-center">
+              <span>{session.user?.firstName}</span>
+              <Avatar className="size-10 hover:opacity-75 transition">
+                <AvatarFallback className="bg-orange-400 text-white">
+                  {avatarFallback}
+                </AvatarFallback>
+              </Avatar>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="center" side="bottom" className="w-50">
+            <DropdownMenuItem onClick={goToAdmin} className="h-10">
+              Admin
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={goToProfile} className="h-10">
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleSignOut()} className="h-10">
+              Log Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        ) : (
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="outline-none relative">
             <div className="flex gap-4 items-center">
@@ -57,12 +91,8 @@ const UserLink = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      ) : (
-        <Link href="/login">
-          <CgProfile size={25} className="m-auto"/>
-          Login
-        </Link>
-      )
+        )
+      ) 
     }
 
     </div>

@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { navOptions } from '../constants';
 import { UserLink, NavbarMenu } from '@/components/index';
-import { SessionProvider } from 'next-auth/react';
-
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);

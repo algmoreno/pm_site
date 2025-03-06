@@ -7,8 +7,8 @@ import { format } from 'date-fns';
 
 const Calendar = () => {
   const { data: session } = useSession();
-
-  const id = session.user.id
+  const [status, setStatus] = useState(null);
+  const id = session?.user.id
   const [appointment, setAppointment] = useState({
     date: '',
     duration: '',
@@ -25,39 +25,16 @@ const Calendar = () => {
   
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // get appts
-    // try { 
-    //   const response = await axios.get('/api/appointments')
-    //   console.log(response)
-    // } catch (err) {
-    //   console.log(err);
-    // }
 
     // add appt
     try {
+      console.log("appointment", appointment);
       const response = await axios.post('/api/auth/appointments', appointment);
       console.log("appt response", response);
+      setStatus("Appointment successfully booked!")
     } catch (err) {
       console.log(err);
     }
-
-    // edit appt
-    // try {
-    //   const apptId = "67c2115c505d146318777094";
-    //   const response = await axios.put(`/api/appointments/${apptId}`, appointment);
-    //   console.log("put response", response);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
-    // delete appt 
-    // try {
-    //   const apptId = "67c0ef1fcd5f489cd878059a";
-    //   const response = await axios.delete(`/api/appointments/${apptId}`)
-    //   console.log(response)
-    // } catch (err) {
-    //   console.log(err);
-    // }
   }
 
   return (
@@ -67,8 +44,8 @@ const Calendar = () => {
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Create Appointment</h2>
-              <div className="mt-10 ">
 
+              <div className="mt-10 ">
                 <div className="sm:col-span-3">
                   <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                     Date
