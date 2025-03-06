@@ -26,6 +26,7 @@ const UserDetails = () => {
         .then(res =>{setUser(res.data.user)})
         .catch(err => console.error(err));
     }
+    
   }, [id]);
 
   if (!user) return <div>Insert loading wheel...</div>;
@@ -37,9 +38,9 @@ const UserDetails = () => {
 
     if (!validated) return;
     
-    // add user
+    // edit user info
     try {
-      const response = await axios.post('/api/auth/users', user)
+      const response = await axios.put('/api/auth/users', user)
       setPending(false);
       toast.success(response.data.message);
       router.push("/login")
@@ -67,12 +68,12 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md">
-      <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
-        <div className="space-y-2">
+    <div className="w-[1200px] h-auto mx-auto my-20 flex flex-wrap">
+      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border border-black p-5" onSubmit={handleSubmit}>
+        <div className="space-y-2 ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
-            <p className="mt-1 text-sm/6 text-gray-200">{user.firstName}'s Info</p>
+            <p className="mt-1 text-sm/6 text-gray-200">{user.firstName}'s Account Info</p>
             {!!error && (
               <div className="bg-red-500 p-3 rounded-md flex items-center gap-x-2 text-sm text-red-200 my-6">
                 <p>
@@ -161,9 +162,30 @@ const UserDetails = () => {
                         ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
             Submit
           </button>
-        </div>        
+        </div>
 
       </form>
+      
+      <div className="border-4 border-amber-200 bg-slate-200 p-5 rounded-md flex-wrap">
+        <div className="text-[24px] border-b-2 border-gray-200">
+          <h1 className="mb-5 text-gray-500">Upcoming Appointments</h1>
+        </div>
+        <ul role="list" className="divide-y divide-gray-100">
+        {user.appointments.map((appointment) => (
+          <li key={appointment.date} className="flex justify-between gap-x-6 py-5">
+            <div className="flex min-w-0 gap-x-4">
+              <div className="min-w-0 flex-auto">
+                <p className="mt-1 truncate text-xs/5 text-gray-500">{appointment.date}</p>
+              </div>
+            </div>
+            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+              <p className="text-sm/6 text-gray-900">{appointment.duration} min.</p>
+            </div>
+          </li>
+          ))}
+        </ul>
+      </div>
+
     </div>
   )
 }

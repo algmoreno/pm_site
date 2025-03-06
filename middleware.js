@@ -9,10 +9,12 @@ export async function middleware(request) {
     return NextResponse.next();
   }
 
-  const userRole = token.role;
+  const userRole = token?.role;
 
   const adminOnlyRoutes = ["/admin"];
   const userOnlyRoutes = ["/schedule"];
+
+  const requestedPath = request.nextUrl.pathname;
 
   // admin page redirecting non admin to unauthorized page
   if (adminOnlyRoutes.includes(requestedPath) && userRole !== "admin") {
@@ -20,7 +22,7 @@ export async function middleware(request) {
   }
 
   // schedule page redirecting non members to login page
-  if (userOnlyRoutes.includes(requestedPath) && userRole !== "user") {
+  if (userOnlyRoutes.includes(requestedPath) && userRole !== "member") {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
