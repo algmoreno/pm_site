@@ -6,7 +6,7 @@ import { UserDropdown, NavbarMenu } from '@/components/index';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-
+  
   return (
     <div className="h-[100px]  gap-4 font-primary flex flex-wrap">
       <div className="text-[30px] m-auto">

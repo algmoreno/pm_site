@@ -8,9 +8,9 @@ const AppointmentList = () => {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.role === "admin";
 
-  if (!isAdmin) {
-    router.push("/unauthorized")
-  }
+  // if (!isAdmin) {
+  //   router.push("/unauthorized")
+  // }
 
   return (
     <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md">
