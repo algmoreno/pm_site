@@ -18,7 +18,7 @@ const UserDetails = () => {
         .catch(err => console.error(err));
     }
   }, [id]);
-  console.log(user);
+
   if (!user) return <div>Insert loading wheel...</div>;
 
   const handleSubmit = async(e) => {     

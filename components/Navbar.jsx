@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { navOptions } from '../constants';
-import { UserLink, NavbarMenu } from '@/components/index';
+import { UserDropdown, NavbarMenu } from '@/components/index';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -23,7 +23,7 @@ const Navbar = () => {
           <Link href={option.href}>{option.name}</Link>
         </div>
         ))}
-        <UserLink />
+        <UserDropdown />
       </div>
 
       <div className="md:hidden align-middle flex m-auto">          

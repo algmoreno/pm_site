@@ -14,9 +14,9 @@ export async function middleware(request) {
   const adminOnlyRoutes = ["/admin"];
   const userOnlyRoutes = ["/schedule"];
 
-  // admin page redirecting non admin to login page
+  // admin page redirecting non admin to unauthorized page
   if (adminOnlyRoutes.includes(requestedPath) && userRole !== "admin") {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/unauthorized", request.url));
   }
 
   // schedule page redirecting non members to login page

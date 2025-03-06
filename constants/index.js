@@ -4,7 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import { TiContacts } from "react-icons/ti";
 import { RiShoppingBag2Line } from "react-icons/ri";
 import { RiCalendarLine } from "react-icons/ri";
-import { UserLink } from '@/components/index';
+import { UserDropdown } from '@/components/index';
 
 export const navOptions = [
   {
@@ -24,7 +24,7 @@ export const navOptions = [
   },
   // {
   //   href: "",
-  //   name: <UserLink />,
+  //   name: <UserDropdown />,
   //   icon: <CgProfile size={25} className="m-auto"/>
   // }
 ]

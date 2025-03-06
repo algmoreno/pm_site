@@ -1,11 +1,11 @@
 import "../styles/globals.css";
-import { Main, About } from '@/components/index';
+import { Landing, About } from '@/components/index';
 
 const Home = () => {
   return (
     <div > 
-        <Main />
-        <About />
+      <Landing />
+      <About />
     </div>
   );
 }

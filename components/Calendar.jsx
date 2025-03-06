@@ -15,6 +15,10 @@ const Calendar = () => {
     price: 50,
     userId: id
   });
+  
+  if (!session) {
+    router.push("/login")
+  }
 
   function handleChange(e) {
     setAppointment({

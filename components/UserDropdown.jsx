@@ -2,7 +2,7 @@
 import React from 'react'
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { SessionProvider, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
 import { CgProfile } from "react-icons/cg";
@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } 
         from '@/components/ui/dropdown-menu';
 
-const UserLink = () => {
+const UserDropdown = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const isAdmin = session?.user.role === "admin";
@@ -99,4 +99,4 @@ const UserLink = () => {
   )
 }
 
-export default UserLink;
+export default UserDropdown;

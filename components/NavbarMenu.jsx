@@ -16,6 +16,7 @@ const NavbarMenu = () => {
   const { data: session, status } = useSession();
   const [showMenu, setShowMenu] = useState(false);
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();
+  const isAdmin = session?.user.role === "admin";
 
   const handleSignOut = async () => {
     await signOut({
