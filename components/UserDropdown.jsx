@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { Loader } from '@/components/index'
 import { toast } from "sonner";
 import { CgProfile } from "react-icons/cg";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -17,7 +18,7 @@ const UserDropdown = () => {
 
   if (status === "loading"){
     return (
-      <div className="m-auto">Loading...</div>
+      <Loader />
     )
   }
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 
 const Calendar = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const [status, setStatus] = useState(null);
   const id = session?.user.id

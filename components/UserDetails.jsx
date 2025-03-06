@@ -1,5 +1,6 @@
 "use client"; 
 import { useEffect, useState } from "react";
+import { Loader } from '@/components/index'
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
@@ -29,8 +30,11 @@ const UserDetails = () => {
     
   }, [id]);
 
-  if (!user) return <div>Insert loading wheel...</div>;
-
+  if (!user) {
+    return (
+      <Loader />
+    )
+  }
   const handleSubmit = async(e) => {     
     e.preventDefault();
     setPending(true);
@@ -69,7 +73,7 @@ const UserDetails = () => {
 
   return (
     <div className="w-[1200px] h-auto mx-auto my-20 flex flex-wrap">
-      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-orange-500 p-5" onSubmit={handleSubmit}>
+      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-black p-5" onSubmit={handleSubmit}>
         <div className="space-y-2 ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
