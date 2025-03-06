@@ -69,7 +69,7 @@ const UserDetails = () => {
 
   return (
     <div className="w-[1200px] h-auto mx-auto my-20 flex flex-wrap">
-      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border border-black p-5" onSubmit={handleSubmit}>
+      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-orange-500 p-5" onSubmit={handleSubmit}>
         <div className="space-y-2 ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
@@ -166,7 +166,7 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="border-4 border-amber-200 bg-slate-200 p-5 rounded-md flex-wrap">
+      <div className="border-4 border-sky-600 bg-slate-200 p-5 rounded-md flex-wrap">
         <div className="text-[24px] border-b-2 border-gray-200">
           <h1 className="mb-5 text-gray-500">Upcoming Appointments</h1>
         </div>

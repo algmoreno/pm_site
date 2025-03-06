@@ -15,7 +15,7 @@ const Layout = async ({ children }) => {
           <Navbar />
         </header>
         <main >
-          <Toaster />
+          <Toaster position="bottom-center"/>
           {children}
         </main>
         <footer>

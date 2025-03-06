@@ -27,7 +27,7 @@ const UserList = () => {
   return (
     <div className="w-[800px] h-auto mx-auto my-20 rounded-md border border-black p-5">
       <div className="text-[24px] border-b-2 border-gray-200">
-        <h1 >Members</h1>
+        <h1 >All Users</h1>
       </div>
       <ul role="list" className="divide-y divide-gray-100">
       {users.map((user) => (

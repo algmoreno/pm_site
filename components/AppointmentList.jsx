@@ -27,7 +27,7 @@ const AppointmentList = () => {
   return (
     <div className="w-[800px] h-auto mx-auto my-20 rounded-md border border-black p-5">
       <div className="text-[24px] border-b-2 border-gray-200">
-        <h1>Appointments</h1>
+        <h1>Your Appointments</h1>
       </div>
       <ul role="list" className="divide-y divide-gray-100">
       {appointments.map((appointment) => (
