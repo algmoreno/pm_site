@@ -219,10 +219,6 @@ const UserDetails = () => {
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>
-        <div onClick={() => enableForm()} className="mt-1 text-sm/6 text-gray-200 flex hover:cursor-pointer">
-          <FaRegEdit className="ml-auto"/>
-          <p>Edit</p>
-        </div>
         <ul role="list" className="divide-y divide-gray-500">
         {user.appointments.map((appointment) => (
           <li key={appointment.date} className="flex justify-between gap-x-6 py-5">
