@@ -58,7 +58,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md">
+    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
       <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">

@@ -72,8 +72,8 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="w-[1200px] h-auto mx-auto my-20 flex flex-wrap">
-      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-black p-5" onSubmit={handleSubmit}>
+    <div className="w-[1200px] h-auto mx-auto my-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-gray-200 p-10 " onSubmit={handleSubmit}>
         <div className="space-y-2 ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
@@ -155,7 +155,7 @@ const UserDetails = () => {
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
+        <div className="mt-6 flex items-center justify-end gap-x-6 ">
           <button type="button" className="text-sm/6 font-semibold text-gray-900">
             Cancel
           </button>
@@ -170,16 +170,16 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="border-4 border-sky-600 bg-slate-200 p-5 rounded-md flex-wrap">
+      <div className=" border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
         <div className="text-[24px] border-b-2 border-gray-200">
-          <h1 className="mb-5 text-gray-500">Upcoming Appointments</h1>
+          <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>
         <ul role="list" className="divide-y divide-gray-100">
         {user.appointments.map((appointment) => (
           <li key={appointment.date} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
               <div className="min-w-0 flex-auto">
-                <p className="mt-1 truncate text-xs/5 text-gray-500">{appointment.date}</p>
+                <p className="mt-1 truncate text-xs/5 text-gray-100">{appointment.date}</p>
               </div>
             </div>
             <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
