@@ -1,6 +1,7 @@
 "use client"; 
 import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react';
+import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import { PageLoader } from '@/components/index';
 import axios from "axios";
@@ -46,7 +47,8 @@ const UserDetails = () => {
     
     // edit user info
     try {
-      const response = await axios.put('/api/auth/users', user)
+      const response = await axios.put(`/api/auth/users/${id}`, user)
+      console.log(response)
       setPending(false);
       toast.success(response.data.message);
       router.push("/login")
@@ -74,8 +76,8 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="w-[1200px] h-auto mx-auto my-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
-      <form className="w-[70%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-gray-200 p-10 " onSubmit={handleSubmit}>
+    <div className="w-[1400px] h-auto mx-auto my-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+      <form className="w-[50%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-gray-200 p-10 " onSubmit={handleSubmit}>
         <div className="space-y-2 ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
@@ -152,6 +154,22 @@ const UserDetails = () => {
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
               </div>
+            
+              <div className="sm:col-span-4">
+                <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
+                  Confirm Password
+                </label> 
+                <div className="mt-2">
+                  <input
+                    disabled={pending}
+                    type="password"
+                    value={user.confirmPassword}
+                    onChange={(e) => setUser({...user, confirmPassword:e.target.value})}
+                    required
+                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -172,11 +190,11 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
-        <div className="text-[24px] border-b-2 border-gray-200">
+      <div className="w-[40%] border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
+        <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>
-        <ul role="list" className="divide-y divide-gray-100">
+        <ul role="list" className="divide-y divide-gray-500">
         {user.appointments.map((appointment) => (
           <li key={appointment.date} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">

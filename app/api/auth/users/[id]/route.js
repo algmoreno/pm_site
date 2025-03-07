@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { ObjectId } from "mongodb";
 import mongoClient from "@/app/lib/mongodb";
 import User from "@/app/models/User";
@@ -21,13 +22,22 @@ export async function PUT(req, context) {
   const params = await context.params;
   try {
     await mongoClient();
-    const update = await req.json();
+    const { firstName, lastName, email, password, confirmPassword } = await req.json();
 
     if (!params || !params.id) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(params.id, update, { new: true })
+    const hashedPwd = await bcrypt.hash(password, 10);
+
+    const user = {
+      firstName, 
+      lastName, 
+      email, 
+      password: hashedPwd
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(params.id, user, { new: true })
 
     return NextResponse.json({ message: "User updated" }, { status: 200 });
   } catch (err) {

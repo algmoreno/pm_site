@@ -63,7 +63,7 @@ const UserDropdown = () => {
               Admin
             </DropdownMenuItem>
             <DropdownMenuItem onClick={goToProfile} className="h-10">
-              Profile
+              Your Account
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleSignOut()} className="h-10">
               Log Out

@@ -86,7 +86,7 @@ const NavbarMenu = () => {
                 </div>
                 <div className="align-middle my-auto">
                   <a href="/profile" className="font-semibold text-gray-900">
-                    Profile
+                    Your Account
                     <span className="absolute inset-0" />
                   </a>
                 </div>
