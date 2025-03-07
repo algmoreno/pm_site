@@ -1,6 +1,5 @@
 "use client"; 
 import { useEffect, useState } from "react";
-import { Loader } from '@/components/index'
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
@@ -32,7 +31,7 @@ const UserDetails = () => {
 
   if (!user) {
     return (
-      <Loader />
+      <div>Loading</div>
     )
   }
   const handleSubmit = async(e) => {     
