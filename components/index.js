@@ -10,5 +10,6 @@ export { default as RegisterForm } from './RegisterForm';
 export { default as Landing } from './Landing';
 export { default as About } from './About';
 export { default as Calendar } from './Calendar';
-export { default as Loader } from './Loader';
+export { default as SunWidget } from './SunWidget';
+export { default as PageLoader } from './PageLoader';
 export { default as Footer } from './Footer';

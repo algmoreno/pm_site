@@ -2,13 +2,14 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { PageLoader } from '@/components/index';
 import { format } from 'date-fns';
+import axios from 'axios';
 
 const Calendar = () => {
   const router = useRouter();
-  const { data: session } = useSession();
-  const [status, setStatus] = useState(null);
+  const [error, setError] = useState(null);
+  const { data: session, status } = useSession();
   const id = session?.user.id
   const [appointment, setAppointment] = useState({
     date: '',
@@ -20,8 +21,16 @@ const Calendar = () => {
   useEffect(() => {
     if (!session) {
       router.push("/login")
+    } else{
+      router.push(`/schedule`)
     }
   }, [session])
+
+  if (status === "loading" || !id) {
+    return (
+      <PageLoader />
+    )
+  }
 
 
   function handleChange(e) {

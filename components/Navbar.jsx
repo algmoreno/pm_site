@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Loader } from '@/components/index'
+import { SunWidget } from '@/components/index'
 import { navOptions } from '../constants';
 import { UserDropdown, NavbarMenu } from '@/components/index';
 
@@ -15,7 +15,7 @@ const Navbar = () => {
           <Link href='/'>PM Yoga</Link>
         </h1>
         <div>
-          <Loader />
+          <SunWidget />
         </div>
       </div>
 

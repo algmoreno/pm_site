@@ -1,8 +1,7 @@
 import React from 'react';
-//import styled from 'styled-components';
-import "@/styles/loader.css";
+import "@/styles/sun-widget.css";
 
-const Loader = () => {
+const SunWidget = () => {
   return (
     <div className="container mx-auto">
       <div className="cloud front">
@@ -19,4 +18,4 @@ const Loader = () => {
   );
 }
 
-export default Loader;
+export default SunWidget;

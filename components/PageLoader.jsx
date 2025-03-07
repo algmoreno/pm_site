@@ -1,0 +1,21 @@
+import React from 'react';
+import "@/styles/page-loader.css";
+
+const PageLoader = () => {
+  return (
+    <div className="flex flex-wrap m-auto">
+      <div className="h-[500px] mx-auto my-20 rounded-md flex">
+        <div className="m-auto">
+          <div className="load-row">
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default PageLoader

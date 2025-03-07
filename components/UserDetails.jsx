@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from "next/navigation";
+import { PageLoader } from '@/components/index';
 import axios from "axios";
 
 const UserDetails = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -17,6 +18,8 @@ const UserDetails = () => {
   useEffect(() => {
     if (!session) {
       router.push("/login")
+    } else{
+      router.push(`/profile/${id}`)
     }
   }, [session])
 
@@ -26,14 +29,14 @@ const UserDetails = () => {
         .then(res =>{setUser(res.data.user)})
         .catch(err => console.error(err));
     }
-    
   }, [id]);
 
-  if (!user) {
+  if (status === "loading" || !user) {
     return (
-      <div>Loading</div>
+      <PageLoader />
     )
   }
+
   const handleSubmit = async(e) => {     
     e.preventDefault();
     setPending(true);
@@ -169,7 +172,7 @@ const UserDetails = () => {
 
       </form>
       
-      <div className=" border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
+      <div className="border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
         <div className="text-[24px] border-b-2 border-gray-200">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>

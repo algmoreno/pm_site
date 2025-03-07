@@ -17,7 +17,7 @@ const UserDropdown = () => {
 
   if (status === "loading"){
     return (
-      <div>Loading...</div>
+      <div className="my-auto">Loading...</div>
     )
   }
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();
