@@ -1,18 +1,22 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { Loader } from '@/components/index'
 import { navOptions } from '../constants';
 import { UserDropdown, NavbarMenu } from '@/components/index';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  
+
   return (
-    <div className="h-[100px]  gap-4 font-primary flex flex-wrap">
-      <div className="text-[30px] m-auto">
-        <h1>
+    <div className="h-[100px] gap-4 font-primary flex flex-wrap">
+      <div className="text-[30px] m-auto flex">
+        <h1 className="my-auto z-10 text-[38px] absolute">
           <Link href='/'>PM Yoga</Link>
         </h1>
+        <div>
+          <Loader />
+        </div>
       </div>
 
       <div className="text-lg mr-auto gap-20 max-md:hidden flex">

@@ -1,7 +1,8 @@
 .container {
   width: 250px;
-  height: 250px;
+  height: 100px;
   padding: 15px;
+  margin: 0px 0px -50px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,60 +17,60 @@
   margin-left: 25px;
   display: inline;
   position: absolute;
-  z-index: 11;
-  animation: clouds 8s infinite;
+  z-index: 1;
+  animation: clouds 18s infinite;
   animation-timing-function: ease-in-out;
 }
 
 .back {
   margin-top: -30px;
   margin-left: 150px;
-  z-index: 12;
-  animation: clouds 12s infinite;
+  z-index: 1;
+  animation: clouds 22s infinite;
   animation-timing-function: ease-in-out;
 }
 
 .right-front {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50% 50% 50% 0%;
-  background-color: #4c9beb;
+  background-color: #e4e4e4;
   display: inline-block;
   margin-left: -25px;
-  z-index: 5;
+  z-index: 0;
 }
 
 .left-front {
-  width: 65px;
-  height: 65px;
+  width: 58px;
+  height: 58px;
   border-radius: 50% 50% 0% 50%;
-  background-color: #4c9beb;
+  background-color: #e4e4e4;
   display: inline-block;
-  z-index: 5;
+  z-index: 0;
 }
 
 .right-back {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50% 50% 50% 0%;
-  background-color: #4c9beb;
+  background-color: #e4e4e4;
   display: inline-block;
   margin-left: -20px;
-  z-index: 5;
+  z-index: 0;
 }
 
 .left-back {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50% 50% 0% 50%;
-  background-color: #4c9beb;
+  background-color: #e4e4e4;
   display: inline-block;
   z-index: 5;
 }
 
 .sun {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   background: -webkit-linear-gradient(to right, #fc6b04, #d7a606);
   background: linear-gradient(to right, #f17427, #fff700);
   border-radius: 60px;
@@ -78,7 +79,7 @@
 }
 
 .sunshine {
-  animation: sunshines 2s infinite;
+  animation: sunshines 10s infinite;
 }
 
 @keyframes sunshines {
