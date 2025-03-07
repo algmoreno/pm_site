@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -13,16 +14,23 @@ const UserList = () => {
   useEffect(() => {
     if (!isAdmin) {
       router.push("/unauthorized")
+    } else{
+      router.push(`/admin`)
     }
-  }, [isAdmin])
+  }, [session])
 
+    // pull all users
+    useEffect(() => {
+      axios.get(`/api/auth/users/`)
+        .then(res =>{setUsers(res.data.users)})
+        .catch(err => console.error(err));
+    }, []);
 
-  // pull all users
-  useEffect(() => {
-    axios.get(`/api/auth/users/`)
-      .then(res =>{setUsers(res.data.users)})
-      .catch(err => console.error(err));
-  }, []);
+  if (status === "loading" || !users) {
+    return (
+      <PageLoader />
+    )
+  }
 
   return (
     <div className="w-[800px] h-auto mx-auto my-20 rounded-md border border-black p-5 ">

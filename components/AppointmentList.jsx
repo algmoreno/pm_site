@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -9,7 +10,6 @@ const AppointmentList = () => {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.role === "admin";
   const [appointments, setAppointments] = useState([]);
-  //console.log(typeof(appointments));
 
   useEffect(() => {
     if (!isAdmin) {
@@ -23,6 +23,12 @@ const AppointmentList = () => {
       .then(res =>{setAppointments(res.data.appointments)})
       .catch(err => console.error(err));
   }, []);
+
+  if (status === "loading" || !appointments) {
+    return (
+      <PageLoader />
+    )
+  }
 
   return (
     <div className="w-[800px] h-auto mx-auto my-20 rounded-md border border-black p-5">

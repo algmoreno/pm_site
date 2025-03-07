@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react';
 import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
+import { FaRegEdit } from "react-icons/fa";
 import { PageLoader } from '@/components/index';
 import axios from "axios";
 
@@ -12,7 +13,8 @@ const UserDetails = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-  const [pending, setPending] = useState(false);
+  const [pending, setPending] = useState(true);
+  const [showConfirm, setShowConfirm] = useState(false)
   const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
   const validPassword = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$');
 
@@ -59,6 +61,18 @@ const UserDetails = () => {
     }
   }
 
+  const editForm = () => {
+    setPending(false);
+    setUser({...user, password:""})
+    setShowConfirm(true)
+  }
+
+  const cancelEdit = () => {
+    setPending(true);
+    setUser({...user, password:"asdfasdfasdf"})
+    setShowConfirm(false)
+  }
+
   const validation = () => {
     if (!validEmail.test(user.email)) {
       setError("Invalid email format.")
@@ -81,7 +95,7 @@ const UserDetails = () => {
         <div className="space-y-2 ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
-            <p className="mt-1 text-sm/6 text-gray-200">{user.firstName}'s Account Info</p>
+            <p className="mt-1 text-sm/6 text-gray-200">{user.firstName}'s Account Info </p>
             {!!error && (
               <div className="bg-red-500 p-3 rounded-md flex items-center gap-x-2 text-sm text-red-200 my-6">
                 <p>
@@ -92,6 +106,11 @@ const UserDetails = () => {
             <div className="mt-10">
 
               <div className="col-span-4">
+                <div onClick={() => editForm()} className="mt-1 text-sm/6 text-gray-200 flex hover:cursor-pointer">
+                  <FaRegEdit className="ml-auto"/>
+                  <p>Edit</p>
+                </div>
+              
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   First Name
                 </label> 
@@ -155,7 +174,8 @@ const UserDetails = () => {
                 </div>
               </div>
             
-              <div className="sm:col-span-4">
+              {showConfirm && 
+                <div className="sm:col-span-4">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Confirm Password
                 </label> 
@@ -170,13 +190,16 @@ const UserDetails = () => {
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
               </div>
+              }
+
 
             </div>
           </div>
         </div>
-
-        <div className="mt-6 flex items-center justify-end gap-x-6 ">
-          <button type="button" className="text-sm/6 font-semibold text-gray-900">
+        
+        {showConfirm && 
+          <div className="mt-6 flex items-center justify-end gap-x-6 ">
+          <button onClick={() => cancelEdit()} type="button" className="text-sm/6 font-semibold text-gray-900">
             Cancel
           </button>
           <button
@@ -184,15 +207,21 @@ const UserDetails = () => {
             disabled={pending}
             className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
                         ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
-            Submit
+            Update
           </button>
         </div>
+        }
+
 
       </form>
       
-      <div className="w-[40%] border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
+      <div className="w-[40%] h-[400px] min-h-[500px] border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
+        </div>
+        <div onClick={() => enableForm()} className="mt-1 text-sm/6 text-gray-200 flex hover:cursor-pointer">
+          <FaRegEdit className="ml-auto"/>
+          <p>Edit</p>
         </div>
         <ul role="list" className="divide-y divide-gray-500">
         {user.appointments.map((appointment) => (
