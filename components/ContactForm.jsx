@@ -18,8 +18,6 @@ const ContactForm = () => {
     e.preventDefault();
     setPending(true);
 
-    console.log(form)
-
     emailjs.send(
       'service_qjdjgk9',
       'template_irpu8ds',
@@ -31,19 +29,20 @@ const ContactForm = () => {
         message: form.message,
       }, 'GDA7yUKvlEcVbask0')
       .then(() => {
-        setPending(false);
-
+        setPending(false);        
         setForm({
-          name: '',
-          email: '',
-          message: '',
+          name: "",
+          email: "",
+          message: "",
         })
+        toast.success("Message successfully sent!")
       }, (error) => {
         setPending(false);
         console.log(error);
+        toast.error("Something went wrong.")
       })
-    
-    toast.success("Message successfully sent!")
+
+      
   }
 
   return (
