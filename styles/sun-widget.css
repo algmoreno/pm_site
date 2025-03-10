@@ -17,7 +17,7 @@
   margin-left: 25px;
   display: inline;
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   animation: clouds 18s infinite;
   animation-timing-function: ease-in-out;
 }
@@ -35,6 +35,7 @@
   height: 40px;
   border-radius: 50% 50% 50% 0%;
   background-color: #bbd7fd;
+  background: linear-gradient(to right, #ffd0aa, #ffd0aa);
   display: inline-block;
   margin-left: -25px;
   z-index: 0;
@@ -45,6 +46,7 @@
   height: 58px;
   border-radius: 50% 50% 0% 50%;
   background-color: #bbd7fd;
+  background: linear-gradient(to right, #ffd0aa, #ffd0aa);
   display: inline-block;
   z-index: 0;
 }
@@ -54,6 +56,7 @@
   height: 40px;
   border-radius: 50% 50% 50% 0%;
   background-color: #bbd7fd;
+  background: linear-gradient(to left, #ffd0aa, #ffd0aa);
   display: inline-block;
   margin-left: -20px;
   z-index: 0;
@@ -64,35 +67,38 @@
   height: 32px;
   border-radius: 50% 50% 0% 50%;
   background-color: #bbd7fd;
+  background: linear-gradient(to left, #ffd0aa, #ffd0aa);
   display: inline-block;
-  z-index: 5;
+  z-index: 0;
 }
 
 .sun {
   width: 100px;
   height: 100px;
-  background: -webkit-linear-gradient(to right, #fffae3, #fa8e00);
-  background: linear-gradient(to right, #ffe679, #ff7700);
+  background: -webkit-linear-gradient(to right, #ffffff, #ffefda);
+  background: linear-gradient(to right, #ffffff, #ffd0aa);
   border-radius: 60px;
+  border: 2px solid rgb(255, 238, 208);
   display: inline;
   position: absolute;
+  z-index: -1;
 }
 
-.sunshine {
+/* .sunshine {
   animation: sunshines 10s infinite;
 }
 
 @keyframes sunshines {
   0% {
     transform: scale(1);
-    opacity: 0.6;
+    opacity: 1.6;
   }
 
   100% {
     transform: scale(1.4);
     opacity: 0;
   }
-}
+} */
 
 @keyframes clouds {
   0% {
