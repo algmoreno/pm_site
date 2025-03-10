@@ -6,6 +6,7 @@ export { default as UserDetails } from './UserDetails';
 export { default as UserList } from './UserList';
 export { default as AppointmentList } from './AppointmentList';
 export { default as AppointmentDetails } from './AppointmentDetails';
+export { default as ContactForm } from './ContactForm';
 export { default as LoginForm } from './LoginForm';
 export { default as RegisterForm } from './RegisterForm';
 export { default as Landing } from './Landing';

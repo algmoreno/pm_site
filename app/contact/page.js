@@ -1,10 +1,11 @@
 import "../../styles/globals.css";
+import { ContactForm } from '@/components/index'
 
 
 const Contact = () => {
   return (
-    <div className="block min-h-screen w-full"> 
-        Contact
+    <div className="flex flex-wrap m-auto"> 
+        <ContactForm />
     </div>
   );
 }
