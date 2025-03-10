@@ -2,25 +2,52 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from "sonner";
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import emailjs from '@emailjs/browser';
 
 const ContactForm = () => {
-  const router = useRouter();
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [pending, setPending] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const [pending, setPending] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setPending(true);
 
+    console.log(form)
+
+    emailjs.send(
+      'service_qjdjgk9',
+      'template_irpu8ds',
+      {
+        from_name: form.name,
+        to_name: 'Alan',
+        from_email: form.email,
+        to_email: 'alg.moreno00@gmail.com',
+        message: form.message,
+      }, 'GDA7yUKvlEcVbask0')
+      .then(() => {
+        setPending(false);
+
+        setForm({
+          name: '',
+          email: '',
+          message: '',
+        })
+      }, (error) => {
+        setPending(false);
+        console.log(error);
+      })
+    
+    toast.success("Message successfully sent!")
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md border-2 border-gray-200 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md border-[12px] border-orange-50 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
 
       <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
         <div className="space-y-2">
@@ -43,10 +70,10 @@ const ContactForm = () => {
                 </label> 
                 <div className="mt-2">
                   <input
-                    disabled={pending}
+                    disabled={false}
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={form.name}
+                    onChange={(e) => setForm({...form, name:e.target.value})}
                     required
                     className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
@@ -60,9 +87,9 @@ const ContactForm = () => {
                 <div className="mt-2">
                   <input
                     disabled={pending}
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({...form, email:e.target.value})}
                     required
                     className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
@@ -76,8 +103,8 @@ const ContactForm = () => {
                 <div className="mt-2">
                 <textarea
                   disabled={pending}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  value={form.message}
+                  onChange={(e) => setForm({...form, message:e.target.value})}
                   required
                   className="w-full h-[100px] m-auto rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 
                             -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 

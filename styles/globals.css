@@ -16,11 +16,10 @@
 }
 
 .bg-1 {
-  background-image: linear-gradient(to bottom, #ffffff 50% ,#c1ffcd 53%);
+  background-image: linear-gradient(to bottom, #ffffff 80%, #bad6ff 99%);
   background-size: cover;
   background-repeat: no-repeat;
 }
-
 
 
 @layer base {

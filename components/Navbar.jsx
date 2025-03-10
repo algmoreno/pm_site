@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import "@/styles/globals.css"
 import { SunWidget } from '@/components/index'
 import { navOptions } from '../constants';
 import { UserDropdown, NavbarMenu } from '@/components/index';

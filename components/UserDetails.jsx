@@ -91,8 +91,8 @@ const UserDetails = () => {
 
   return (
     <div className="w-[1400px] h-auto mx-auto my-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
-      <form className="w-[50%] my-5 mx-auto bg-slate-400 rounded-md border-2 border-gray-200 p-10 " onSubmit={handleSubmit}>
-        <div className="space-y-2 ">
+      <form className="w-[50%] my-5 mx-auto bg-slate-400 rounded-md border-[12px] border-orange-50 p-10" onSubmit={handleSubmit}>
+        <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
             <p className="mt-1 text-sm/6 text-gray-200">{user.firstName}'s Account Info </p>
@@ -215,7 +215,7 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="w-[40%] h-[400px] min-h-[500px] border-4 border-gray-200 bg-slate-400 p-5 rounded-md flex-wrap ">
+      <div className="w-[40%] h-[400px] min-h-[500px] border-[12px] border-orange-50 bg-slate-400 p-5 rounded-md flex-wrap ">
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>

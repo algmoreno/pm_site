@@ -55,7 +55,7 @@ const Calendar = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md border-2 border-gray-200 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-400 rounded-md border-[12px] border-orange-50 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
 
       <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">

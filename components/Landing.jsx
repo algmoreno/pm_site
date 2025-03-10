@@ -1,9 +1,9 @@
 import React from 'react'
-import "../styles/globals.css"
+import "@/styles/globals.css"
 
 const Landing = () => {
   return (
-    <div className="min-h-[900px] justify-items-center w-full bg-slate-100">
+    <div className="min-h-[900px] justify-items-center w-full border bg-slate-200 border-gray-400">
       
     </div>
   )
