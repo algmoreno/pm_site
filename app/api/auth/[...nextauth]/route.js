@@ -44,6 +44,7 @@ const handler = NextAuth({
         token.id = user.id;
         token.email = user.email;
         token.firstName = user.firstName;
+        token.lastName = user.lastName;
         token.role = user.role;
       }
       return token;
@@ -54,6 +55,7 @@ const handler = NextAuth({
           id: token.id,
           email: token.email,
           firstName: token.firstName,
+          lastName: token.lastName,
           role: token.role,
         }
       }

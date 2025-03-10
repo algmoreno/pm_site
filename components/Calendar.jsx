@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
+import emailjs from '@emailjs/browser';
+import { toast } from "sonner";
 import { format } from 'date-fns';
 import axios from 'axios';
 
@@ -10,7 +12,10 @@ const Calendar = () => {
   const router = useRouter();
   const [error, setError] = useState(null);
   const { data: session, status } = useSession();
+  const [pending, setPending] = useState(false);
   const id = session?.user.id
+  const name = session?.user.firstName + " " + session?.user.lastName
+  const email = session?.user.email
   const [appointment, setAppointment] = useState({
     date: '',
     duration: '',
@@ -32,7 +37,6 @@ const Calendar = () => {
     )
   }
 
-
   function handleChange(e) {
     setAppointment({
       ...appointment,
@@ -45,10 +49,34 @@ const Calendar = () => {
 
     // add appt
     try {
-      console.log("appointment", appointment);
       const response = await axios.post('/api/auth/appointments', appointment);
-      console.log("appt response", response);
-      setStatus("Appointment successfully booked!")
+      if (response.status == 201) {
+        console.log("201");
+        emailjs.send(
+          'service_qjdjgk9',
+          'template_w5n6h43',
+          {
+            from_name: "Appointment Manager",
+            to_name: 'Alan',
+            to_email: 'alg.moreno00@gmail.com',
+            message: `${appointment.duration} min. session booked for ${name} at ${appointment.date}`,
+          }, 'GDA7yUKvlEcVbask0')
+          .then(() => {
+            setPending(false);        
+            setAppointment({
+              date: '',
+              duration: '',
+              price: 50,
+              userId: id
+            })
+            toast.success("Appointment confirmed. Check details here.")
+          }, (error) => {
+            setPending(false);
+            console.log(error);
+            toast.error("Something went wrong.")
+          })
+      }
+
     } catch (err) {
       console.log(err);
     }

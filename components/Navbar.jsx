@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div className="h-[100px] gap-4 font-primary flex flex-wrap">
       <div className="text-[30px] m-auto flex">
-        <h1 className="my-auto z-2 text-[38px] absolute">
+        <h1 className="my-auto z-10 text-[38px] absolute">
           <Link href='/'>PM Yoga</Link>
         </h1>
         <div>
