@@ -23,7 +23,7 @@ const LoginForm = () => {
     });
 
     if (response.ok){
-      toast.success("Welcome Back! ")
+      toast.success("Welcome Back!")
       router.push("/")
     } else if (response?.status === 401) {
       setError("Wrong email or password.")

@@ -71,9 +71,9 @@ const SignUpForm = () => {
                 </p>
               </div>
             )}
-            <div className="mt-10">
+            <div className="mt-10 grid grid-cols-2 gap-2">
 
-              <div className="col-span-4">
+              <div className="col-span-1 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   First Name
                 </label> 
@@ -84,13 +84,13 @@ const SignUpForm = () => {
                     value={user.firstName}
                     onChange={(e) => setUser({...user, firstName:e.target.value})}
                     required
-                    className="block w-[50%] m-[auto] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
               </div>
 
-              <div className="sm:col-span-4">
-                <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
+              <div className="col-span-1 mt-2">
+                <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900 ">
                   Last Name
                 </label> 
                 <div className="mt-2">
@@ -100,12 +100,12 @@ const SignUpForm = () => {
                     value={user.lastName}
                     onChange={(e) => setUser({...user, lastName:e.target.value})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="col-span-2 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Email
                 </label> 
@@ -116,12 +116,12 @@ const SignUpForm = () => {
                     value={user.email}
                     onChange={(e) => setUser({...user, email:e.target.value.trim()})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[49%] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="col-span-1 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Password
                 </label> 
@@ -132,12 +132,12 @@ const SignUpForm = () => {
                     value={user.password}
                     onChange={(e) => setUser({...user, password:e.target.value})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="col-span-1 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Confirm Password
                 </label> 
@@ -148,7 +148,7 @@ const SignUpForm = () => {
                     value={user.confirmPassword}
                     onChange={(e) => setUser({...user, confirmPassword:e.target.value})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
               </div>
