@@ -73,6 +73,10 @@ const UserDetails = () => {
     setShowConfirm(false)
   }
 
+  const seeDetails = (apptId) => {
+    router.push(`/appointment/${apptId}`)
+  }
+
   const validation = () => {
     if (!validEmail.test(user.email)) {
       setError("Invalid email format.")
@@ -221,7 +225,7 @@ const UserDetails = () => {
         </div>
         <ul role="list" className="divide-y divide-gray-800">
           {user.appointments.map((appointment) => (
-            <li key={appointment._id} className="flex justify-between gap-x-6 py-5">
+            <li onClick={(e) => seeDetails(appointment._id)} key={appointment._id} className="flex justify-between gap-x-6 py-5 hover:cursor-pointer hover:bg-gray-200 p-4">
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm/6 font-semibold text-black">{appointment.date}</p>
@@ -229,7 +233,7 @@ const UserDetails = () => {
                 </div>
               </div>
               <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                <p className="text-sm/6 text-white">{appointment.price}</p>
+                <p className="text-sm/6 text-gray-400">${appointment.price}</p>
               </div>
             </li>
           ))}
