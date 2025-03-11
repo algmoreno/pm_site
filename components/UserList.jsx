@@ -33,7 +33,7 @@ const UserList = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 rounded-md border border-black p-5 ">
+    <div id="/admin#users" className="w-[800px] h-auto mx-auto my-20 bg-slate-200 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] rounded-md border border-black p-5 ">
       <div className="text-[24px] border-b-2 border-gray-200">
         <h1 >All Users</h1>
       </div>

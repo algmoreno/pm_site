@@ -84,7 +84,7 @@ const UserDropdown = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="center" side="bottom" className="w-50">
             <DropdownMenuItem onClick={goToProfile} className="h-10">
-              Profile
+              Your Account
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleSignOut()} className="h-10">
               Log Out

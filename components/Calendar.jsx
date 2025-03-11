@@ -69,7 +69,7 @@ const Calendar = () => {
               price: 50,
               userId: id
             })
-            toast.success("Appointment confirmed. Check details here.")
+            toast.success(`Appointment confirmed! See details.`)
           }, (error) => {
             setPending(false);
             console.log(error);

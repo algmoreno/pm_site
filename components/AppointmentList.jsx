@@ -31,7 +31,7 @@ const AppointmentList = () => {
   }
 
   return (
-    <div className="w-[800px] h-[500px] mx-auto my-20 rounded-md border border-black p-5 overflow-auto">
+    <div id="/admin#appointments" className="w-[800px] h-[500px] mx-auto my-20 rounded-md bg-slate-500 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] border border-black p-5 overflow-auto">
       <div className="text-[24px] border-b-2 border-gray-200">
         <h1>Your Appointments</h1>
       </div>

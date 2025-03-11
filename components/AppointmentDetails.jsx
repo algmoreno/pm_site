@@ -68,8 +68,8 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="w-[1400px] h-auto mx-auto my-20 flex flex-wrap bg-slate-200 p-5 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
-      <div className="px-4 sm:px-0">
+    <div className="w-[1400px] h-auto mx-auto my-20 flex flex-wrap bg-slate-200 p-10 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
+      <div className="px-4 sm:px-0 ">
         <h3 className="text-base/7 font-semibold text-gray-900">Appointment Details</h3>
       </div>
       <div className="mt-6 border-t border-gray-100">
