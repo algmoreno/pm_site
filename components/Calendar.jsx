@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday,
-  isSameMonth, isEqual, parse, add, getDay } from 'date-fns';
+  isSameDay, isSameMonth, isEqual, parse, add, getDay, parseISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
@@ -17,7 +17,7 @@ const Calendar = () => {
   let [selectedDay, setSelectedDay] = useState(today)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
-  let newDays = eachDayOfInterval({ start: firstDayCurrentMonth, end: endOfWeek(endOfMonth(firstDayCurrentMonth)) })
+  let days = eachDayOfInterval({ start: firstDayCurrentMonth, end: endOfWeek(endOfMonth(firstDayCurrentMonth)) })
   let colStartClasses = [
     '',
     'col-start-2',
@@ -48,10 +48,8 @@ const Calendar = () => {
       name: 'Leslie Alexander',
       imageUrl:
         'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      start: '1:00 PM',
-      startDatetime: '2022-01-21T13:00',
-      end: '2:30 PM',
-      endDatetime: '2022-01-21T14:30',
+      startDatetime: '2025-03-11T13:00',
+      endDatetime: '2025-03-11T14:30',
     },
     // More meetings...
   ]
@@ -124,6 +122,8 @@ const Calendar = () => {
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
   }
 
+  let selectedDayMeetings = meetings.filter((meeting) => isSameDay(parseISO(meeting.startDatetime), selectedDay))
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -163,9 +163,8 @@ const Calendar = () => {
           <div>S</div>
         </div>
         <div className="mt-2 grid grid-cols-7 text-sm">
-          {newDays.map((day, dayIdx) => (
+          {days.map((day, dayIdx) => (
             <div key={day.toString()} className={classNames(
-              dayIdx > 6 && 'border border-gray-100', 'py-2',
               dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2')}>
               <button
                 onClick={() => setSelectedDay(day)}
@@ -186,62 +185,31 @@ const Calendar = () => {
                   {format(day, 'd')}
                 </time>
               </button>
+              <div className="w-1 h-1 mx-auto mt-1">
+                {meetings.some((meeting) => isSameDay(parseISO(meeting.startDatetime), day)
+                ) && (
+                  <div className="w-1 h-1 rounded-full bg-sky-600"></div>
+                )}
+              </div>
+              
+              
             </div>
           ))}
         </div>
       </div>
       <section className="mt-12 md:mt-0 md:pl-14">
         <h2 className="text-base font-semibold text-gray-900">
-          Schedule for <time dateTime="2022-01-21">January 21, 2022</time>
+          Schedule for <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
         </h2>
         <ol className="mt-4 flex flex-col gap-y-1 text-sm/6 text-gray-500">
-          {meetings.map((meeting) => (
-            <li
-              key={meeting.id}
-              className="group flex items-center gap-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100"
-            >
-              <img src={meeting.imageUrl} alt="" className="size-10 flex-none rounded-full" />
-              <div className="flex-auto">
-                <p className="text-gray-900">{meeting.name}</p>
-                <p className="mt-0.5">
-                  <time dateTime={meeting.startDatetime}>{meeting.start}</time> -{' '}
-                  <time dateTime={meeting.endDatetime}>{meeting.end}</time>
-                </p>
-              </div>
-              <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">
-                <div>
-                  <MenuButton className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
-                    <span className="sr-only">Open options</span>
-                    <EllipsisVerticalIcon className="size-6" aria-hidden="true" />
-                  </MenuButton>
-                </div>
-
-                <MenuItems
-                  transition
-                  className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-                >
-                  <div className="py-1">
-                    <MenuItem>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
-                      >
-                        Edit
-                      </a>
-                    </MenuItem>
-                    <MenuItem>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
-                      >
-                        Cancel
-                      </a>
-                    </MenuItem>
-                  </div>
-                </MenuItems>
-              </Menu>
-            </li>
-          ))}
+          {selectedDayMeetings.length > 0 ? (
+            selectedDayMeetings.map((meeting) => (
+              <Meeting key={meeting.id} meeting={meeting} />
+            ))
+          ) : (
+            <p>No meetings today.</p>
+          )}
+            
         </ol>
       </section>
     </div>
@@ -303,6 +271,58 @@ const Calendar = () => {
 
       </form> */}
     </div>
+  )
+}
+
+function Meeting({ meeting }) {
+  let startDateTime = parseISO(meeting.startDatetime)
+  let endDateTime = parseISO(meeting.endDatetime)
+
+  return (
+    <li
+      className="group flex items-center gap-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100"
+      >
+      <img src={meeting.imageUrl} alt="" className="size-10 flex-none rounded-full" />
+      <div className="flex-auto">
+        <p className="text-gray-900">{meeting.name}</p>
+        <p className="mt-0.5">
+          <time dateTime={meeting.startDatetime}>{format(startDateTime, 'hh:mm a')}</time> -{' '}
+          <time dateTime={meeting.endDatetime}>{format(endDateTime, 'hh:mm a')}</time>
+        </p>
+      </div>
+      <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">
+        <div>
+          <MenuButton className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
+            <span className="sr-only">Open options</span>
+            <EllipsisVerticalIcon className="size-6" aria-hidden="true" />
+          </MenuButton>
+        </div>
+
+        <MenuItems
+          transition
+          className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+        >
+          <div className="py-1">
+            <MenuItem>
+              <a
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
+              >
+                Edit
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
+              >
+                Cancel
+              </a>
+            </MenuItem>
+          </div>
+        </MenuItems>
+      </Menu>
+    </li>
   )
 }
 
