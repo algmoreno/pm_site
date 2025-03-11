@@ -31,11 +31,11 @@ const AppointmentList = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 rounded-md border border-black p-5">
+    <div className="w-[800px] h-[500px] mx-auto my-20 rounded-md border border-black p-5 overflow-auto">
       <div className="text-[24px] border-b-2 border-gray-200">
         <h1>Your Appointments</h1>
       </div>
-      <ul role="list" className="divide-y divide-gray-100">
+      <ul role="list" className="divide-y divide-gray-100 overflow-auto">
       {appointments.map((appointment) => (
         <li key={appointment.date} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-0 gap-x-4">

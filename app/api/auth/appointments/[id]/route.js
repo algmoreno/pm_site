@@ -8,7 +8,7 @@ export async function GET(req, context) {
   const params = await context.params;
   try {
     await mongoClient();
-    const appointment = await Appointment.findById(params.id);
+    const appointment = await Appointment.findById(params.id).populate("user");
 
     if (!appointment) {
       return NextResponse.json({ message: "Appointment not found" }, { status: 404 });
