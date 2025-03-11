@@ -90,8 +90,8 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="w-[1400px] h-auto mx-auto my-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
-      <form className="w-[50%] my-5 mx-auto bg-slate-400 rounded-md border-[12px] border-gray-400 p-10" onSubmit={handleSubmit}>
+    <div className="w-full h-[auto] mx-auto my-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+      <form className="w-[50%] ml-auto bg-slate-400 rounded-md border-[12px] border-gray-400 p-10" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
@@ -215,22 +215,23 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="w-[40%] h-[400px] min-h-[500px] border-[12px] border-gray-400 bg-slate-400 p-5 rounded-md flex-wrap ">
+      <div className="w-[20%] h-[600px] min-h-[500px] mr-auto border-[12px] border-gray-400 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>
-        <ul role="list" className="divide-y divide-gray-500">
-        {user.appointments.map((appointment) => (
-          <li key={appointment.date} className="flex justify-between gap-x-6 py-5">
-            <div className="flex min-w-0 gap-x-4">
-              <div className="min-w-0 flex-auto">
-                <p className="mt-1 truncate text-xs/5 text-gray-100">{appointment.date}</p>
+        <ul role="list" className="divide-y divide-gray-800">
+          {user.appointments.map((appointment) => (
+            <li key={appointment._id} className="flex justify-between gap-x-6 py-5">
+              <div className="flex min-w-0 gap-x-4">
+                <div className="min-w-0 flex-auto">
+                  <p className="text-sm/6 font-semibold text-black">{appointment.date}</p>
+                  <p className="mt-1 truncate text-xs/5 text-gray-400">{appointment.duration} min.</p>
+                </div>
               </div>
-            </div>
-            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-              <p className="text-sm/6 text-gray-900">{appointment.duration} min.</p>
-            </div>
-          </li>
+              <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                <p className="text-sm/6 text-white">{appointment.price}</p>
+              </div>
+            </li>
           ))}
         </ul>
       </div>
