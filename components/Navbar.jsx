@@ -13,7 +13,7 @@ const Navbar = () => {
     <div className="h-[100px] gap-4 font-primary flex flex-wrap">
       <div className="text-[30px] m-auto flex">
         <h1 className="my-auto z-10 text-[38px]">
-          <Link href='/'>PM Yoga</Link>
+          <Link href='/'>PM Yoga Therapy</Link>
         </h1>
 
       </div>
