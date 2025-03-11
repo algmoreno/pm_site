@@ -95,11 +95,11 @@ const UserDetails = () => {
 
   return (
     <div className="w-full h-[auto] mx-auto my-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
-      <form className="w-[50%] ml-auto bg-slate-400 rounded-md border-[12px] border-gray-400 p-10" onSubmit={handleSubmit}>
+      <form className="w-[50%] ml-auto bg-slate-300 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
-            <p className="mt-1 text-sm/6 text-gray-200">{user.firstName}'s Account Info </p>
+            <p className="mt-1 text-sm/6 text-gray-600">{user.firstName}'s Account Info </p>
             {!!error && (
               <div className="bg-red-500 p-3 rounded-md flex items-center gap-x-2 text-sm text-red-200 my-6">
                 <p>
@@ -110,7 +110,7 @@ const UserDetails = () => {
             <div className="mt-10">
 
               <div className="col-span-4">
-                <div onClick={() => editForm()} className="mt-1 text-sm/6 text-gray-200 flex hover:cursor-pointer">
+                <div onClick={() => editForm()} className="mt-1 text-sm/6 text-gray-500 flex hover:cursor-pointer">
                   <FaRegEdit className="ml-auto"/>
                   <p>Edit</p>
                 </div>
@@ -219,7 +219,7 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="w-[20%] h-[600px] min-h-[500px] mr-auto border-[12px] border-gray-400 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
+      <div className="w-[20%] h-[600px] min-h-[500px] mr-auto border-4 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>
