@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday,
-  isSameMonth, isEqual, parse, add } from 'date-fns';
+  isSameMonth, isEqual, parse, add, getDay } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
@@ -17,7 +17,16 @@ const Calendar = () => {
   let [selectedDay, setSelectedDay] = useState(today)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
-  let newDays = eachDayOfInterval({ start: startOfMonth(today), end: endOfWeek(endOfMonth(today)) })
+  let newDays = eachDayOfInterval({ start: firstDayCurrentMonth, end: endOfWeek(endOfMonth(firstDayCurrentMonth)) })
+  let colStartClasses = [
+    '',
+    'col-start-2',
+    'col-start-3',
+    'col-start-4',
+    'col-start-5',
+    'col-start-6',
+    'col-start-7',
+  ]
 
   const router = useRouter();
   const [error, setError] = useState(null);
@@ -75,7 +84,6 @@ const Calendar = () => {
     try {
       const response = await axios.post('/api/auth/appointments', appointment);
       if (response.status == 201) {
-        console.log("201");
         emailjs.send(
           'service_qjdjgk9',
           'template_w5n6h43',
@@ -111,12 +119,17 @@ const Calendar = () => {
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
   }
 
+  const prevMonth = () => {
+    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
+    setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
+  }
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
   return (
-    <div className="w-[1200px] h-auto mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-slate-200 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] h-[500px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
       <div className="md:pr-14">
         <div className="flex items-center">
@@ -124,6 +137,7 @@ const Calendar = () => {
             {format(firstDayCurrentMonth, 'MMMM yyyy')}
           </h2>
           <button
+            onClick={prevMonth}
             type="button"
             className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
           >
@@ -150,15 +164,17 @@ const Calendar = () => {
         </div>
         <div className="mt-2 grid grid-cols-7 text-sm">
           {newDays.map((day, dayIdx) => (
-            <div key={day.toString()} className={classNames(dayIdx > 6 && 'border-t border-gray-200', 'py-2')}>
+            <div key={day.toString()} className={classNames(
+              dayIdx > 6 && 'border border-gray-100', 'py-2',
+              dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2')}>
               <button
                 onClick={() => setSelectedDay(day)}
                 type="button"
                 className={classNames(
                   isEqual(day, selectedDay) && 'text-white',
                   !isEqual(day, selectedDay) && isToday(day) && 'text-red-600',
-                  !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, today) && 'text-gray-900',
-                  !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, today) && 'text-gray-400',
+                  !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && 'text-gray-900',
+                  !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
                   isEqual(day, selectedDay) && isToday(day) && 'bg-red-600',
                   isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
                   !isEqual(day, selectedDay) && 'hover:bg-gray-200',
