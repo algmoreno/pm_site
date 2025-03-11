@@ -33,26 +33,58 @@ const UserList = () => {
   }
 
   return (
-    <div id="/admin#users" className="w-[800px] h-auto mx-auto my-20 bg-slate-200 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] rounded-md border border-black p-5 ">
-      <div className="text-[24px] border-b-2 border-gray-200">
-        <h1 >All Users</h1>
+    <div className="w-[1200px] h-auto mx-auto my-20 bg-slate-200 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] rounded-md border-4 border-gray-400 p-5 ">
+      <div className="px-4 sm:px-6 lg:px-8">
+      <div className="sm:flex sm:items-center">
+        <div className="sm:flex-auto">
+          <h1 className="text-base text-[28px] font-semibold text-gray-900">Users</h1>
+        </div>
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        </div>
       </div>
-      <ul role="list" className="divide-y divide-gray-100">
-      {users.map((user) => (
-        <li key={user.email} className="flex justify-between gap-x-6 py-5">
-          <div className="flex min-w-0 gap-x-4">
-            {/* <img alt="" src={person.imageUrl} className="size-12 flex-none rounded-full bg-gray-50" /> */}
-            <div className="min-w-0 flex-auto">
-              <p className="text-sm/6 font-semibold text-gray-900">{user.firstName} {user.lastName}</p>
-              <p className="mt-1 truncate text-xs/5 text-gray-500">{user.email}</p>
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <div className="overflow-hidden ring-1 shadow-sm ring-black/5 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                      Name
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Email
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Role
+                    </th>
+                    <th scope="col" className="relative py-3.5 pr-4 pl-3 sm:pr-6">
+                      <span className="sr-only">Edit</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {users.map((user) => (
+                    <tr key={user.email} className="hover:bg-slate-300">
+                      <td className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-6">
+                        {user.firstName} {user.lastName}
+                      </td>
+                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{user.email}</td>
+                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{user.role}</td>
+                      <td className="relative py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-6">
+                        <a href="#" className="text-gray-400 hover:text-gray-900">
+                          Edit<span className="sr-only">, {user.name}</span>
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-            <p className="text-sm/6 text-gray-900">{user.role}</p>
-          </div>
-        </li>
-        ))}
-      </ul>
+        </div>
+      </div>
+    </div>
     </div>
   )
 }

@@ -4,8 +4,6 @@ import { UserList, AppointmentList, AdminTabs } from '@/components/index';
 const Admin = () => {
   return (
     <div className="flex flex-wrap m-auto">
-      {/* <UserList />
-      <AppointmentList /> */}
       <AdminTabs />
     </div>
   )

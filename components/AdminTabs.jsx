@@ -3,11 +3,9 @@ import React, { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { BuildingOfficeIcon, CreditCardIcon, UserIcon, UsersIcon } from '@heroicons/react/20/solid';
 import { UserList, AppointmentList } from '@/components/index';
-import { useRouter } from 'next/navigation';
 
 
 const AdminTabs = () => {
-  const router = useRouter();
   const [appointmentsTab, setAppointmentsTab] = useState(true);
   const [tabs, setTabs] = useState([
     { name: 'Appointments', href: '#appointments', icon: BuildingOfficeIcon, current: true },
