@@ -105,21 +105,22 @@ const AdminCalendar = ({ title }) => {
           <div>F</div>
           <div>S</div>
         </div>
-        <div className="mt-2 grid grid-cols-7 text-sm">
+        <div className="mt-2 grid grid-cols-7 text-sm bg-slate-50">
           {days.map((day, dayIdx) => (
-            <div key={day.toString()} className={classNames(
-              dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2')}>
+            <div key={day.toString()} onClick={() => setSelectedDay(day)} 
+              className={classNames(
+                isEqual(day, selectedDay) && 'bg-orange-100',
+                dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2 hover:bg-orange-100')}>
               <button
-                onClick={() => setSelectedDay(day)}
                 type="button"
                 className={classNames(
-                  isEqual(day, selectedDay) && 'text-white',
+                  // isEqual(day, selectedDay) && 'text-white',
                   !isEqual(day, selectedDay) && isToday(day) && 'text-red-600',
                   !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && 'text-gray-900',
                   !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
-                  isEqual(day, selectedDay) && isToday(day) && 'bg-red-600',
-                  isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
-                  !isEqual(day, selectedDay) && 'hover:bg-gray-200',
+                  isToday(day) && 'text-red-600',
+                  
+                  // !isEqual(day, selectedDay) && 'hover:bg-gray-200',
                   (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
                   'mx-auto flex size-8 items-center justify-center rounded-full',
                 )}
@@ -160,7 +161,7 @@ const AdminCalendar = ({ title }) => {
   )
 }
 
-function Appointment({ appointment }) {
+const Appointment = ({ appointment }) => {
   let startTime = parseISO(appointment.startDatetime)
   let endTime = parseISO(appointment.endDatetime)
 
