@@ -3,7 +3,7 @@ import { Calendar } from '@/components/index';
 
 const Schedule = async () => {
   return (
-    <div className="flex flex-wrap m-auto"> 
+    <div className="flex flex-wrap m-auto">       
       <Calendar />
     </div>
   );

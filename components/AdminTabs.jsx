@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { BuildingOfficeIcon, CreditCardIcon, UserIcon, UsersIcon } from '@heroicons/react/20/solid';
-import { UserList, AppointmentList } from '@/components/index';
+import { UserList, Calendar, AppointmentList } from '@/components/index';
 
 
 const AdminTabs = () => {
-  const [appointmentsTab, setAppointmentsTab] = useState(true);
+  const [scheduleTab, setScheduleTab] = useState(true);
   const [tabs, setTabs] = useState([
-    { name: 'Appointments', href: '#appointments', icon: BuildingOfficeIcon, current: true },
+    { name: 'Your Schedule', href: '/about', icon: BuildingOfficeIcon, current: true },
     { name: 'Users', href: '#users', icon: UsersIcon, current: false },
   ])
     
@@ -19,7 +19,7 @@ const AdminTabs = () => {
         current: tab.name === currentTab,
       }))
     )
-    setAppointmentsTab(currentTab === "Appointments")
+    setScheduleTab(currentTab === "Your Schedule")
   }
 
   function classNames(...classes) {
@@ -27,7 +27,7 @@ const AdminTabs = () => {
   }
   
   return (
-    <div className="w-full h-[auto] mx-auto justify-center flex flex-wrap border-b-2 ">
+    <div className="w-full h-[auto] mx-auto justify-center flex flex-wrap">
       <div className="bg-blue-100 w-full md:px-[20%] px-[5%] hover:cursor-pointer">
         <div className="border-b border-gray-200 m-auto ">
           <nav aria-label="Tabs" className="-mb-px flex space-x-8 ">
@@ -35,7 +35,6 @@ const AdminTabs = () => {
               <a
                 key={tab.name}
                 onClick={(e) => tabRedirect(tab.name)}
-                aria-current={tab.current ? 'page' : undefined}
                 className={classNames(
                   tab.current
                     ? 'border-gray-500 text-slate-600'
@@ -56,7 +55,7 @@ const AdminTabs = () => {
           </nav>
         </div>
       </div>
-      {appointmentsTab ? (<AppointmentList />): (<UserList />)}
+      {scheduleTab ? (<Calendar />) : (<UserList />)}
     </div>
   )
 }

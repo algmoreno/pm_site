@@ -33,7 +33,7 @@ const UserList = () => {
   }
 
   return (
-    <div className="w-[1200px] h-auto mx-auto my-20 bg-slate-200 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] rounded-md border-4 border-gray-400 p-5 ">
+    <div className="w-[1200px] h-auto mx-auto my-20 bg-slate-300 border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] rounded-md  p-5 ">
       <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">

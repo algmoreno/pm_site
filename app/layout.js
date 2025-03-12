@@ -9,7 +9,7 @@ const Layout = async ({ children }) => {
 
   return (
     <html lang="en">
-      <body>
+      <body className="font-primary">
       <SessionProvider>
         <header>
           <Navbar />

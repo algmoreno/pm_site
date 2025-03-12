@@ -2,6 +2,7 @@ export { default as Navbar } from './Navbar';
 export { default as NavbarMenu } from './NavbarMenu';
 export { default as Toaster } from './Sonner';
 export { default as AdminTabs } from './AdminTabs';
+export { default as AdminCalendar } from './AdminCalendar';
 export { default as UserDropdown } from './UserDropdown';
 export { default as UserDetails } from './UserDetails';
 export { default as UserList } from './UserList';

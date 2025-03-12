@@ -75,7 +75,7 @@ const ContactForm = () => {
                     onChange={(e) => setForm({...form, name:e.target.value})}
                     required
                     className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
-                    outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                    outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
 
@@ -91,7 +91,7 @@ const ContactForm = () => {
                     onChange={(e) => setForm({...form, email:e.target.value})}
                     required
                     className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
-                    outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                    outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
 
@@ -107,7 +107,7 @@ const ContactForm = () => {
                   required
                   className="w-full h-[100px] m-auto rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 
                             -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
-                            focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm leading-tight resize-none"/>
+                            focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm leading-tight resize-none"/>
                 </div>
               </div>
 

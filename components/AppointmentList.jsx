@@ -31,7 +31,7 @@ const AppointmentList = () => {
   }
 
   return (
-    <div id="/admin#appointments" className="w-[800px] h-[500px] mx-auto my-20 rounded-md bg-slate-500 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] border border-black p-5 overflow-auto">
+    <div className="w-[800px] h-[500px] mx-auto my-20 rounded-md bg-slate-300 border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5 overflow-auto">
       <div className="text-[24px] border-b-2 border-gray-200">
         <h1>Your Appointments</h1>
       </div>
@@ -40,12 +40,12 @@ const AppointmentList = () => {
         <li key={appointment._id} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-0 gap-x-4">
             <div className="min-w-0 flex-auto">
-              <p className="text-sm/6 font-semibold text-white">{appointment.date}</p>
+              <p className="text-sm/6 font-semibold text-gray-700">{appointment.date}</p>
               <p className="mt-1 truncate text-xs/5 text-gray-400">{appointment.duration}</p>
             </div>
           </div>
           <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-            <p className="text-sm/6 text-white">{appointment.price}</p>
+            <p className="text-sm/6 text-gray-500">{appointment.price}</p>
           </div>
         </li>
       ))}
