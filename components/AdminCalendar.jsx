@@ -36,10 +36,10 @@ const Calendar = () => {
   const name = session?.user.firstName + " " + session?.user.lastName
   const email = session?.user.email
   const [appointment, setAppointment] = useState({
-    date: '',
-    duration: '',
+    userId: id,
+    startDatetime: '',
+    endDatetime: '',
     price: 50,
-    userId: id
   });
 
   const meetings = [
@@ -66,50 +66,6 @@ const Calendar = () => {
     return (
       <PageLoader />
     )
-  }
-
-  function handleChange(e) {
-    setAppointment({
-      ...appointment,
-      [e.target.name]: e.target.value
-    });
-  }
-  
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-
-    // add appt
-    try {
-      const response = await axios.post('/api/auth/appointments', appointment);
-      if (response.status == 201) {
-        emailjs.send(
-          'service_qjdjgk9',
-          'template_w5n6h43',
-          {
-            from_name: "Appointment Manager",
-            to_name: 'Alan',
-            to_email: 'alg.moreno00@gmail.com',
-            message: `${appointment.duration} min. session booked for ${name} at ${appointment.date}`,
-          }, 'GDA7yUKvlEcVbask0')
-          .then(() => {
-            setPending(false);        
-            setAppointment({
-              date: '',
-              duration: '',
-              price: 50,
-              userId: id
-            })
-            toast.success(`Appointment confirmed! See details.`)
-          }, (error) => {
-            setPending(false);
-            console.log(error);
-            toast.error("Something went wrong.")
-          })
-      }
-
-    } catch (err) {
-      console.log(err);
-    }
   }
   
   const nextMonth = () => {

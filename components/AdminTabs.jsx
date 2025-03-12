@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { BuildingOfficeIcon, CreditCardIcon, UserIcon, UsersIcon } from '@heroicons/react/20/solid';
-import { UserList, Calendar, AppointmentList } from '@/components/index';
+import { UserList, AdminCalendar, AppointmentList } from '@/components/index';
 
 
 const AdminTabs = () => {
@@ -55,7 +55,7 @@ const AdminTabs = () => {
           </nav>
         </div>
       </div>
-      {scheduleTab ? (<Calendar />) : (<UserList />)}
+      {scheduleTab ? (<AdminCalendar />) : (<UserList />)}
     </div>
   )
 }

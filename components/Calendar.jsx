@@ -12,7 +12,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 
-const Calendar = () => {
+const Calendar = ({ title }) => {
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
@@ -35,19 +35,18 @@ const Calendar = () => {
   const id = session?.user.id
   const name = session?.user.firstName + " " + session?.user.lastName
   const email = session?.user.email
+  const [appointments, setAppointments] = useState([]);
   const [appointment, setAppointment] = useState({
-    date: '',
-    duration: '',
+    userId: id,
+    startDatetime: '2025-03-12T15:00',
+    endDatetime: '2025-03-12T16:00',
     price: 50,
-    userId: id
   });
 
   const meetings = [
     {
       id: 1,
       name: 'Leslie Alexander',
-      imageUrl:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       startDatetime: '2025-03-11T13:00',
       endDatetime: '2025-03-11T14:30',
     },
@@ -58,9 +57,15 @@ const Calendar = () => {
     if (!session) {
       router.push("/login")
     } else{
-      // router.push(`/schedule`)
+      router.push(`/schedule`)
     }
   }, [session])
+
+  // useEffect(() => {
+  //   axios.get(`/api/auth/appointments/`)
+  //     .then(res =>{setAppointments(res.data.appointments)})
+  //     .catch(err => console.error(err));
+  // }, []);
 
   if (status === "loading" || !id) {
     return (
@@ -80,31 +85,34 @@ const Calendar = () => {
 
     // add appt
     try {
+      console.log(appointment)
+      setAppointment((prevAppointment) => ({...appointment, userId: id}))
       const response = await axios.post('/api/auth/appointments', appointment);
+      console.log(response);
       if (response.status == 201) {
-        emailjs.send(
-          'service_qjdjgk9',
-          'template_w5n6h43',
-          {
-            from_name: "Appointment Manager",
-            to_name: 'Alan',
-            to_email: 'alg.moreno00@gmail.com',
-            message: `${appointment.duration} min. session booked for ${name} at ${appointment.date}`,
-          }, 'GDA7yUKvlEcVbask0')
-          .then(() => {
-            setPending(false);        
-            setAppointment({
-              date: '',
-              duration: '',
-              price: 50,
-              userId: id
-            })
-            toast.success(`Appointment confirmed! See details.`)
-          }, (error) => {
-            setPending(false);
-            console.log(error);
-            toast.error("Something went wrong.")
-          })
+        // emailjs.send(
+        //   'service_qjdjgk9',
+        //   'template_w5n6h43',
+        //   {
+        //     from_name: "Appointment Manager",
+        //     to_name: 'Alan',
+        //     to_email: 'alg.moreno00@gmail.com',
+        //     message: `${appointment.duration} min. session booked for ${name} at ${appointment.date}`,
+        //   }, 'GDA7yUKvlEcVbask0')
+        //   .then(() => {
+        //     setPending(false);        
+        //     setAppointment({
+        //       date: '',
+        //       duration: '',
+        //       price: 50,
+        //       userId: id
+        //     })
+        //     toast.success(`Appointment confirmed! See details.`)
+        //   }, (error) => {
+        //     setPending(false);
+        //     console.log(error);
+        //     toast.error("Something went wrong.")
+        //   })
       }
 
     } catch (err) {
@@ -214,45 +222,47 @@ const Calendar = () => {
         </ol>
       </section>
     </div>
-      {/* <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
+      <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Create Appointment</h2>
 
               <div className="mt-10 ">
+
                 <div className="sm:col-span-3">
                   <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                    Date
+                    Start Date
                   </label>
                   <div className="mt-2">
                     <input
-                      id="date"
-                      name="date"
+                      id="startDatetime"
+                      name="startDatetime"
                       type="date"
-                      value={appointment.date}
+                      value={appointment.startDatetime}
                       onChange={handleChange}
                       autoComplete="email"
                       className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                               outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                   </div>
                 </div>
-                
+
                 <div className="sm:col-span-3">
                   <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                    Duration
+                    End Date
                   </label>
                   <div className="mt-2">
                     <input
-                      id="duration"
-                      name="duration"
-                      type="duration"
-                      value={appointment.duration}
+                      id="endDatetime"
+                      name="endDatetime"
+                      type="date"
+                      value={appointment.endDatetime}
                       onChange={handleChange}
                       autoComplete="email"
                       className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                               outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                   </div>
-                </div>            
+                </div>
+                       
 
             </div>
           </div>
@@ -270,7 +280,7 @@ const Calendar = () => {
           </button>
         </div>
 
-      </form> */}
+      </form>
     </div>
   )
 }

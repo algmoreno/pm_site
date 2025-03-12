@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req){
   try {
     await mongoClient(); 
-    const { userId, date, duration, price } = await req.json();
+    const { userId, startDatetime, endDatetime, price } = await req.json();
 
     // Find the user
     const user = await User.findById(userId);
@@ -16,7 +16,7 @@ export async function POST(req){
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     //creating new appointment 
-    const newAppointment = await Appointment.create({ user: userId, date, duration, price }); 
+    const newAppointment = await Appointment.create({ user: userId, startDatetime, endDatetime, price }); 
 
     // pushing appointment object ref to user appointment array
     user.appointments.push(newAppointment._id);
