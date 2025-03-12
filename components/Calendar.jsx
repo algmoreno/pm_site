@@ -196,9 +196,9 @@ const Calendar = ({ title }) => {
           ))}
         </div>
       </div>
-      <section className="mt-12 md:mt-0 md:pl-14 bg-orange-50 p-5">
+      <section className="mt-12 md:mt-0 md:pl-14 bg-amber-100 rounded-sm p-5">
         <h2 className="text-base font-semibold text-gray-900">
-          Schedule for <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
+          Available times on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
         </h2>
         <ol className="mt-4 flex flex-col gap-y-1 text-sm/6 text-gray-500">
           {selectedDayAppointments.length > 0 ? (
@@ -212,7 +212,7 @@ const Calendar = ({ title }) => {
         </ol>
       </section>
     </div>
-      <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
+      {/* <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Create Appointment</h2>
@@ -270,7 +270,7 @@ const Calendar = ({ title }) => {
           </button>
         </div>
 
-      </form>
+      </form> */}
     </div>
   )
 }

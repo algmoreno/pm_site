@@ -71,8 +71,8 @@ const AdminCalendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] h-[600px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
-      <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
+    <div className="w-[1500px] h-[500px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+
       <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
       <div className="md:pr-14">
         <div className="flex items-center">
@@ -140,7 +140,7 @@ const AdminCalendar = ({ title }) => {
           ))}
         </div>
       </div>
-      <section className="mt-12 md:mt-0 md:pl-14 bg-orange-50 p-5">
+      <section className="mt-12 md:mt-0 md:pl-14 bg-orange-100 rounded-sm p-5">
         <h2 className="text-base font-semibold text-gray-900">
           Schedule for <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
         </h2>
@@ -156,65 +156,6 @@ const AdminCalendar = ({ title }) => {
         </ol>
       </section>
     </div>
-      <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
-        <div className="space-y-2">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-[24px] font-semibold text-gray-900">Create Appointment</h2>
-
-              <div className="mt-10 ">
-
-                <div className="sm:col-span-3">
-                  <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                    Start Date
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="startDatetime"
-                      name="startDatetime"
-                      type="date"
-                      value={appointment.startDatetime}
-                      onChange={handleChange}
-                      autoComplete="email"
-                      className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
-                              outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                    End Date
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="endDatetime"
-                      name="endDatetime"
-                      type="date"
-                      value={appointment.endDatetime}
-                      onChange={handleChange}
-                      autoComplete="email"
-                      className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
-                              outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
-                  </div>
-                </div>
-                       
-
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button type="button" className="text-sm/6 font-semibold text-gray-900">
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
-                        ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
-            Submit
-          </button>
-        </div>
-
-      </form>
     </div>
   )
 }
@@ -225,7 +166,7 @@ function Appointment({ appointment }) {
 
   return (
     <li
-      className="group flex items-center gap-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100"
+      className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
       >
       <div className="flex-auto">
         <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>
