@@ -1,13 +1,13 @@
 "use client"
 import axios from 'axios';
 import emailjs from '@emailjs/browser';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday,
-  isSameDay, isSameMonth, isEqual, parse, add, set, getDay, parseISO } from 'date-fns';
+  isSameDay, isSameMonth, isEqual, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
@@ -18,11 +18,9 @@ const Calendar = ({ title }) => {
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
   let firstHourOfDay = set(selectedDay, { hours: 9 })
-  let lastHourOfDay = set(selectedDay, { hours: 17 })
+  let lastHourOfDay = set(selectedDay, { hours: 16 })
   let days = eachDayOfInterval({ start: firstDayCurrentMonth, end: endOfWeek(endOfMonth(firstDayCurrentMonth)) })
   let hoursOfDay = eachHourOfInterval({ start: firstHourOfDay, end: lastHourOfDay })
-
-  console.log("hoursOfDay", hoursOfDay);
   let colStartClasses = [
     '',
     'col-start-2',
@@ -43,8 +41,8 @@ const Calendar = ({ title }) => {
   const [appointments, setAppointments] = useState([]);
   const [appointment, setAppointment] = useState({
     userId: id,
-    startDatetime: '2025-03-12T15:00',
-    endDatetime: '2025-03-12T16:00',
+    startDatetime: '',
+    endDatetime: '',
     price: 50,
   });
   
@@ -80,8 +78,8 @@ const Calendar = ({ title }) => {
 
     // add appt
     try {
-      console.log(appointment)
       setAppointment((prevAppointment) => ({...appointment, userId: id}))
+      console.log(appointment);
       const response = await axios.post('/api/auth/appointments', appointment);
       console.log(response);
       if (response.status == 201) {
@@ -131,6 +129,25 @@ const Calendar = ({ title }) => {
     return classes.filter(Boolean).join(' ')
   }
 
+  const Slot = ({ hour }) => {
+    let hourPlusOne = addHours(hour, 1)
+
+    const handleDatetimes = () => {
+      setAppointment((prevAppt) => ({...appointment, startDatetime: formatISO(hour), endDatetime: formatISO(hourPlusOne)}))
+    }
+  
+    return (
+      <div onClick={handleDatetimes} 
+        className="col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-4 focus:outline-offset-2 focus:outline-green-200 
+                  hover:bg-green-200 hover:cursor-pointer border border-black">
+        <p className="mt-0.5 ">
+          <time dateTime={hour}>{format(hour, 'hh:mm a')}</time>-{' '}
+          <time dateTime={hourPlusOne}>{format(hourPlusOne, 'hh:mm a')}</time>
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div className="w-[1500px] h-[600px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
@@ -171,7 +188,7 @@ const Calendar = ({ title }) => {
               <div key={day.toString()} onClick={() => setSelectedDay(day)} 
                 className={classNames(
                   isEqual(day, selectedDay) && 'bg-blue-100',
-                  dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2 hover:bg-blue-100')}>
+                  dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2 hover:bg-blue-100 hover:cursor-pointer')}>
                 <button
                   type="button"
                   className={classNames(
@@ -203,83 +220,35 @@ const Calendar = ({ title }) => {
           <h2 className="text-base font-semibold text-gray-900">
             Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>
-          <ol className="mt-4 grid grid-col-2 gap-y-1 text-sm/6 text-gray-500">
+          <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-500">
             {hoursOfDay.length !== selectedDayAppointments.length ? (
               hoursOfDay.map((hour, index) => (
-                <li key={index} className="col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100 border border-black">
-                  <p className="mt-0.5 ">
-                    <time dateTime={hour}>{format(hour, 'hh:mm a')}</time>
-                  </p>
-                </li>
+                <Slot key={index} hour={hour}/>
               ))
             ) : (
               <p>No availability today.</p>
             )}
               
-          </ol>
+          </div>
+
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+            <button type="button" className="text-sm/6 font-semibold text-gray-900">
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
+                          ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
+              Submit
+            </button>
+          </div>
         </section>
       </div>
-    {/* <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
-        <div className="space-y-2">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-[24px] font-semibold text-gray-900">Create Appointment</h2>
-
-              <div className="mt-10 ">
-
-                <div className="sm:col-span-3">
-                  <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                    Start Date
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="startDatetime"
-                      name="startDatetime"
-                      type="date"
-                      value={appointment.startDatetime}
-                      onChange={handleChange}
-                      autoComplete="email"
-                      className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
-                              outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                    End Date
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="endDatetime"
-                      name="endDatetime"
-                      type="date"
-                      value={appointment.endDatetime}
-                      onChange={handleChange}
-                      autoComplete="email"
-                      className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
-                              outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
-                  </div>
-                </div>
-                       
-
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button type="button" className="text-sm/6 font-semibold text-gray-900">
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
-                        ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
-            Submit
-          </button>
-        </div>
-
-      </form> */}
     </div>          
   )
 }
+
+
 
 export default Calendar
