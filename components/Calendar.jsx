@@ -42,16 +42,6 @@ const Calendar = ({ title }) => {
     endDatetime: '2025-03-12T16:00',
     price: 50,
   });
-
-  const meetings = [
-    {
-      id: 1,
-      name: 'Leslie Alexander',
-      startDatetime: '2025-03-11T13:00',
-      endDatetime: '2025-03-11T14:30',
-    },
-    // More meetings...
-  ]
   
   useEffect(() => {
     if (!session) {
@@ -61,11 +51,11 @@ const Calendar = ({ title }) => {
     }
   }, [session])
 
-  // useEffect(() => {
-  //   axios.get(`/api/auth/appointments/`)
-  //     .then(res =>{setAppointments(res.data.appointments)})
-  //     .catch(err => console.error(err));
-  // }, []);
+  useEffect(() => {
+    axios.get(`/api/auth/appointments/`)
+      .then(res =>{setAppointments(res.data.appointments)})
+      .catch(err => console.error(err));
+  }, []);
 
   if (status === "loading" || !id) {
     return (
@@ -130,7 +120,7 @@ const Calendar = ({ title }) => {
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
   }
 
-  let selectedDayMeetings = meetings.filter((meeting) => isSameDay(parseISO(meeting.startDatetime), selectedDay))
+  let selectedDayAppointments = appointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay))
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -162,7 +152,7 @@ const Calendar = ({ title }) => {
             <ChevronRightIcon className="size-5" aria-hidden="true" />
           </button>
         </div>
-        <div className="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-500">
+        <div className="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-600">
           <div>S</div>
           <div>M</div>
           <div>T</div>
@@ -195,7 +185,7 @@ const Calendar = ({ title }) => {
                 </time>
               </button>
               <div className="w-1 h-1 mx-auto mt-1">
-                {meetings.some((meeting) => isSameDay(parseISO(meeting.startDatetime), day)
+                {appointments.some((appointment) => isSameDay(parseISO(appointment.startDatetime), day)
                 ) && (
                   <div className="w-1 h-1 rounded-full bg-sky-600"></div>
                 )}
@@ -211,12 +201,12 @@ const Calendar = ({ title }) => {
           Schedule for <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
         </h2>
         <ol className="mt-4 flex flex-col gap-y-1 text-sm/6 text-gray-500">
-          {selectedDayMeetings.length > 0 ? (
-            selectedDayMeetings.map((meeting) => (
-              <Meeting key={meeting.id} meeting={meeting} />
+          {selectedDayAppointments.length > 0 ? (
+            selectedDayAppointments.map((appointment) => (
+              <Appointment key={appointment._id} appointment={appointment} />
             ))
           ) : (
-            <p>No meetings today.</p>
+            <p>No appointments today.</p>
           )}
             
         </ol>
@@ -285,20 +275,19 @@ const Calendar = ({ title }) => {
   )
 }
 
-function Meeting({ meeting }) {
-  let startDateTime = parseISO(meeting.startDatetime)
-  let endDateTime = parseISO(meeting.endDatetime)
+function Appointment({ appointment }) {
+  let startTime = parseISO(appointment.startDatetime)
+  let endTime = parseISO(appointment.endDatetime)
 
   return (
     <li
       className="group flex items-center gap-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100"
       >
-      <img src={meeting.imageUrl} alt="" className="size-10 flex-none rounded-full" />
       <div className="flex-auto">
-        <p className="text-gray-900">{meeting.name}</p>
+        <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>
         <p className="mt-0.5">
-          <time dateTime={meeting.startDatetime}>{format(startDateTime, 'hh:mm a')}</time> -{' '}
-          <time dateTime={meeting.endDatetime}>{format(endDateTime, 'hh:mm a')}</time>
+          <time dateTime={appointment.startDatetime}>{format(startTime, 'hh:mm a')}</time> -{' '}
+          <time dateTime={appointment.endDatetime}>{format(endTime, 'hh:mm a')}</time>
         </p>
       </div>
       <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">

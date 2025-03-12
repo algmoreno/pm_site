@@ -12,7 +12,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 
-const Calendar = () => {
+const AdminCalendar = ({ title }) => {
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
@@ -33,34 +33,20 @@ const Calendar = () => {
   const { data: session, status } = useSession();
   const [pending, setPending] = useState(false);
   const id = session?.user.id
-  const name = session?.user.firstName + " " + session?.user.lastName
-  const email = session?.user.email
-  const [appointment, setAppointment] = useState({
-    userId: id,
-    startDatetime: '',
-    endDatetime: '',
-    price: 50,
-  });
-
-  const meetings = [
-    {
-      id: 1,
-      name: 'Leslie Alexander',
-      imageUrl:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      startDatetime: '2025-03-11T13:00',
-      endDatetime: '2025-03-11T14:30',
-    },
-    // More meetings...
-  ]
+  const isAdmin = session?.user.role === "admin";
+  const [appointments, setAppointments] = useState([]);
   
   useEffect(() => {
-    if (!session) {
-      router.push("/login")
-    } else{
-      // router.push(`/schedule`)
+    if (!isAdmin) {
+      router.push("/unauthorized")
     }
-  }, [session])
+  }, [isAdmin])
+
+  useEffect(() => {
+    axios.get(`/api/auth/appointments/`)
+      .then(res =>{setAppointments(res.data.appointments)})
+      .catch(err => console.error(err));
+  }, []);
 
   if (status === "loading" || !id) {
     return (
@@ -78,14 +64,15 @@ const Calendar = () => {
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
   }
 
-  let selectedDayMeetings = meetings.filter((meeting) => isSameDay(parseISO(meeting.startDatetime), selectedDay))
+  let selectedDayAppointments = appointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay))
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
   return (
-    <div className="w-[1500px] h-[500px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] h-[600px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+      <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
       <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
       <div className="md:pr-14">
         <div className="flex items-center">
@@ -109,7 +96,7 @@ const Calendar = () => {
             <ChevronRightIcon className="size-5" aria-hidden="true" />
           </button>
         </div>
-        <div className="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-500">
+        <div className="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-600">
           <div>S</div>
           <div>M</div>
           <div>T</div>
@@ -142,7 +129,7 @@ const Calendar = () => {
                 </time>
               </button>
               <div className="w-1 h-1 mx-auto mt-1">
-                {meetings.some((meeting) => isSameDay(parseISO(meeting.startDatetime), day)
+                {appointments.some((appointment) => isSameDay(parseISO(appointment.startDatetime), day)
                 ) && (
                   <div className="w-1 h-1 rounded-full bg-sky-600"></div>
                 )}
@@ -158,35 +145,93 @@ const Calendar = () => {
           Schedule for <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
         </h2>
         <ol className="mt-4 flex flex-col gap-y-1 text-sm/6 text-gray-500">
-          {selectedDayMeetings.length > 0 ? (
-            selectedDayMeetings.map((meeting) => (
-              <Meeting key={meeting.id} meeting={meeting} />
+          {selectedDayAppointments.length > 0 ? (
+            selectedDayAppointments.map((appointment) => (
+              <Appointment key={appointment._id} appointment={appointment} />
             ))
           ) : (
-            <p>No meetings today.</p>
+            <p>No appointments today.</p>
           )}
             
         </ol>
       </section>
     </div>
+      <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
+        <div className="space-y-2">
+          <div className="border-b border-gray-900/10 pb-12">
+            <h2 className="text-[24px] font-semibold text-gray-900">Create Appointment</h2>
+
+              <div className="mt-10 ">
+
+                <div className="sm:col-span-3">
+                  <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+                    Start Date
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="startDatetime"
+                      name="startDatetime"
+                      type="date"
+                      value={appointment.startDatetime}
+                      onChange={handleChange}
+                      autoComplete="email"
+                      className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                              outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+                    End Date
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="endDatetime"
+                      name="endDatetime"
+                      type="date"
+                      value={appointment.endDatetime}
+                      onChange={handleChange}
+                      autoComplete="email"
+                      className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                              outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
+                  </div>
+                </div>
+                       
+
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button type="button" className="text-sm/6 font-semibold text-gray-900">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
+                        ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
+            Submit
+          </button>
+        </div>
+
+      </form>
     </div>
   )
 }
 
-function Meeting({ meeting }) {
-  let startDateTime = parseISO(meeting.startDatetime)
-  let endDateTime = parseISO(meeting.endDatetime)
+function Appointment({ appointment }) {
+  let startTime = parseISO(appointment.startDatetime)
+  let endTime = parseISO(appointment.endDatetime)
 
   return (
     <li
       className="group flex items-center gap-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100"
       >
-      <img src={meeting.imageUrl} alt="" className="size-10 flex-none rounded-full" />
       <div className="flex-auto">
-        <p className="text-gray-900">{meeting.name}</p>
+        <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>
         <p className="mt-0.5">
-          <time dateTime={meeting.startDatetime}>{format(startDateTime, 'hh:mm a')}</time> -{' '}
-          <time dateTime={meeting.endDatetime}>{format(endDateTime, 'hh:mm a')}</time>
+          <time dateTime={appointment.startDatetime}>{format(startTime, 'hh:mm a')}</time> -{' '}
+          <time dateTime={appointment.endDatetime}>{format(endTime, 'hh:mm a')}</time>
         </p>
       </div>
       <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">
@@ -225,4 +270,4 @@ function Meeting({ meeting }) {
   )
 }
 
-export default Calendar
+export default AdminCalendar
