@@ -15,6 +15,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 const Calendar = ({ title }) => {
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
+  let [selectedHour, setSelectedHour] = useState()
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
   let firstHourOfDay = set(selectedDay, { hours: 9 })
@@ -39,6 +40,7 @@ const Calendar = ({ title }) => {
   const name = session?.user.firstName + " " + session?.user.lastName
   const email = session?.user.email
   const [appointments, setAppointments] = useState([]);
+  const appointmentRef = useRef({ startDatetime: null, endDatetime: null });
   const [appointment, setAppointment] = useState({
     userId: id,
     startDatetime: '',
@@ -78,7 +80,7 @@ const Calendar = ({ title }) => {
 
     // add appt
     try {
-      setAppointment((prevAppointment) => ({...appointment, userId: id}))
+      setAppointment((prevAppointment) => ({...appointment, userId: id }))
       console.log(appointment);
       const response = await axios.post('/api/auth/appointments', appointment);
       console.log(response);
@@ -130,16 +132,24 @@ const Calendar = ({ title }) => {
   }
 
   const Slot = ({ hour }) => {
+    const slotRef = useRef(null);
     let hourPlusOne = addHours(hour, 1)
 
-    const handleDatetimes = () => {
-      setAppointment((prevAppt) => ({...appointment, startDatetime: formatISO(hour), endDatetime: formatISO(hourPlusOne)}))
+    const handleSelect = () => {
+      setSelectedHour(hour);
+      setAppointment((prevAppt) => ({
+        ...appointment,
+        startDatetime: formatISO(hour),
+        endDatetime: formatISO(hourPlusOne),
+      }));
+
     }
-  
+
     return (
-      <div onClick={handleDatetimes} 
-        className="col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-4 focus:outline-offset-2 focus:outline-green-200 
-                  hover:bg-green-200 hover:cursor-pointer border border-black">
+      <div ref={slotRef} tabIndex="0" onClick={handleSelect}
+        className={classNames(
+          isEqual(hour, selectedHour) && 'bg-blue-200 border-2', 
+          'col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-2 focus:outline-offset-2 focus:outline-blue-200 focus:bg-blue-200 hover:bg-blue-200 hover:cursor-pointer border border-black')}>
         <p className="mt-0.5 ">
           <time dateTime={hour}>{format(hour, 'hh:mm a')}</time>-{' '}
           <time dateTime={hourPlusOne}>{format(hourPlusOne, 'hh:mm a')}</time>
