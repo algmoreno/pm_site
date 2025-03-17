@@ -186,8 +186,7 @@ const Calendar = ({ title }) => {
                   </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius aliquam laudantium explicabo pariatur
-                      iste dolorem animi vitae error totam. At sapiente aliquam accusamus facere veritatis.
+                      {format(appointment.startDatetime, "M/dd/yyyy h:mm a")} - {format(appointment.endDatetime, "M/dd/yyyy h:mm a")}
                     </p>
                   </div>
                 </div>
