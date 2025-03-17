@@ -230,7 +230,7 @@ const UserDetails = () => {
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
                 <p className="text-sm/6 text-black">{format(appointment.startDatetime, "MMMM dd, yyyy")}</p>
-                  <p className="text-sm/6 text-black">{format(appointment.startDatetime, "hh:mm a")} - {format(appointment.endDatetime, "hh:mm a")}</p>
+                  <p className="text-sm/6 text-black">{format(appointment.startDatetime, "h:mm a")} - {format(appointment.endDatetime, "h:mm a")}</p>
                 </div>
               </div>
               <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">

@@ -11,7 +11,6 @@ import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMon
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline'
-import "@/styles/globals.css"
 
 const Calendar = ({ title }) => {
   let today = startOfToday()

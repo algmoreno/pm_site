@@ -21,6 +21,12 @@
   background-repeat: no-repeat;
 }
 
+.bg-2 {
+  background-image: linear-gradient(to top, #ffffff 50%, #fff1c6 99%);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 
 @layer base {
   :root {
