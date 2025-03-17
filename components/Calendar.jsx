@@ -15,7 +15,7 @@ import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline'
 const Calendar = ({ title }) => {
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
-  let [selectedHour, setSelectedHour] = useState()
+  let [selectedHour, setSelectedHour] = useState(null)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
   let firstHourOfDay = set(selectedDay, { hours: 9 })
@@ -49,6 +49,7 @@ const Calendar = ({ title }) => {
     price: 50,
   });
   
+  // redirect if no user session
   useEffect(() => {
     if (!session) {
       router.push("/login")
@@ -57,12 +58,14 @@ const Calendar = ({ title }) => {
     }
   }, [session])
 
+  // get all appointments
   useEffect(() => {
     axios.get(`/api/auth/appointments/`)
       .then(res =>{setAppointments(res.data.appointments)})
       .catch(err => console.error(err));
   }, []);
 
+  // if loading show loader
   useEffect(() => {
     if (status === "loading" || !id) {
       Load()
@@ -75,7 +78,6 @@ const Calendar = ({ title }) => {
     )
   }
 
-
   function handleChange(e) {
     setAppointment({
       ...appointment,
@@ -83,6 +85,7 @@ const Calendar = ({ title }) => {
     });
   }
   
+  // submit appointment to api
   const handleSubmit = async(e) => {
     e.preventDefault();
 
@@ -311,7 +314,7 @@ const Calendar = ({ title }) => {
               Cancel
             </button>
             <button
-              onClick={() => setShowConfirm(true)}
+              onClick={selectedHour == null ? () => {toast.error("Must select a time slot")} : () => {setShowConfirm(true)}}
               type="submit"
               className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
                           ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
