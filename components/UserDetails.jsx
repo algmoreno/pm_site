@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { FaRegEdit } from "react-icons/fa";
 import { PageLoader } from '@/components/index';
 import axios from "axios";
+import { format } from 'date-fns';
 
 const UserDetails = () => {
   const router = useRouter();
@@ -219,7 +220,7 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="w-[20%] h-[600px] min-h-[500px] mr-auto border-4 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
+      <div className="w-[25%] h-[600px] min-h-[500px] mr-auto border-4 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>
@@ -228,12 +229,11 @@ const UserDetails = () => {
             <li onClick={(e) => seeDetails(appointment._id)} key={appointment._id} className="flex justify-between gap-x-6 py-5 hover:cursor-pointer hover:bg-gray-200 p-4">
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
-                  <p className="text-sm/6 font-semibold text-black">{appointment.date}</p>
-                  <p className="mt-1 truncate text-xs/5 text-gray-400">{appointment.duration} min.</p>
+                <p className="text-sm/6 text-black">{format(appointment.startDatetime, "MMMM dd, yyyy")}</p>
+                  <p className="text-sm/6 text-black">{format(appointment.startDatetime, "hh:mm a")} - {format(appointment.endDatetime, "hh:mm a")}</p>
                 </div>
               </div>
               <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                <p className="text-sm/6 text-gray-400">${appointment.price}</p>
               </div>
             </li>
           ))}
