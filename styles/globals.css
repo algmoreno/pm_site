@@ -22,9 +22,10 @@
 }
 
 .bg-2 {
-  background-image: linear-gradient(to top, #ffffff 50%, #fff1c6 99%);
-  background-size: cover;
+  background-image: url("/assets/bg_1.jpg");
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 

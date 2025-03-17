@@ -3,7 +3,7 @@ import { Landing, About } from '@/components/index';
 
 const Home = () => {
   return (
-    <div > 
+    <div className="bg-2" > 
       <Landing />
       <About />
     </div>

@@ -43,7 +43,7 @@ const UserDropdown = () => {
       {!session ? (
         <Link href="/login">
           <CgProfile size={25} className="m-auto"/>
-          Login
+          Log In
         </Link>
       ) : (
       isAdmin ? (
