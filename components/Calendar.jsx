@@ -63,11 +63,18 @@ const Calendar = ({ title }) => {
       .catch(err => console.error(err));
   }, []);
 
-  if (status === "loading" || !id) {
+  useEffect(() => {
+    if (status === "loading" || !id) {
+      Load()
+    }
+  }, [id])
+
+  function Load() {
     return (
       <PageLoader />
     )
   }
+
 
   function handleChange(e) {
     setAppointment({
@@ -83,8 +90,8 @@ const Calendar = ({ title }) => {
     try {
       setAppointment((prevAppointment) => ({...appointment, userId: id }))
       console.log(appointment);
-      //const response = await axios.post('/api/auth/appointments', appointment);
-      //console.log(response);
+      const response = await axios.post('/api/auth/appointments', appointment);
+      console.log(response);
       if (response.status == 201) {
         // emailjs.send(
         //   'service_qjdjgk9',
@@ -107,11 +114,12 @@ const Calendar = ({ title }) => {
         //   }, (error) => {
         //     setPending(false);
         //     console.log(error);
-        //     toast.error("Something went wrong.")
+        //     toast.error("Confirmation email failed to send.")
         //   })
       }
 
     } catch (err) {
+      toast.error("Something went wrong.")
       console.log(err);
     }
     setShowConfirm(false)
@@ -186,7 +194,7 @@ const Calendar = ({ title }) => {
                   </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      {format(appointment.startDatetime, "M/dd/yyyy h:mm a")} - {format(appointment.endDatetime, "M/dd/yyyy h:mm a")}
+                      {appointment.startDatetime != '' && format(appointment.startDatetime, "M/dd/yyyy h:mm a")} - {appointment.endDatetime != '' && format(appointment.endDatetime, "M/dd/yyyy h:mm a")}
                     </p>
                   </div>
                 </div>
@@ -214,7 +222,7 @@ const Calendar = ({ title }) => {
       </Dialog>
     )
   }
-  console.log("showConfirm", showConfirm);
+
   return (
     <div className="w-[1500px] h-[600px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
@@ -305,7 +313,7 @@ const Calendar = ({ title }) => {
             <button
               onClick={() => setShowConfirm(true)}
               type="submit"
-              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
+              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
                           ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
               Submit
             </button>
