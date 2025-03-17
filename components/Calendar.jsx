@@ -11,6 +11,7 @@ import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMon
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline'
+import "@/styles/globals.css"
 
 const Calendar = ({ title }) => {
   let today = startOfToday()
@@ -163,8 +164,8 @@ const Calendar = ({ title }) => {
     return (
       <div ref={slotRef} tabIndex="0" onClick={handleSelect}
         className={classNames(
-          isEqual(hour, selectedHour) && 'bg-blue-200 border-2', 
-          'col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-2 focus:outline-offset-2 focus:outline-blue-200 focus:bg-blue-200 hover:bg-blue-200 hover:cursor-pointer border border-black')}>
+          isEqual(hour, selectedHour) && 'bg-gray-200 border-2', 
+          'col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-2 focus:outline-offset-2 focus:outline-gray-200 focus:bg-gray-200 hover:bg-gray-200 hover:cursor-pointer border border-gray-500')}>
         <p className="mt-0.5 ">
           <time dateTime={hour}>{format(hour, 'hh:mm a')}</time>-{' '}
           <time dateTime={hourPlusOne}>{format(hourPlusOne, 'hh:mm a')}</time>
@@ -295,7 +296,7 @@ const Calendar = ({ title }) => {
             ))}
           </div>
         </div>
-        <section className="mt-12 md:mt-0 md:pl-14 bg-blue-100 rounded-sm p-5">
+        <section className="mt-12 md:mt-0 md:pl-14 bg-1 rounded-sm p-5">
           <h2 className="text-base font-semibold text-gray-900">
             Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>

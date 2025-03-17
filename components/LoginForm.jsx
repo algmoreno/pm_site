@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from "sonner";
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import "@/styles/globals.css"
 
 const LoginForm = () => {
   const router = useRouter();

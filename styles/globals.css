@@ -16,7 +16,7 @@
 }
 
 .bg-1 {
-  background-image: linear-gradient(to bottom, #ffffff 80%, #bad6ff 99%);
+  background-image: linear-gradient(to right, #cbd5e1 10%, #d8d8d0 90%);
   background-size: cover;
   background-repeat: no-repeat;
 }
