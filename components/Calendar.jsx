@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday,
-  isSameDay, isSameMonth, isEqual, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
+  isSameHour, isSameDay, isSameMonth, isEqual, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline'
@@ -139,6 +139,7 @@ const Calendar = ({ title }) => {
   }
 
   let selectedDayAppointments = appointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay))
+  let availableHours = hoursOfDay.filter((hour) => !selectedDayAppointments.some((appointment) => isSameHour(parseISO(appointment.startDatetime), hour)))
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -299,8 +300,8 @@ const Calendar = ({ title }) => {
             Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-500">
-            {hoursOfDay.length !== selectedDayAppointments.length ? (
-              hoursOfDay.map((hour, index) => (
+            {availableHours.length > 0 ? (
+              availableHours.map((hour, index) => (
                 <Slot key={index} hour={hour}/>
               ))
             ) : (
@@ -308,19 +309,22 @@ const Calendar = ({ title }) => {
             )}
               
           </div>
-
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" className="text-sm/6 font-semibold text-gray-900">
-              Cancel
-            </button>
-            <button
-              onClick={selectedHour == null ? () => {toast.error("Must select a time slot")} : () => {setShowConfirm(true)}}
-              type="submit"
-              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
-                          ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
-              Submit
-            </button>
-          </div>
+          {availableHours.length > 0 ? (
+            <div className="mt-6 flex items-center justify-end gap-x-6">
+              <button type="button" className="text-sm/6 font-semibold text-gray-900">
+                Cancel
+              </button>
+              <button
+                onClick={selectedHour == null ? () => {toast.error("Must select a time slot")} : () => {setShowConfirm(true)}}
+                type="submit"
+                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
+                            ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
+                Submit
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </section>
         <ConfirmModal />
       </div>
