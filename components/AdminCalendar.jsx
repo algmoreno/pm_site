@@ -37,7 +37,6 @@ const AdminCalendar = ({ title }) => {
   const [appointments, setAppointments] = useState([]);
   
   useEffect(() => {
-    console.log("isAdmin", isAdmin);
     if (!isAdmin) {
       router.push("/unauthorized")
     } else {

@@ -18,20 +18,20 @@ const UserList = () => {
       router.push(`/admin`)
     }
   }, [session])
-
-    // pull all users
+  
+  // pull all users
   useEffect(() => {
     axios.get(`/api/auth/users/`)
-      .then(res =>{setUsers(res.data.users)})
-      .catch(err => console.error(err));
+    .then(res =>{setUsers(res.data.users)})
+    .catch(err => console.error(err));
   }, []);
-
+  
   useEffect(() => {
     Load()
-  }, [session])
+  }, [users])
 
   function Load(){
-    if (status === "loading" || !users) {
+    if (status === "loading") {
       return (
         <PageLoader />
       )
