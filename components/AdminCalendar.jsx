@@ -29,16 +29,19 @@ const AdminCalendar = ({ title }) => {
   ]
 
   const router = useRouter();
-  const [error, setError] = useState(null);
   const { data: session, status } = useSession();
-  const [pending, setPending] = useState(false);
   const id = session?.user.id
   const isAdmin = session?.user.role === "admin";
+  const [error, setError] = useState(null);
+  const [pending, setPending] = useState(false);
   const [appointments, setAppointments] = useState([]);
   
   useEffect(() => {
+    console.log("isAdmin", isAdmin);
     if (!isAdmin) {
       router.push("/unauthorized")
+    } else {
+      router.push("/admin")
     }
   }, [isAdmin])
 
@@ -48,10 +51,20 @@ const AdminCalendar = ({ title }) => {
       .catch(err => console.error(err));
   }, []);
 
-  if (status === "loading" || !id) {
-    return (
-      <PageLoader />
-    )
+  useEffect(() => {
+    Load()
+  }, [session])
+
+  function Load() {
+    if (status === "loading" || !id) {
+      return (
+        <PageLoader />
+      )
+    }
+  }
+
+  const seeDetails = (apptId) => {
+    router.push(`/appointment/${apptId}`)
   }
   
   const nextMonth = () => {
@@ -163,7 +176,7 @@ const Appointment = ({ appointment }) => {
 
   return (
     <li
-      className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
+      onClick={(e) => seeDetails(appointment._id)} className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
       >
       <div className="flex-auto">
         <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>

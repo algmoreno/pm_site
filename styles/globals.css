@@ -15,14 +15,14 @@
   font-style: normal;
 }
 
-.bg-10 {
+.bg-0 {
   background-image: url("/assets/bg_0.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
 
-.bg-11 {
+.bg-1 {
   background-image: url("/assets/bg_1.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -35,7 +35,7 @@
   background-repeat: no-repeat;
 }
 
-.bg-13 {
+.bg-3 {
   background-image: url("/assets/bg_4.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
