@@ -134,8 +134,8 @@ const AdminCalendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] h-[500px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
-      <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+    <div className="w-[1500px] mx-auto my-20 max-sm:mt-[40%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+      <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
           <div className="flex items-center">
             <h2 className="flex-auto text-sm font-semibold text-gray-900">
@@ -181,7 +181,7 @@ const AdminCalendar = ({ title }) => {
                     !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
                     isToday(day) && 'text-red-600',
                     (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
-                    'mx-auto flex size-8 items-center justify-center rounded-full',
+                    'max-md:h-4 mx-auto flex size-8 items-center justify-center rounded-full',
                   )}
                 >
                   <time dateTime={format(day, 'yyyy-MM-dd')}>
@@ -200,7 +200,7 @@ const AdminCalendar = ({ title }) => {
             ))}
           </div>
         </div>
-        <section className="mt-12 md:mt-0 md:pl-14 bg-orange-100 rounded-sm p-5">
+        <section className="mt-12 md:mt-0 md:pl-14 max-md:my-5 bg-orange-100 rounded-sm p-5">
           <h2 className="text-base font-semibold text-gray-900">
             Schedule for <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>
