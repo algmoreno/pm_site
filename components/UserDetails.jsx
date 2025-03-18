@@ -95,7 +95,7 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="w-full h-[auto] mx-auto my-[7%] flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-full h-[auto] mx-auto mt-[9%] mb-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
       <form className="w-[50%] ml-auto bg-slate-300 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">

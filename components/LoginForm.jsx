@@ -34,7 +34,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-[7%] bg-slate-300 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] h-auto mx-auto mt-[9%] mb-20 bg-2 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
 
       <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
         <div className="space-y-2">
@@ -63,7 +63,7 @@ const LoginForm = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] mr-auto rounded-md border border-gray-400 px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -79,7 +79,7 @@ const LoginForm = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] mr-auto rounded-md border border-gray-400 px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>

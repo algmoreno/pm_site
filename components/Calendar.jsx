@@ -228,7 +228,7 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] h-[600px] mx-auto my-[7%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] h-[600px] mx-auto mt-[9%] mb-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
       <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
@@ -295,7 +295,7 @@ const Calendar = ({ title }) => {
             ))}
           </div>
         </div>
-        <section className="mt-12 md:mt-0 md:pl-14 bg-1 rounded-sm p-5">
+        <section className="mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
           <h2 className="text-base font-semibold text-gray-900">
             Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>
