@@ -228,7 +228,7 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] h-[600px] mx-auto my-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] h-[600px] mx-auto my-[7%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
       <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
