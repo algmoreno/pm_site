@@ -14,9 +14,9 @@ const Navbar = () => {
         <h1 className="my-auto z-10 text-[38px] max-[860px]:hidden">
           <Link href='/'>PM Yoga Therapy</Link>
         </h1>
-        <div className="my-auto">
+        {/* <div className="my-auto">
           <img className="m-auto w-[120px]" src="/assets/logo_1.png" alt="" />
-        </div>
+        </div> */}
 
       </div>
 
