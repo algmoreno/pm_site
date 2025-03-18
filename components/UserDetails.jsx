@@ -95,8 +95,8 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="w-full h-[auto] mx-auto mt-[9%] mb-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
-      <form className="w-[50%] ml-auto bg-slate-300 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
+    <div className="w-full mx-auto mt-[9%] mb-20 flex flex-wrap drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+      <form className="w-[50%] max-sm:w-[100%] max-sm:mt-[20%] ml-auto bg-slate-300 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
@@ -126,12 +126,12 @@ const UserDetails = () => {
                     value={user.firstName}
                     onChange={(e) => setUser({...user, firstName:e.target.value})}
                     required
-                    className="block w-[50%] m-[auto] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] max-sm:w-[100%] m-[auto] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-4 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Last Name
                 </label> 
@@ -142,12 +142,12 @@ const UserDetails = () => {
                     value={user.lastName}
                     onChange={(e) => setUser({...user, lastName:e.target.value})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] max-sm:w-[100%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-4 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Email
                 </label> 
@@ -158,12 +158,12 @@ const UserDetails = () => {
                     value={user.email}
                     onChange={(e) => setUser({...user, email:e.target.value})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] max-sm:w-[100%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-4 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Password
                 </label> 
@@ -174,13 +174,13 @@ const UserDetails = () => {
                     value={user.password}
                     onChange={(e) => setUser({...user, password:e.target.value})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] max-sm:w-[100%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
             
               {showConfirm && 
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-4 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
                   Confirm Password
                 </label> 
@@ -191,7 +191,7 @@ const UserDetails = () => {
                     value={user.confirmPassword}
                     onChange={(e) => setUser({...user, confirmPassword:e.target.value})}
                     required
-                    className="block w-[50%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] max-sm:w-[100%] m-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -220,7 +220,7 @@ const UserDetails = () => {
 
       </form>
       
-      <div className="w-[25%] h-[600px] min-h-[500px] mr-auto border-4 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
+      <div className="w-[25%] max-sm:w-[100%] h-[600px] min-h-[500px] mr-auto border-4 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
         </div>
