@@ -9,7 +9,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="h-[100px] w-full gap-4 font-primary flex fixed z-50 bg-white">
+    <div className="min-h-[100px] w-full gap-4 font-primary flex fixed z-50 bg-white">
       <div className="text-[30px] m-auto flex">
         <h1 className="my-auto z-10 text-[38px]">
           <Link href='/'>PM Yoga Therapy</Link>
