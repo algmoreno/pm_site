@@ -20,7 +20,7 @@ const NavbarMenu = () => {
 
   const handleSignOut = async () => {
     await signOut({
-      redirect: false,
+      redirect: true,
     });    
     router.push("/");
     toast.success("Successfully logged out.");
@@ -40,7 +40,7 @@ const NavbarMenu = () => {
       
       <PopoverPanel
         transition
-        className="fixed overflow-scroll left-1/2 z-10 mt-[30px] flex w-auto -translate-x-1/2 transition data-closed:translate-y-1 data-closed:opacity-0 
+        className="fixed overflow-scroll left-1/2 z-100 mt-[30px] flex w-auto -translate-x-1/2 transition data-closed:translate-y-1 data-closed:opacity-0 
                   data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in">
         <div className="w-screen max-w-md flex-auto overflow-hidden rounded-b-2xl bg-white text-sm/6 ring-1 shadow-lg ring-gray-900/5">
           {!session ? (
@@ -79,7 +79,7 @@ const NavbarMenu = () => {
                     {item.icon}
                   </div>
                   <div className="align-middle my-auto">
-                    <a href={item.href} className="font-semibold text-gray-900">
+                    <a onClick={() => close()} href={item.href} className="font-semibold text-gray-900">
                       {item.name}
                       <span className="absolute inset-0" />
                     </a>
