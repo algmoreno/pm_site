@@ -70,7 +70,7 @@ const UserDetails = () => {
 
   return (
     <div className="w-[80%] h-auto mx-auto mt-[9%] max-sm:mt-[35%] mb-20 flex flex-wrap rounded-md bg-slate-200 border border-gray-300 p-10 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
-      <div className="px-4 sm:px-0 ">
+      <div className="px-4 sm:px-0 ml-2">
         <h3 className="text-base/7 font-semibold text-gray-900">Appointment Details</h3>
       </div>
       <div className="mt-6 border-t border-gray-100 w-[1300px]">

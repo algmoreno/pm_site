@@ -87,10 +87,9 @@ const AdminCalendar = ({ title }) => {
     }
   
     return (
-      <li
-        onClick={(e) => seeDetails(appointment._id)} className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
+      <li className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
         >
-        <div className="flex-auto">
+        <div onClick={(e) => seeDetails(appointment._id)} className="flex-auto">
           <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>
           <p className="mt-0.5">
             <time dateTime={appointment.startDatetime}>{format(startTime, 'hh:mm a')}</time> -{' '}
@@ -113,9 +112,15 @@ const AdminCalendar = ({ title }) => {
               <MenuItem>
                 <a
                   href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
-                >
+                  className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                   Edit
+                </a>
+              </MenuItem>
+              <MenuItem>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
+                  Delete
                 </a>
               </MenuItem>
               <MenuItem>
@@ -134,7 +139,7 @@ const AdminCalendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] mx-auto mb-[5%] mt-[12%] max-sm:mt-[42%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] mx-auto mb-[5%] mt-[6%] max-sm:mt-[42%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
           <div className="flex items-center">

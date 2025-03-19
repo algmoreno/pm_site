@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday,
-  isSameHour, isSameDay, isSameMonth, isEqual, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
+  isSameHour, isSameDay, isSameMonth, isEqual, isBefore, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline'
@@ -146,6 +146,7 @@ const Calendar = ({ title }) => {
 
   let selectedDayAppointments = appointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay))
   let availableHours = hoursOfDay.filter((hour) => !selectedDayAppointments.some((appointment) => isSameHour(parseISO(appointment.startDatetime), hour)))
+  let isBeforeToday = isBefore(selectedDay, today)
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -304,7 +305,7 @@ const Calendar = ({ title }) => {
             Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-500">
-            {availableHours.length > 0 ? (
+            {availableHours.length > 0 && !isBeforeToday ? (
               availableHours.map((hour, index) => (
                 <Slot key={index} hour={hour}/>
               ))
@@ -313,7 +314,7 @@ const Calendar = ({ title }) => {
             )}
               
           </div>
-          {availableHours.length > 0 ? (
+          {availableHours.length > 0 && !isBeforeToday ? (
             <div className="mt-6 flex items-center justify-end gap-x-6">
               <button type="button" className="text-sm/6 font-semibold text-gray-900">
                 Cancel
