@@ -31,7 +31,7 @@ const UserDropdown = () => {
 
   const handleSignOut = async () => {
     await signOut({
-      redirect: false,
+      redirect: true,
     });    
     router.push("/");
     toast.success("Successfully logged out.");
@@ -72,7 +72,7 @@ const UserDropdown = () => {
             <DropdownMenuItem onClick={goToProfile} className="h-10">
               Your Account
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleSignOut()} className="h-10">
+            <DropdownMenuItem onClick={handleSignOut} className="h-10">
               Log Out
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -93,7 +93,7 @@ const UserDropdown = () => {
             <DropdownMenuItem onClick={goToProfile} className="h-10">
               Your Account
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleSignOut()} className="h-10">
+            <DropdownMenuItem onClick={handleSignOut} className="h-10">
               Log Out
             </DropdownMenuItem>
           </DropdownMenuContent>
