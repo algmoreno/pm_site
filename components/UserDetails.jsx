@@ -51,7 +51,6 @@ const UserDetails = () => {
     // edit user info
     try {
       const response = await axios.put(`/api/auth/users/${id}`, user)
-      console.log(response)
       setPending(false);
       toast.success(response.data.message);
       router.push("/login")

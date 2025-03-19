@@ -78,6 +78,17 @@ const AdminCalendar = ({ title }) => {
     return classes.filter(Boolean).join(' ')
   }
 
+  const deleteAppointment = async (apptId) => {
+    const params = { id: apptId }
+    const response = await axios.delete(`/api/auth/appointments/${apptId}`, params);
+    toast.success("Removed appointment.")
+    
+    // reload appointments
+    axios.get(`/api/auth/appointments/`)
+      .then(res =>{setAppointments(res.data.appointments)})
+      .catch(err => console.error(err));
+  }
+
   const Appointment = ({ appointment }) => {
     let startTime = parseISO(appointment.startDatetime)
     let endTime = parseISO(appointment.endDatetime)
@@ -87,8 +98,7 @@ const AdminCalendar = ({ title }) => {
     }
   
     return (
-      <li className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
-        >
+      <li className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100">
         <div onClick={(e) => seeDetails(appointment._id)} className="flex-auto">
           <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>
           <p className="mt-0.5">
@@ -106,7 +116,7 @@ const AdminCalendar = ({ title }) => {
   
           <MenuItems
             transition
-            className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+            className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 hover:cursor-pointer focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
           >
             <div className="py-1">
               <MenuItem>
@@ -117,11 +127,11 @@ const AdminCalendar = ({ title }) => {
                 </a>
               </MenuItem>
               <MenuItem>
-                <a
-                  href="#"
+                <p
+                  onClick={(e) => deleteAppointment(appointment._id)}
                   className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                   Delete
-                </a>
+                </p>
               </MenuItem>
               <MenuItem>
                 <a
