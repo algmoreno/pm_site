@@ -290,7 +290,7 @@ const Calendar = ({ title }) => {
                   </time>
                 </button>
                 <div className="w-1 h-1 mx-auto mt-1">
-                  {availableHours.length > 0 && (
+                  {availableHours.length > 0 && !isBefore(day, today) && (
                     <div className="w-1 h-1 rounded-full bg-gray-400"></div>
                   )}
                 </div>
