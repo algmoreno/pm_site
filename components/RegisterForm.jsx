@@ -58,7 +58,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-300 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] h-auto mx-auto mt-[9%] mb-20 bg-2 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
       <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
@@ -84,7 +84,7 @@ const SignUpForm = () => {
                     value={user.firstName}
                     onChange={(e) => setUser({...user, firstName:e.target.value})}
                     required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -100,7 +100,7 @@ const SignUpForm = () => {
                     value={user.lastName}
                     onChange={(e) => setUser({...user, lastName:e.target.value})}
                     required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -116,7 +116,7 @@ const SignUpForm = () => {
                     value={user.email}
                     onChange={(e) => setUser({...user, email:e.target.value.trim()})}
                     required
-                    className="block w-[49%] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[49%] rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -132,7 +132,7 @@ const SignUpForm = () => {
                     value={user.password}
                     onChange={(e) => setUser({...user, password:e.target.value})}
                     required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const SignUpForm = () => {
                     value={user.confirmPassword}
                     onChange={(e) => setUser({...user, confirmPassword:e.target.value})}
                     required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-full rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>

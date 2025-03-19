@@ -46,7 +46,7 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto my-20 bg-slate-300 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] h-auto mx-auto mt-[8%] mb-10 bg-2 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
 
       <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
         <div className="space-y-2">
@@ -74,7 +74,7 @@ const ContactForm = () => {
                     value={form.name}
                     onChange={(e) => setForm({...form, name:e.target.value})}
                     required
-                    className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] mr-auto rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -90,7 +90,7 @@ const ContactForm = () => {
                     value={form.email}
                     onChange={(e) => setForm({...form, email:e.target.value})}
                     required
-                    className="block w-[50%] mr-auto rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] mr-auto rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
@@ -105,7 +105,7 @@ const ContactForm = () => {
                   value={form.message}
                   onChange={(e) => setForm({...form, message:e.target.value})}
                   required
-                  className="w-full h-[100px] m-auto rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 
+                  className="w-full h-[100px] m-auto rounded-md border border-gray-400 px-3 py-2 text-base text-gray-900 outline-1 
                             -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
                             focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm leading-tight resize-none"/>
                 </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { BuildingOfficeIcon, CreditCardIcon, UserIcon, UsersIcon } from '@heroicons/react/20/solid';
 import { UserList, AdminCalendar, AppointmentList } from '@/components/index';
@@ -27,7 +27,7 @@ const AdminTabs = () => {
   }
   
   return (
-    <div className="w-full h-[auto] mx-auto justify-center flex flex-wrap">
+    <div className="w-full h-[auto] mx-auto mt-[5%] mb-18 justify-center flex flex-wrap">
       <div className="bg-orange-50 w-full md:px-[20%] px-[5%] hover:cursor-pointer">
         <div className="border-b border-gray-200 m-auto ">
           <nav aria-label="Tabs" className="-mb-px flex space-x-8 ">

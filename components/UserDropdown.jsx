@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
@@ -15,11 +15,18 @@ const UserDropdown = () => {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.role === "admin";
 
-  if (status === "loading"){
-    return (
-      <div className="my-auto">Loading...</div>
-    )
+  function Load() {
+    if (status === "loading"){
+      return (
+        <div className="my-auto">Loading...</div>
+      )
+    }
   }
+
+  useEffect(() => {
+    Load()
+  }, [session])
+
   const avatarFallback = session?.user?.firstName?.charAt(0).toUpperCase();
 
   const handleSignOut = async () => {
@@ -43,7 +50,7 @@ const UserDropdown = () => {
       {!session ? (
         <Link href="/login">
           <CgProfile size={25} className="m-auto"/>
-          Login
+          Log In
         </Link>
       ) : (
       isAdmin ? (

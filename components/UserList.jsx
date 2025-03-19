@@ -18,18 +18,28 @@ const UserList = () => {
       router.push(`/admin`)
     }
   }, [session])
+  
+  // pull all users
+  useEffect(() => {
+    axios.get(`/api/auth/users/`)
+    .then(res =>{setUsers(res.data.users)})
+    .catch(err => console.error(err));
+  }, []);
+  
+  useEffect(() => {
+    Load()
+  }, [users])
 
-    // pull all users
-    useEffect(() => {
-      axios.get(`/api/auth/users/`)
-        .then(res =>{setUsers(res.data.users)})
-        .catch(err => console.error(err));
-    }, []);
+  function Load(){
+    if (status === "loading") {
+      return (
+        <PageLoader />
+      )
+    }
+  }
 
-  if (status === "loading" || !users) {
-    return (
-      <PageLoader />
-    )
+  const seeDetails = (userId) => {
+    router.push(`/profile/${userId}`)
   }
 
   return (
@@ -65,7 +75,7 @@ const UserList = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {users.map((user) => (
-                    <tr key={user.email} className="hover:bg-slate-300">
+                    <tr onClick={(e) => seeDetails(user._id)} key={user.email} className="hover:bg-slate-300">
                       <td className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                         {user.firstName} {user.lastName}
                       </td>

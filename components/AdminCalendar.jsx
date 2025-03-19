@@ -29,16 +29,18 @@ const AdminCalendar = ({ title }) => {
   ]
 
   const router = useRouter();
-  const [error, setError] = useState(null);
   const { data: session, status } = useSession();
-  const [pending, setPending] = useState(false);
   const id = session?.user.id
   const isAdmin = session?.user.role === "admin";
+  const [error, setError] = useState(null);
+  const [pending, setPending] = useState(false);
   const [appointments, setAppointments] = useState([]);
   
   useEffect(() => {
     if (!isAdmin) {
       router.push("/unauthorized")
+    } else {
+      router.push("/admin")
     }
   }, [isAdmin])
 
@@ -48,12 +50,18 @@ const AdminCalendar = ({ title }) => {
       .catch(err => console.error(err));
   }, []);
 
-  if (status === "loading" || !id) {
-    return (
-      <PageLoader />
-    )
+  useEffect(() => {
+    Load()
+  }, [session])
+
+  function Load() {
+    if (status === "loading" || !id) {
+      return (
+        <PageLoader />
+      )
+    }
   }
-  
+
   const nextMonth = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
@@ -68,6 +76,61 @@ const AdminCalendar = ({ title }) => {
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
+  }
+
+  const Appointment = ({ appointment }) => {
+    let startTime = parseISO(appointment.startDatetime)
+    let endTime = parseISO(appointment.endDatetime)
+  
+    const seeDetails = (apptId) => {
+      router.push(`/appointment/${apptId}`)
+    }
+  
+    return (
+      <li
+        onClick={(e) => seeDetails(appointment._id)} className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
+        >
+        <div className="flex-auto">
+          <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>
+          <p className="mt-0.5">
+            <time dateTime={appointment.startDatetime}>{format(startTime, 'hh:mm a')}</time> -{' '}
+            <time dateTime={appointment.endDatetime}>{format(endTime, 'hh:mm a')}</time>
+          </p>
+        </div>
+        <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">
+          <div>
+            <MenuButton className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
+              <span className="sr-only">Open options</span>
+              <EllipsisVerticalIcon className="size-6" aria-hidden="true" />
+            </MenuButton>
+          </div>
+  
+          <MenuItems
+            transition
+            className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+          >
+            <div className="py-1">
+              <MenuItem>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
+                >
+                  Edit
+                </a>
+              </MenuItem>
+              <MenuItem>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
+                >
+                  Cancel
+                </a>
+              </MenuItem>
+            </div>
+          </MenuItems>
+        </Menu>
+      </li>
+    )
   }
 
   return (
@@ -157,55 +220,6 @@ const AdminCalendar = ({ title }) => {
   )
 }
 
-const Appointment = ({ appointment }) => {
-  let startTime = parseISO(appointment.startDatetime)
-  let endTime = parseISO(appointment.endDatetime)
 
-  return (
-    <li
-      className="group flex items-center gap-x-4 rounded-xl px-4 py-2 border-b focus-within:bg-gray-100 hover:bg-gray-100"
-      >
-      <div className="flex-auto">
-        <p className="text-gray-900">{appointment.user.firstName} {appointment.user.lastName}</p>
-        <p className="mt-0.5">
-          <time dateTime={appointment.startDatetime}>{format(startTime, 'hh:mm a')}</time> -{' '}
-          <time dateTime={appointment.endDatetime}>{format(endTime, 'hh:mm a')}</time>
-        </p>
-      </div>
-      <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">
-        <div>
-          <MenuButton className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
-            <span className="sr-only">Open options</span>
-            <EllipsisVerticalIcon className="size-6" aria-hidden="true" />
-          </MenuButton>
-        </div>
-
-        <MenuItems
-          transition
-          className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-        >
-          <div className="py-1">
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
-              >
-                Edit
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
-              >
-                Cancel
-              </a>
-            </MenuItem>
-          </div>
-        </MenuItems>
-      </Menu>
-    </li>
-  )
-}
 
 export default AdminCalendar
