@@ -117,7 +117,8 @@ const Calendar = ({ title }) => {
         //       price: 50,
         //       userId: id
         //     })
-        //     toast.success(`Appointment confirmed! See details.`)
+        //     toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
+        //     from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
         //   }, (error) => {
         //     setPending(false);
         //     console.log(error);
@@ -130,6 +131,7 @@ const Calendar = ({ title }) => {
       console.log(err);
     }
     setShowConfirm(false)
+    setSelectedHour(null)
   }
   
   const nextMonth = () => {
