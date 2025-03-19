@@ -8,9 +8,10 @@ import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday,
   isSameDay, isSameMonth, isEqual, parse, add, getDay, parseISO } from 'date-fns';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
+import { EllipsisVerticalIcon, CheckIcon } from '@heroicons/react/24/outline'
+import { MdEdit, MdDelete } from "react-icons/md";
 
 const AdminCalendar = ({ title }) => {
   let today = startOfToday()
@@ -28,13 +29,22 @@ const AdminCalendar = ({ title }) => {
     'col-start-7',
   ]
 
+
   const router = useRouter();
   const { data: session, status } = useSession();
   const id = session?.user.id
   const isAdmin = session?.user.role === "admin";
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
+  const [showEdit, setShowEdit] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
   const [appointments, setAppointments] = useState([]);
+  const [appointment, setAppointment] = useState({
+    userId: id,
+    startDatetime: '',
+    endDatetime: '',
+    price: 50,
+  });
   
   useEffect(() => {
     if (!isAdmin) {
@@ -78,18 +88,131 @@ const AdminCalendar = ({ title }) => {
     return classes.filter(Boolean).join(' ')
   }
 
+  const editAppointment = async (apptId) => {
+    const params = { id: apptId }
+    const response = await axios.delete(`/api/auth/appointments/${apptId}`, params);
+    // reload appointments
+    axios.get(`/api/auth/appointments/`)
+    .then(res =>{setAppointments(res.data.appointments)})
+    .catch(err => console.error(err));
+    toast.success("Removed appointment.")
+  }
+
   const deleteAppointment = async (apptId) => {
     const params = { id: apptId }
     const response = await axios.delete(`/api/auth/appointments/${apptId}`, params);
-    toast.success("Removed appointment.")
-    
     // reload appointments
     axios.get(`/api/auth/appointments/`)
-      .then(res =>{setAppointments(res.data.appointments)})
-      .catch(err => console.error(err));
+    .then(res =>{setAppointments(res.data.appointments)})
+    .catch(err => console.error(err));
+    toast.success("Removed appointment.")
   }
 
-  const Appointment = ({ appointment }) => {
+  // Edit appt modal component 
+  const EditModal = () => {
+    return (
+      <Dialog open={showEdit} onClose={setShowEdit} className="relative z-10">
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+        />
+
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <DialogPanel
+              transition
+              className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+            >
+              <div>
+                <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-green-100">
+                  <MdEdit aria-hidden="true" className="size-6 text-green-600" />
+                </div>
+                <div className="mt-3 text-center sm:mt-5">
+                  <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
+                    Edit appointment
+                  </DialogTitle>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      {appointment.startDatetime != '' && format(appointment.startDatetime, "M/dd/yyyy h:mm a")} - {appointment.endDatetime != '' && format(appointment.endDatetime, "M/dd/yyyy h:mm a")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={editAppointment}
+                  className="inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  data-autofocus
+                  onClick={() => setShowEdit(false)}
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                >
+                  Cancel
+                </button>
+              </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+    )
+  }
+
+  // Edit appt modal component 
+  const DeleteModal = () => {
+    return (
+      <Dialog open={showDelete} onClose={setShowDelete} className="relative z-10">
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+        />
+
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <DialogPanel
+              transition
+              className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+            >
+              <div>
+                <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-red-100">
+                  <MdDelete aria-hidden="true" className="size-6 text-red-600"  />
+                </div>
+                <div className="mt-3 text-center sm:mt-5">
+                  <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
+                    Delete Appointment
+                  </DialogTitle>
+                  <p className="text-[14px]">Are you sure you want to delete this appointment?</p>
+                </div>
+              </div>
+              <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={deleteAppointment}
+                  className="inline-flex w-full justify-center rounded-md bg-red-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  data-autofocus
+                  onClick={() => setShowDelete(false)}
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                >
+                  Cancel
+                </button>
+              </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+    )
+  }
+
+  const AppointmentCard = ({ appointment }) => {
     let startTime = parseISO(appointment.startDatetime)
     let endTime = parseISO(appointment.endDatetime)
   
@@ -120,15 +243,15 @@ const AdminCalendar = ({ title }) => {
           >
             <div className="py-1">
               <MenuItem>
-                <a
-                  href="#"
+                <p
+                  onClick={() => setShowEdit(true)}
                   className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                   Edit
-                </a>
+                </p>
               </MenuItem>
               <MenuItem>
                 <p
-                  onClick={(e) => deleteAppointment(appointment._id)}
+                  onClick={() => setShowDelete(true)}
                   className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                   Delete
                 </p>
@@ -222,7 +345,7 @@ const AdminCalendar = ({ title }) => {
           <ol className="mt-4 flex flex-col gap-y-1 text-sm/6 text-gray-500">
             {selectedDayAppointments.length > 0 ? (
               selectedDayAppointments.map((appointment) => (
-                <Appointment key={appointment._id} appointment={appointment} />
+                <AppointmentCard key={appointment._id} appointment={appointment} />
               ))
             ) : (
               <p>No appointments today.</p>
@@ -230,6 +353,8 @@ const AdminCalendar = ({ title }) => {
               
           </ol>
         </section>
+        <EditModal />
+        <DeleteModal />
       </div>
     </div>
   )
