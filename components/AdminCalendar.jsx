@@ -134,7 +134,7 @@ const AdminCalendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] mx-auto my-20 max-sm:mt-[40%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] mx-auto my-20 max-sm:mt-[42%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
           <div className="flex items-center">
