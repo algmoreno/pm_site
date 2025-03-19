@@ -287,9 +287,8 @@ const Calendar = ({ title }) => {
                   </time>
                 </button>
                 <div className="w-1 h-1 mx-auto mt-1">
-                  {appointments.some((appointment) => isSameDay(parseISO(appointment.startDatetime), day)
-                  ) && (
-                    <div className="w-1 h-1 rounded-full bg-sky-600"></div>
+                  {availableHours.length > 0 && (
+                    <div className="w-1 h-1 rounded-full bg-gray-400"></div>
                   )}
                 </div>
                 
