@@ -33,14 +33,15 @@ const Calendar = ({ title }) => {
   ]
 
   const router = useRouter();
-  const [error, setError] = useState(null);
   const { data: session, status } = useSession();
+  const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
+  const [appointments, setAppointments] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false)
+  const [reload, setReload] = useState(false);
   const id = session?.user.id
   const name = session?.user.firstName + " " + session?.user.lastName
   const email = session?.user.email
-  const [appointments, setAppointments] = useState([]);
   const appointmentRef = useRef({ startDatetime: null, endDatetime: null });
   const [appointment, setAppointment] = useState({
     userId: id,
@@ -92,10 +93,13 @@ const Calendar = ({ title }) => {
     // add appt
     try {
       setAppointment((prevAppointment) => ({...appointment, userId: id }))
-      console.log(appointment);
       const response = await axios.post('/api/auth/appointments', appointment);
-      console.log(response);
       if (response.status == 201) {
+        // pull all appointments again
+        axios.get(`/api/auth/appointments/`)
+        .then(res =>{setAppointments(res.data.appointments)})
+        .catch(err => console.error(err));
+        // send confirmation email
         // emailjs.send(
         //   'service_qjdjgk9',
         //   'template_w5n6h43',
@@ -157,7 +161,6 @@ const Calendar = ({ title }) => {
         startDatetime: formatISO(hour),
         endDatetime: formatISO(hourPlusOne),
       }));
-
     }
 
     return (
