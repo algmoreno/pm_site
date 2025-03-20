@@ -34,7 +34,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto mt-[9%] mb-20 bg-2 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] h-auto mx-auto mt-[9%] mb-20 bg-2 max-sm:mt-20 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
 
       <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
         <div className="space-y-2">
@@ -53,7 +53,7 @@ const LoginForm = () => {
             <div className="mt-10">
 
               <div className="sm:col-span-4">
-                <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900 ml-[20%]">
+                <label htmlFor="last-name" className="block text-sm/6 max-sm:m-auto font-medium text-gray-900 ml-[20%]">
                   Email
                 </label> 
                 <div className="mt-2">
@@ -63,13 +63,13 @@ const LoginForm = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="block w-[50%] mr-auto rounded-md border border-gray-400 px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] max-sm:w-[100%] max-sm:m-auto mr-auto rounded-md border border-gray-400 px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
 
               <div className="sm:col-span-4 mt-2">
-                <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900 ml-[20%]">
+                <label htmlFor="last-name" className="block text-sm/6 max-sm:m-auto font-medium text-gray-900 ml-[20%]">
                   Password
                 </label> 
                 <div className="mt-2">
@@ -79,7 +79,7 @@ const LoginForm = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="block w-[50%] mr-auto rounded-md border border-gray-400 px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block w-[50%] mr-auto max-sm:w-[100%] max-sm:m-auto rounded-md border border-gray-400 px-3 py-1.5 ml-[20%] text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>

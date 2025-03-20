@@ -5,12 +5,14 @@ import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { PageLoader } from '@/components/index';
+import { FaRegEdit } from "react-icons/fa";
 import axios from "axios";
 import { format } from 'date-fns';
 
 const UserDetails = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const isAdmin = session?.user.role === "admin"
   const { id } = useParams();
   const [appointment, setAppointment] = useState(null);
   const [error, setError] = useState(null);
@@ -33,7 +35,6 @@ const UserDetails = () => {
     }
   }, [id]);
 
-  console.log(appointment);
   if (status === "loading" || !appointment) {
     return (
       <PageLoader />
@@ -58,21 +59,17 @@ const UserDetails = () => {
 
   }
 
-  const editForm = () => {
-    setPending(false);
-    setShowConfirm(true)
-  }
-
   const cancelEdit = () => {
     setPending(true);
     setShowConfirm(false)
   }
 
   return (
-    <div className="w-[1400px] h-auto mx-auto mt-[9%] mb-20 flex flex-wrap rounded-md bg-slate-200 border border-gray-300 p-10 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
-      <div className="px-4 sm:px-0 ">
+    <div className="w-[80%] h-auto mx-auto mt-[9%] max-sm:mt-[35%] mb-20 flex flex-wrap rounded-md bg-slate-200 border border-gray-300 p-10 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
+      <div className="px-4 sm:px-0 ml-2">
         <h3 className="text-base/7 font-semibold text-gray-900">Appointment Details</h3>
       </div>
+      
       <div className="mt-6 border-t border-gray-100 w-[1300px]">
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

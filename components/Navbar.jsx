@@ -9,15 +9,18 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="h-[100px] w-full gap-4 font-primary flex fixed z-50 bg-white">
+    <div className="min-h-[100px] w-full gap-4 font-primary flex fixed z-50 bg-white">
       <div className="text-[30px] m-auto flex">
-        <h1 className="my-auto z-10 text-[38px]">
+        <h1 className="my-auto z-10 text-[38px] max-[860px]:hidden">
           <Link href='/'>PM Yoga Therapy</Link>
         </h1>
+        {/* <div className="my-auto">
+          <img className="m-auto w-[120px]" src="/assets/logo_1.png" alt="" />
+        </div> */}
 
       </div>
 
-      <div className="text-lg mr-auto gap-20 max-md:hidden flex">
+      <div className="text-lg mr-auto gap-20 max-[870px]:hidden flex">
         {navOptions.map((option) => (
         <div key={option.name} className="m-auto">
           {option.name === "Log In" 
@@ -28,7 +31,7 @@ const Navbar = () => {
         <UserDropdown />
       </div>
 
-      <div className="md:hidden align-middle flex m-auto">          
+      <div className="min-[870px]:hidden align-middle flex m-auto">          
         <NavbarMenu />
       </div>
     </div>

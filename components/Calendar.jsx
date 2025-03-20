@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday,
-  isSameHour, isSameDay, isSameMonth, isEqual, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
+  isSameHour, isSameDay, isSameMonth, isEqual, isBefore, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline'
@@ -33,14 +33,15 @@ const Calendar = ({ title }) => {
   ]
 
   const router = useRouter();
-  const [error, setError] = useState(null);
   const { data: session, status } = useSession();
+  const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
+  const [appointments, setAppointments] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false)
+  const [reload, setReload] = useState(false);
   const id = session?.user.id
   const name = session?.user.firstName + " " + session?.user.lastName
   const email = session?.user.email
-  const [appointments, setAppointments] = useState([]);
   const appointmentRef = useRef({ startDatetime: null, endDatetime: null });
   const [appointment, setAppointment] = useState({
     userId: id,
@@ -92,10 +93,13 @@ const Calendar = ({ title }) => {
     // add appt
     try {
       setAppointment((prevAppointment) => ({...appointment, userId: id }))
-      console.log(appointment);
       const response = await axios.post('/api/auth/appointments', appointment);
-      console.log(response);
       if (response.status == 201) {
+        // pull all appointments again
+        axios.get(`/api/auth/appointments/`)
+        .then(res =>{setAppointments(res.data.appointments)})
+        .catch(err => console.error(err));
+        // send confirmation email
         // emailjs.send(
         //   'service_qjdjgk9',
         //   'template_w5n6h43',
@@ -113,7 +117,8 @@ const Calendar = ({ title }) => {
         //       price: 50,
         //       userId: id
         //     })
-        //     toast.success(`Appointment confirmed! See details.`)
+        //     toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
+        //     from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
         //   }, (error) => {
         //     setPending(false);
         //     console.log(error);
@@ -126,6 +131,7 @@ const Calendar = ({ title }) => {
       console.log(err);
     }
     setShowConfirm(false)
+    setSelectedHour(null)
   }
   
   const nextMonth = () => {
@@ -140,6 +146,7 @@ const Calendar = ({ title }) => {
 
   let selectedDayAppointments = appointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay))
   let availableHours = hoursOfDay.filter((hour) => !selectedDayAppointments.some((appointment) => isSameHour(parseISO(appointment.startDatetime), hour)))
+  let isBeforeToday = isBefore(selectedDay, today)
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -157,7 +164,6 @@ const Calendar = ({ title }) => {
         startDatetime: formatISO(hour),
         endDatetime: formatISO(hourPlusOne),
       }));
-
     }
 
     return (
@@ -228,9 +234,9 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] h-[600px] mx-auto mt-[9%] mb-20 rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] h-[auto] mx-auto mt-[9%] mb-20 max-sm:mt-[25%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
-      <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+      <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 max-md:flex-wrap">
         <div className="md:pr-14">
           <div className="flex items-center">
             <h2 className="flex-auto text-sm font-semibold text-gray-900">
@@ -276,7 +282,7 @@ const Calendar = ({ title }) => {
                     !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
                     isToday(day) && 'text-red-600',
                     (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
-                    'mx-auto flex size-8 items-center justify-center rounded-full',
+                    'max-md:h-4 mx-auto flex size-8 items-center justify-center rounded-full',
                   )}
                 >
                   <time dateTime={format(day, 'yyyy-MM-dd')}>
@@ -284,9 +290,8 @@ const Calendar = ({ title }) => {
                   </time>
                 </button>
                 <div className="w-1 h-1 mx-auto mt-1">
-                  {appointments.some((appointment) => isSameDay(parseISO(appointment.startDatetime), day)
-                  ) && (
-                    <div className="w-1 h-1 rounded-full bg-sky-600"></div>
+                  {availableHours.length > 0 && !isBefore(day, today) && (
+                    <div className="w-1 h-1 rounded-full bg-gray-400"></div>
                   )}
                 </div>
                 
@@ -295,12 +300,12 @@ const Calendar = ({ title }) => {
             ))}
           </div>
         </div>
-        <section className="mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
+        <section className="max-md:my-5 mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
           <h2 className="text-base font-semibold text-gray-900">
             Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-500">
-            {availableHours.length > 0 ? (
+            {availableHours.length > 0 && !isBeforeToday ? (
               availableHours.map((hour, index) => (
                 <Slot key={index} hour={hour}/>
               ))
@@ -309,7 +314,7 @@ const Calendar = ({ title }) => {
             )}
               
           </div>
-          {availableHours.length > 0 ? (
+          {availableHours.length > 0 && !isBeforeToday ? (
             <div className="mt-6 flex items-center justify-end gap-x-6">
               <button type="button" className="text-sm/6 font-semibold text-gray-900">
                 Cancel

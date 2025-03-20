@@ -58,7 +58,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto mt-[9%] mb-20 bg-2 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] mx-auto mt-[9%] mb-20 max-md:mt-20 bg-2 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
       <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
@@ -71,7 +71,7 @@ const SignUpForm = () => {
                 </p>
               </div>
             )}
-            <div className="mt-10 grid grid-cols-2 gap-2">
+            <div className="max-sm:block mt-10 grid grid-cols-2 gap-2">
 
               <div className="col-span-1 mt-2">
                 <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
@@ -116,7 +116,7 @@ const SignUpForm = () => {
                     value={user.email}
                     onChange={(e) => setUser({...user, email:e.target.value.trim()})}
                     required
-                    className="block w-[49%] rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
+                    className="block max-sm:w-[100%] w-[49%] rounded-md border border-gray-400 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 
                     outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"/>
                 </div>
               </div>
