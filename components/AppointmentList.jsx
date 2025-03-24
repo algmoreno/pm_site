@@ -39,7 +39,7 @@ const AppointmentList = () => {
   }
 
   return (
-    <div className="mx-auto mt-[150px] mb-[5%] w-[50%] h-[600px] min-h-[500px] mr-auto border-2 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
+    <div className="w-[700px] h-[600px] min-h-[500px] mx-auto mt-[150px] mb-[5%] border-2 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
       <div className="text-[24px] border-b-2 border-gray-900">
         <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
       </div>

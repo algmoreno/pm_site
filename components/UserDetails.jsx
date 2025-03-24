@@ -91,7 +91,7 @@ const UserDetails = () => {
 
   return (
     <div className="w-full mx-auto mt-[150px] mb-20 flex flex-wrap">
-      <form className="w-[50%] mx-auto max-sm:w-[100%] max-sm:mt-[20%] bg-slate-200 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
+      <form className="w-[800px] mx-auto max-sm:w-[100%]  bg-slate-200 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>

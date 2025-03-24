@@ -9,9 +9,7 @@ const Assignment = () => {
         error deserunt harum unde tempora obcaecati. Aspernatur, tempore!
       </p>
       <iframe 
-        className="mx-auto"
-        width="560" 
-        height="315" 
+        className="mx-auto w-[500px] h-[300px] max-sm:w-[100%]"
         src="https://www.youtube.com/embed/bjxTIcuzB6k?si=MTBBI4_nZYxdKqtW" 
         title="YouTube video player" 
         frameBorder="0" 
