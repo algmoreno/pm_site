@@ -1,10 +1,11 @@
 import React from 'react'
-import { UserDetails } from '@/components/index';
+import { UserDetails, Assignment } from '@/components/index';
 
 const Profile = () => {
   return (
-    <div className="flex flex-wrap m-auto bg-slate-500">
+    <div className="flex flex-wrap m-auto bg-slate-200">
       <UserDetails />
+      <Assignment />
     </div>
   )
 }
