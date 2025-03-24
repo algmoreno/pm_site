@@ -31,7 +31,7 @@ const AdminCalendar = ({ title }) => {
 
   const router = useRouter();
   const { data: session, status } = useSession();
-  const id = session?.user.id
+  const userId = session?.user.id
   const isAdmin = session?.user.role === "admin";
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
@@ -60,7 +60,7 @@ const AdminCalendar = ({ title }) => {
   }, [session])
 
   function Load() {
-    if (status === "loading" || !id) {
+    if (status === "loading" || !userId) {
       return (
         <PageLoader />
       )
@@ -105,7 +105,7 @@ const AdminCalendar = ({ title }) => {
   const deleteAppointment = async () => {
     const apptId = selectedAppointment._id;
     const params = { id: apptId }
-    const response = await axios.delete(`/api/auth/appointments/${apptId}`, params);
+    const response = await axios.delete(`/api/auth/appointments/${apptId}`, { data: { userId } });
     // reload appointments
     axios.get(`/api/auth/appointments/`)
     .then(res =>{setAppointments(res.data.appointments)})

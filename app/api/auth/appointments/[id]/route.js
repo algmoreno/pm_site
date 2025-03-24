@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import mongoClient from "@/app/lib/mongodb";
 import Appointment from "@/app/models/Appointment";
+import User from "@/app/models/User";
 import { NextResponse } from 'next/server';
 
 // Get user appointments
@@ -43,11 +44,17 @@ export async function DELETE(req, context) {
   const params = await context.params;
   try {
     await mongoClient();
+    const { userId } = await req.json();
+    console.log("userId", userId)
     const deletedAppointment = await Appointment.findByIdAndDelete(params.id);
 
     if (!deletedAppointment) {
       return NextResponse.json({ message: "Appointment not found" }, { status: 404 });
     }
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { appointments: params.id }
+    });
 
     return NextResponse.json({ message: "Appointment deleted" }, { status: 200 });
   } catch (err) {
