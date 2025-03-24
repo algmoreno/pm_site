@@ -3,13 +3,15 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { format } from 'date-fns';
 
 const AppointmentList = () => {
   const router = useRouter();
+  const { id } = useParams();
   const { data: session, status } = useSession();
   const isAdmin = session?.user.role === "admin";
-  const [appointments, setAppointments] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (!isAdmin) {
@@ -17,39 +19,44 @@ const AppointmentList = () => {
     }
   }, [isAdmin])
 
-  // pull all appointments
+  // get user
   useEffect(() => {
-    axios.get(`/api/auth/appointments/`)
-      .then(res =>{setAppointments(res.data.appointments)})
-      .catch(err => console.error(err));
-  }, []);
+    if (id) {
+      axios.get(`/api/auth/users/${id}`)
+        .then(res =>{setUser(res.data.user)})
+        .catch(err => console.error(err));
+    }
+  }, [id]);
 
-  if (status === "loading" || !appointments) {
+  if (status === "loading" || !user) {
     return (
       <PageLoader />
     )
   }
 
+  const seeDetails = (apptId) => {
+    router.push(`/appointment/${apptId}`)
+  }
+
   return (
-    <div className="w-[800px] h-[500px] mx-auto my-20 rounded-md bg-slate-300 border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5 overflow-auto">
-      <div className="text-[24px] border-b-2 border-gray-200">
-        <h1>Your Appointments</h1>
+    <div className="mx-auto mt-[150px] mb-[5%] w-[50%] h-[600px] min-h-[500px] mr-auto border-2 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
+      <div className="text-[24px] border-b-2 border-gray-900">
+        <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
       </div>
       <ul role="list" className="divide-y divide-gray-800">
-      {appointments.map((appointment) => (
-        <li key={appointment._id} className="flex justify-between gap-x-6 py-5">
-          <div className="flex min-w-0 gap-x-4">
-            <div className="min-w-0 flex-auto">
-              <p className="text-sm/6 font-semibold text-gray-700">{appointment.date}</p>
-              <p className="mt-1 truncate text-xs/5 text-gray-400">{appointment.duration}</p>
+        {user.appointments.map((appointment) => (
+          <li onClick={(e) => seeDetails(appointment._id)} key={appointment._id} className="flex justify-between gap-x-6 py-5 hover:cursor-pointer hover:bg-gray-200 p-4">
+            <div className="flex min-w-0 gap-x-4">
+              <div className="min-w-0 flex-auto">
+              <p className="text-sm/6 text-black">{format(appointment.startDatetime, "MMMM dd, yyyy")}</p>
+                <p className="text-sm/6 text-black">{format(appointment.startDatetime, "h:mm a")} - {format(appointment.endDatetime, "h:mm a")}</p>
+              </div>
             </div>
-          </div>
-          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-            <p className="text-sm/6 text-gray-500">{appointment.price}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

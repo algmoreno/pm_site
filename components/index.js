@@ -7,6 +7,7 @@ export { default as AdminCalendar } from './AdminCalendar';
 export { default as UserDropdown } from './UserDropdown';
 export { default as UserDetails } from './UserDetails';
 export { default as Assignment } from './Assignment';
+export { default as ProfileTabs } from './ProfileTabs';
 export { default as UserList } from './UserList';
 export { default as AppointmentList } from './AppointmentList';
 export { default as AppointmentDetails } from './AppointmentDetails';

@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserList, AppointmentList, AdminTabs } from '@/components/index';
+import { AdminTabs } from '@/components/index';
 
 const Admin = () => {
   return (
