@@ -86,20 +86,27 @@ const AdminCalendar = ({ title }) => {
   const editAppointment = async () => {
     const apptId = selectedAppointment._id;
     let hourPlusOne = addHours(newDatetime, 1)
-    setSelectedAppointment({
-      ...selectedAppointment,
-      startDatetime: formatISO(newDatetime),
-      endDatetime: formatISO(hourPlusOne),
-    })
-    console.log("editAppt selectedAppointment", selectedAppointment);
-    // const params = { id: apptId }
-    // const response = await axios.put(`/api/auth/appointments/${apptId}`, selectedAppointment);
-    // // reload appointments
-    // axios.get(`/api/auth/appointments/`)
-    // .then(res =>{setAppointments(res.data.appointments)})
-    // .catch(err => console.error(err));
-    // setShowEdit(false)
-    // toast.success("Changes saved.")
+
+    setSelectedAppointment(prev => {
+      const updatedAppointment = {
+        ...prev,
+        startDatetime: formatISO(newDatetime),
+        endDatetime: formatISO(addHours(newDatetime, 1)),
+      };
+      console.log(updatedAppointment);
+      axios.put(`/api/auth/appointments/${apptId}`, updatedAppointment)
+        .then(response => console.log("Appointment updated:", response.data))
+        .catch(error => console.error("Error updating appointment:", error));
+
+      return updatedAppointment;
+    });
+
+    // reload appointments
+    axios.get(`/api/auth/appointments/`)
+    .then(res =>{setAppointments(res.data.appointments)})
+    .catch(err => console.error(err));
+    setShowEdit(false)
+    toast.success("Changes saved.")
   }
 
   const deleteAppointment = async () => {

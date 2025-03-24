@@ -45,7 +45,6 @@ export async function DELETE(req, context) {
   try {
     await mongoClient();
     const { userId } = await req.json();
-    console.log("userId", userId)
     const deletedAppointment = await Appointment.findByIdAndDelete(params.id);
 
     if (!deletedAppointment) {
