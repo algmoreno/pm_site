@@ -7,6 +7,8 @@ const assignmentSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String  },
   vidLink: { type: String }
+  //image 
+  //file 
 })
 
 const Assignment = models.Assignment || model("Assignment", assignmentSchema);
