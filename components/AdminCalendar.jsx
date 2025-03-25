@@ -31,7 +31,7 @@ const AdminCalendar = ({ title }) => {
 
   const router = useRouter();
   const { data: session, status } = useSession();
-  const id = session?.user.id
+  const userId = session?.user.id
   const isAdmin = session?.user.role === "admin";
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
@@ -60,7 +60,7 @@ const AdminCalendar = ({ title }) => {
   }, [session])
 
   function Load() {
-    if (status === "loading" || !id) {
+    if (status === "loading" || !userId) {
       return (
         <PageLoader />
       )
@@ -86,26 +86,33 @@ const AdminCalendar = ({ title }) => {
   const editAppointment = async () => {
     const apptId = selectedAppointment._id;
     let hourPlusOne = addHours(newDatetime, 1)
-    setSelectedAppointment({
-      ...selectedAppointment,
-      startDatetime: formatISO(newDatetime),
-      endDatetime: formatISO(hourPlusOne),
-    })
-    console.log("editAppt selectedAppointment", selectedAppointment);
-    // const params = { id: apptId }
-    // const response = await axios.put(`/api/auth/appointments/${apptId}`, selectedAppointment);
-    // // reload appointments
-    // axios.get(`/api/auth/appointments/`)
-    // .then(res =>{setAppointments(res.data.appointments)})
-    // .catch(err => console.error(err));
-    // setShowEdit(false)
-    // toast.success("Changes saved.")
+
+    setSelectedAppointment(prev => {
+      const updatedAppointment = {
+        ...prev,
+        startDatetime: formatISO(newDatetime),
+        endDatetime: formatISO(addHours(newDatetime, 1)),
+      };
+      console.log(updatedAppointment);
+      axios.put(`/api/auth/appointments/${apptId}`, updatedAppointment)
+        .then(response => console.log("Appointment updated:", response.data))
+        .catch(error => console.error("Error updating appointment:", error));
+
+      return updatedAppointment;
+    });
+
+    // reload appointments
+    axios.get(`/api/auth/appointments/`)
+    .then(res =>{setAppointments(res.data.appointments)})
+    .catch(err => console.error(err));
+    setShowEdit(false)
+    toast.success("Changes saved.")
   }
 
   const deleteAppointment = async () => {
     const apptId = selectedAppointment._id;
     const params = { id: apptId }
-    const response = await axios.delete(`/api/auth/appointments/${apptId}`, params);
+    const response = await axios.delete(`/api/auth/appointments/${apptId}`, { data: { userId } });
     // reload appointments
     axios.get(`/api/auth/appointments/`)
     .then(res =>{setAppointments(res.data.appointments)})
@@ -284,7 +291,7 @@ const AdminCalendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] mx-auto mb-[5%] mt-[6%] max-sm:mt-[42%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] mx-auto mb-[5%] mt-[150px] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
           <div className="flex items-center">

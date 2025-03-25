@@ -9,10 +9,14 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
+<<<<<<< HEAD
     <div className="min-h-[100px] w-full gap-4 font-primary flex fixed z-50 bg-transparent text-white">
+=======
+    <div className="min-h-[100px] w-full gap-4 font-primary flex fixed z-50 bg-white bg-opacity-90">
+>>>>>>> 312975afb86bf24e94a422cc716147c2535143ef
       <div className="text-[30px] m-auto flex">
         <h1 className="my-auto z-10 text-[38px] max-[860px]:hidden">
-          <Link href='/'>PM Yoga Therapy</Link>
+          <Link href='/'>PMYT</Link>
         </h1>
         {/* <div className="my-auto">
           <img className="m-auto w-[120px]" src="/assets/logo_1.png" alt="" />

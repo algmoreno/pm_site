@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { BuildingOfficeIcon, CreditCardIcon, UserIcon, UsersIcon } from '@heroicons/react/20/solid';
-import { UserList, AdminCalendar, AppointmentList } from '@/components/index';
+import { UserList, AdminCalendar } from '@/components/index';
 
 
 const AdminTabs = () => {
@@ -28,7 +28,7 @@ const AdminTabs = () => {
   
   return (
     <div className="w-full mt-[5%] mx-auto justify-center flex flex-wrap">
-      <div className="fixed z-10 top-[14%] max-sm:top-[10.5%] bg-orange-100 w-full md:px-[20%] px-[5%] hover:cursor-pointer">
+      <div className="fixed z-10 top-[100px] bg-orange-100 w-full md:px-[20%] px-[5%] hover:cursor-pointer">
         <div className="border-b border-gray-200 m-auto ">
           <nav aria-label="Tabs" className="-mb-px flex space-x-8 ">
             {tabs.map((tab) => (
