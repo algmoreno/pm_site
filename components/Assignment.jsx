@@ -1,9 +1,24 @@
+"use client"
 import React from 'react'
 
 const Assignment = () => {
+
+  const handleSubmit = async () => {
+    fetch('https://defovu6u7yq96.cloudfront.net/pm_yoga/index.html', {
+      method: 'GET', 
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_TOKEN'
+      }
+    })
+    .then(response => console.log(response.text()))
+    .catch(error => console.error('Error:', error));
+  }
+
   return (
     <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] mb-20 flex-wrap rounded-md bg-slate-200 border p-10">
-      <div className="border-b border-gray-300">
+      <button onClick={handleSubmit}>Click</button>
+      {/* <div className="border-b border-gray-300">
         <h1 className="text-[24px] font-semibold text-slate-600">Assignments</h1>
       </div>
       <div className="mt-10">
@@ -21,8 +36,7 @@ const Assignment = () => {
           referrerPolicy="strict-origin-when-cross-origin" 
           allowFullScreen>  
         </iframe>
-      </div>
-      
+      </div> */}
     </div>
   )
 }

@@ -14,7 +14,6 @@ const AdminTabs = () => {
   ])
     
   const tabRedirect = (currentTab) => {
-    console.log(currentTab);
     setTabs((prevTabs) => 
       prevTabs.map((tab) => ({
         ...tab,
