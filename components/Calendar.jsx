@@ -78,16 +78,9 @@ const Calendar = ({ title }) => {
       <PageLoader />
     )
   }
-
-  function handleChange(e) {
-    setAppointment({
-      ...appointment,
-      [e.target.name]: e.target.value
-    });
-  }
   
   // submit appointment to api
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // add appt
