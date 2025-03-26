@@ -59,6 +59,24 @@ const Assignment = () => {
     )
   }
 
+  const handleFileChange = (event) => {
+    console.log(event.target.files);
+  };
+
+  const handleUpload = () => {
+    console.log("handleUpload");
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        console.log('File name:', file.name);
+        console.log('File size:', file.size);
+        console.log('File type:', file.type);
+
+        // Perform further operations with the file, e.g., read content or upload
+      }
+    }
+  };
+
   const NewAssignmentForm = () => {
     return (
       <form className="p-5">
@@ -111,11 +129,12 @@ const Assignment = () => {
                       <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
                       <div className="mt-4 flex text-sm/6 text-gray-600">
                         <label
+                          onClick={handleUpload}
                           htmlFor="file-upload"
                           className="relative cursor-pointer rounded-md bg-white font-semibold text-green-600 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 
                             focus-within:outline-hidden hover:text-green-500">
                           <span>Upload a file</span>
-                          <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                          <input onChange={handleFileChange} id="file-upload" name="file-upload" type="file" className="sr-only" />
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
