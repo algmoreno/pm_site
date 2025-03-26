@@ -6,9 +6,7 @@ const assignmentSchema = new Schema({
   date: { type: Date, required: true, unique: true },
   title: { type: String, required: true },
   notes: { type: String  },
-  vidLink: { type: String }
-  //image 
-  //file 
+  fileNames: [{ type: String }]
 })
 
 const Assignment = models.Assignment || model("Assignment", assignmentSchema);

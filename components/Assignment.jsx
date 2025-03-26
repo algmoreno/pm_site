@@ -1,5 +1,7 @@
 "use client"
-import React, { useState, useCallback } from 'react'
+import axios from "axios";
+import aws from 'aws-sdk';
+import React, { useState, useCallback, useEffect } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
@@ -15,18 +17,34 @@ const Assignment = () => {
   const isAdmin = session?.user.role === "admin";
   const [showAdd, setShowAdd] = useState(false);
   const [files, setFiles] = useState([]);
+  const [appointment, setAppointment] = useState({
+    userId: userId,
+    title: '',
+    notes: '',
+    fileNames: [],
+  });
 
+  const s3 = new aws.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    region: process.env.AWS_REGION,
+    signatureVersion: 'v4',
+  });
+
+  // POST assignment to db
   const handleSubmit = async () => {
-    fetch('https://defovu6u7yq96.cloudfront.net/pm_yoga/index.html', {
-      method: 'GET', 
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'YOUR_TOKEN'
-      }
-    })
-    .then(response => console.log(response.text()))
-    .catch(error => console.error('Error:', error));
+    // fetch('https://defovu6u7yq96.cloudfront.net/pm_yoga/index.html', {
+    //   method: 'POST', 
+    //   headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization': 'YOUR_TOKEN'
+    //   }
+    // })
+    // .then(response => console.log(response.text()))
+    // .catch(error => console.error('Error:', error));
   }
+
+
 
   const AddAssignmentDivider = () => {
     return (
@@ -45,11 +63,9 @@ const Assignment = () => {
 
   const handleFileChange = (event) => {
     let fileLength = event.target.files.length
-    console.log("event", event.target.files);
     if (event.target.files && fileLength > 0) {
       setFiles((prevFiles) => [...prevFiles, ...Array.from(event.target.files)]);
     }
-    console.log("files", files);
   };
 
   const removeFile = (removeIndex) => {
@@ -146,6 +162,7 @@ const Assignment = () => {
             Cancel
           </button>
           <button
+            onClick={handleSubmit}
             type="submit"
             className="inline-flex justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-2 
                       focus-visible:outline-offset-2 focus-visible:outline-green-600">
