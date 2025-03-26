@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { CiSquareRemove } from "react-icons/ci";
+import { CiSquareRemove, CiFileOn  } from "react-icons/ci";
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -45,6 +45,7 @@ const Assignment = () => {
 
   const handleFileChange = (event) => {
     let fileLength = event.target.files.length
+    console.log("event", event.target.files);
     if (event.target.files && fileLength > 0) {
       setFiles((prevFiles) => [...prevFiles, ...Array.from(event.target.files)]);
     }
@@ -122,11 +123,9 @@ const Assignment = () => {
                     files.map((file, index) => (
                     <div key={index} className="relative w-[200px] justify-center rounded-lg border border-gray-600 bg-gray-400 px-6 py-10">
                       <div className="text-center">
-                        {file.type == "image/jpeg" && (
-                          <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
-                        )}
+                        <CiFileOn aria-hidden="true" className="mx-auto size-12 text-gray-300" />
                         <div className="block mt-4 text-sm/6 text-gray-600">
-                          <p className="mx-auto text-gray-700 text-sm text-center">
+                          <p className="mx-auto text-gray-700 text-sm text-center truncate">
                             {file.name}
                           </p>
                           <CiSquareRemove onClick={(e) => removeFile(index)} size={25} className="absolute top-0 right-0 text-red-800 hover:text-red-600"/>
