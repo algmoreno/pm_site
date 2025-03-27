@@ -1,6 +1,5 @@
 "use client"
 import axios from "axios";
-import aws from 'aws-sdk';
 import React, { useState, useCallback, useEffect } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { PlusIcon } from '@heroicons/react/20/solid'
@@ -17,32 +16,49 @@ const Assignment = () => {
   const isAdmin = session?.user.role === "admin";
   const [showAdd, setShowAdd] = useState(false);
   const [files, setFiles] = useState([]);
-  const [appointment, setAppointment] = useState({
+  const [assignment, setAssignment] = useState({
     userId: userId,
     title: '',
     notes: '',
     fileNames: [],
   });
 
-  const s3 = new aws.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    region: process.env.AWS_REGION,
-    signatureVersion: 'v4',
-  });
-
   // POST assignment to db
-  const handleSubmit = async () => {
-    // fetch('https://defovu6u7yq96.cloudfront.net/pm_yoga/index.html', {
-    //   method: 'POST', 
-    //   headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': 'YOUR_TOKEN'
-    //   }
-    // })
-    // .then(response => console.log(response.text()))
-    // .catch(error => console.error('Error:', error));
-  }
+  // const handleSubmit = async () => {
+  //   fetch('https://defovu6u7yq96.cloudfront.net/pm_yoga/index.html', {
+  //     method: 'POST', 
+  //     headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'YOUR_TOKEN'
+  //     }
+  //   })
+  //   .then(response => console.log(response.text()))
+  //   .catch(error => console.error('Error:', error));
+  // }
+
+  const uploadFiles = async () => {
+    event.preventDefault();
+    try {
+      const uploadPromises = files.map(async (file) => {
+        const { data } = await axios.get(`/api/auth/s3/`, {
+          params: { fileName: file.name, fileType: file.type, userId: userId },
+        });
+  
+        const uploadURL = data.uploadURL;
+  
+        const uploadResponse = await axios.put(uploadURL, file, {
+          headers: { "Content-Type": file.type },
+        });
+  
+        console.log("File uploaded successfully:", uploadResponse);
+      });
+  
+      await Promise.all(uploadPromises);
+      console.log("All files uploaded successfully!");
+    } catch (error) {
+      console.error("Upload failed:", error);
+    }
+  };
 
 
 
@@ -72,6 +88,7 @@ const Assignment = () => {
     let filesArray = files;
     let newArray = filesArray.filter((_, index) => index !== removeIndex)
     setFiles(prev => newArray)
+    console.log(files)
   }
 
   const NewAssignmentForm = () => {
@@ -162,7 +179,7 @@ const Assignment = () => {
             Cancel
           </button>
           <button
-            onClick={handleSubmit}
+            onClick={uploadFiles}
             type="submit"
             className="inline-flex justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-2 
                       focus-visible:outline-offset-2 focus-visible:outline-green-600">
