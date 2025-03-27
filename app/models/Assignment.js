@@ -6,7 +6,7 @@ const assignmentSchema = new Schema({
   dateAssigned: { type: Date, required: true },
   title: { type: String, required: true },
   notes: { type: String  },
-  fileNames: [{ type: String }]
+  filePaths: [{ type: String }]
 })
 
 const Assignment = models.Assignment || model("Assignment", assignmentSchema);

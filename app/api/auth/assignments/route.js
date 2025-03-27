@@ -8,15 +8,15 @@ import { NextResponse } from 'next/server';
 export async function POST(req){
   try {
     await mongoClient(); 
-    const { userId, dateAssigned, title, notes, fileNames } = await req.json();
+    const { userId, dateAssigned, title, notes, filePaths } = await req.json();
 
     // Find the user
     const user = await User.findById(userId);
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    //creating new Assignment 
-    const newAssignment = await Assignment.create({ user: userId, startDatetime, endDatetime, price }); 
+    // creating new Assignment 
+    const newAssignment = await Assignment.create({ user: userId, dateAssigned, title, notes, filePaths }); 
 
     // pushing Assignment object ref to user Assignment array
     user.assignment.push(newAssignment._id);

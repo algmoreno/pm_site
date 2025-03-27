@@ -17,14 +17,13 @@ const Assignment = () => {
   const isAdmin = session?.user.role === "admin";
   const [showAdd, setShowAdd] = useState(false);
   const [files, setFiles] = useState([]);
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [assignment, setAssignment] = useState({
     userId: '',
     dateAssigned: '',
     title: '',
     notes: '',
-    fileNames: [],
+    filePaths: [],
   });
 
   // Serve files from s3
@@ -43,44 +42,48 @@ const Assignment = () => {
   const uploadAssignment = async () => {
     event.preventDefault();
     const date = formatISO(new Date())
-    const fileNamesArray = getFileNames();
+    const filePaths = getFilePaths();
 
     // setting assignment state
     setAssignment({
       ...assignment,
       userId: userId,
       dateAssigned: date,
-      fileNames: fileNamesArray
+      filePaths: filePaths
     })
     console.log("assignment", assignment)
-    // upload files to s3
-    try {
-      const uploadPromises = files.map(async (file) => {
-        const { data } = await axios.get(`/api/auth/s3/`, {
-          params: { fileName: file.name, fileType: file.type, userId: userId, title: assignment.title },
-        });
-        const uploadUrl = data.uploadUrl;
-        const uploadResponse = await axios.put(uploadUrl, file, {
-          headers: { "Content-Type": file.type },
-        });
-      });
+    //upload files to s3
+    // try {
+    //   const uploadPromises = files.map(async (file) => {
+    //     const { data } = await axios.get(`/api/auth/s3/`, {
+    //       params: { fileName: file.name, fileType: file.type, userId: userId, title: assignment.title },
+    //     });
+    //     const uploadUrl = data.uploadUrl;
+    //     const uploadResponse = await axios.put(uploadUrl, file, {
+    //       headers: { "Content-Type": file.type },
+    //     });
+    //   });
   
-      await Promise.all(uploadPromises);
-      console.log("All files uploaded successfully!");
-    } catch (error) {
-      console.error("Upload failed:", error);
-    }
+    //   await Promise.all(uploadPromises);
+    //   console.log("All files uploaded successfully!");
+    // } catch (error) {
+    //   console.error("Upload failed:", error);
+    // }
 
     // Post assignment to mongodb
-    // const response = axios
+    // const response = axios.post("/api/auth/assignments/", assignment)
+    // console.log("response", response);
   };
 
-  const getFileNames = () => {
-    const fileNames = []
+  const getFilePaths = () => {
+    const filePaths = []
     files.map(file => {
-      fileNames.push(file.name)
+      let formattedTitle = assignment.title.replace(/\s/g, '');
+      console.log("formattedTitle", formattedTitle);
+      let filePath = `${formattedTitle}/${file.name}`;
+      filePaths.push(filePath)
     })
-    return fileNames;
+    return filePaths;
   }
 
   const AddAssignmentDivider = () => {
@@ -110,10 +113,6 @@ const Assignment = () => {
     let newArray = filesArray.filter((_, index) => index !== removeIndex)
     setFiles(prev => newArray)
   }
-
-  useEffect(() => {
-    console.log("Assignment updated:", assignment);
-  }, [assignment]);
 
   return (
     <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] mb-20 flex-wrap rounded-md bg-slate-200  p-10">
