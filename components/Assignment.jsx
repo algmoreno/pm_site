@@ -16,6 +16,7 @@ const Assignment = () => {
   const userId = session?.user.id
   const isAdmin = session?.user.role === "admin";
   const [showAdd, setShowAdd] = useState(false);
+  const [uploadReady, setUploadReady] = useState(false);
   const [files, setFiles] = useState([]);
   const [password, setPassword] = useState("");
   const [assignment, setAssignment] = useState({
@@ -39,11 +40,40 @@ const Assignment = () => {
   //   .catch(error => console.error('Error:', error));
   // })
 
+  useEffect(() => {
+    console.log("assignment", assignment);
+    if (upload) {
+      async function fetchData() {
+        //upload files to s3
+        try {
+          const uploadPromises = files.map(async (file) => {
+            const { data } = await axios.get(`/api/auth/s3/`, {
+              params: { fileName: file.name, fileType: file.type, userId: userId, title: assignment.title },
+            });
+            const uploadUrl = data.uploadUrl;
+            const uploadResponse = await axios.put(uploadUrl, file, {
+              headers: { "Content-Type": file.type },
+            });
+          });
+      
+          await Promise.all(uploadPromises);
+          console.log("All files uploaded successfully!");
+
+          // Post assignment to mongodb
+          const response = await axios.post("/api/auth/assignments/", assignment)
+          console.log("response", response);
+        } catch (error) {
+          console.error("S3 Upload failed:", error);
+        }
+      }
+      fetchData();
+    }
+  }, [upload])
+
   const uploadAssignment = async () => {
     event.preventDefault();
     const date = formatISO(new Date())
     const filePaths = getFilePaths();
-
     // setting assignment state
     setAssignment({
       ...assignment,
@@ -51,35 +81,14 @@ const Assignment = () => {
       dateAssigned: date,
       filePaths: filePaths
     })
-    console.log("assignment", assignment)
-    //upload files to s3
-    // try {
-    //   const uploadPromises = files.map(async (file) => {
-    //     const { data } = await axios.get(`/api/auth/s3/`, {
-    //       params: { fileName: file.name, fileType: file.type, userId: userId, title: assignment.title },
-    //     });
-    //     const uploadUrl = data.uploadUrl;
-    //     const uploadResponse = await axios.put(uploadUrl, file, {
-    //       headers: { "Content-Type": file.type },
-    //     });
-    //   });
-  
-    //   await Promise.all(uploadPromises);
-    //   console.log("All files uploaded successfully!");
-    // } catch (error) {
-    //   console.error("Upload failed:", error);
-    // }
+    setUploadReady(true);
 
-    // Post assignment to mongodb
-    // const response = axios.post("/api/auth/assignments/", assignment)
-    // console.log("response", response);
   };
 
   const getFilePaths = () => {
     const filePaths = []
     files.map(file => {
       let formattedTitle = assignment.title.replace(/\s/g, '');
-      console.log("formattedTitle", formattedTitle);
       let filePath = `${formattedTitle}/${file.name}`;
       filePaths.push(filePath)
     })
