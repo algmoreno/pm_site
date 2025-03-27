@@ -19,6 +19,7 @@ const Assignment = () => {
   const [uploadReady, setUploadReady] = useState(false);
   const [files, setFiles] = useState([]);
   const [password, setPassword] = useState("");
+  const [assignments, setAssignments] = useState([]);
   const [assignment, setAssignment] = useState({
     userId: '',
     dateAssigned: '',
@@ -27,22 +28,37 @@ const Assignment = () => {
     filePaths: [],
   });
 
-  // Serve files from s3
-  // useEffect(() => {
-  //   fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${userId}/${assignment.title}/`, {
-  //     method: 'GET', 
-  //     headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'YOUR_TOKEN'
-  //     }
-  //   })
-  //   .then(response => console.log(response.text()))
-  //   .catch(error => console.error('Error:', error));
-  // })
+  // Pull assignments from db
+  useEffect(() => {
+    async function getAssignments() {
+      // pull assignments from db
+      axios.get(`/api/auth/assignments/`)
+      .then(res =>{setAssignments(res.data.assignments)})
+      .catch(err => console.error(err));      
+    }
+
+    getAssignments();
+  }, [])
 
   useEffect(() => {
-    console.log("assignment", assignment);
-    if (upload) {
+    console.log(assignments)
+    // serve files from s3
+    assignments.filePaths.map(filePath => {
+      fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${userId}/${filePath}/`, {
+        method: 'GET', 
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer YOUR_TOKEN'
+        }
+      })
+      .then(response => console.log(response.text()))
+      .catch(error => console.error('Error:', error));
+    })
+
+  }, [assignments])
+
+  useEffect(() => {
+    if (uploadReady) {
       async function fetchData() {
         //upload files to s3
         try {
@@ -68,10 +84,11 @@ const Assignment = () => {
       }
       fetchData();
     }
-  }, [upload])
+  }, [uploadReady])
 
   const uploadAssignment = async () => {
     event.preventDefault();
+    setUploadReady(false);
     const date = formatISO(new Date())
     const filePaths = getFilePaths();
     // setting assignment state
@@ -82,7 +99,6 @@ const Assignment = () => {
       filePaths: filePaths
     })
     setUploadReady(true);
-
   };
 
   const getFilePaths = () => {
