@@ -38,7 +38,6 @@ const Assignment = () => {
 
   const uploadFiles = async () => {
     event.preventDefault();
-    console.log("Requesting presigned URL for:", files);
     try {
       const uploadPromises = files.map(async (file) => {
         const { data } = await axios.get(`/api/auth/s3/`, {

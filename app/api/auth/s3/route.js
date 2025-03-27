@@ -23,7 +23,7 @@ export async function GET(req, res) {
       return NextResponse.json({ error: "Missing fileName, fileType, or userId" }, { status: 400 });
     }
 
-    const filePath = `pm_yoga/users/${fileName}`;
+    const filePath = `pm_yoga/users/${userId}/${fileName}`;
 
     const params = {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
@@ -32,7 +32,6 @@ export async function GET(req, res) {
     };
     const command = new PutObjectCommand(params);
     const uploadUrl = await getSignedUrl(s3, command, { expiresIn: 180 });
-    console.log("uploadUrl", uploadUrl)
     return NextResponse.json({ uploadUrl }, { status: 200 });
   } catch (error) {
     console.error("Server Error:", error);
