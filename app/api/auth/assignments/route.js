@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req){
   try {
     await mongoClient(); 
-    const { userId, startDatetime, endDatetime, price } = await req.json();
+    const { userId, dateAssigned, title, notes, fileNames } = await req.json();
 
     // Find the user
     const user = await User.findById(userId);

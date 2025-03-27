@@ -8,6 +8,7 @@ import { CiSquareRemove, CiFileOn  } from "react-icons/ci";
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { format, parseISO, formatISO } from 'date-fns';
 
 const Assignment = () => {
   const router = useRouter();
@@ -16,17 +17,20 @@ const Assignment = () => {
   const isAdmin = session?.user.role === "admin";
   const [showAdd, setShowAdd] = useState(false);
   const [files, setFiles] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [assignment, setAssignment] = useState({
-    userId: userId,
+    userId: '',
+    dateAssigned: '',
     title: '',
     notes: '',
     fileNames: [],
   });
 
-  // POST assignment to db
-  // const handleSubmit = async () => {
-  //   fetch('https://defovu6u7yq96.cloudfront.net/pm_yoga/index.html', {
-  //     method: 'POST', 
+  // Serve files from s3
+  // useEffect(() => {
+  //   fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${userId}/${assignment.title}/`, {
+  //     method: 'GET', 
   //     headers: {
   //         'Content-Type': 'application/json',
   //         'Authorization': 'YOUR_TOKEN'
@@ -34,14 +38,26 @@ const Assignment = () => {
   //   })
   //   .then(response => console.log(response.text()))
   //   .catch(error => console.error('Error:', error));
-  // }
+  // })
 
-  const uploadFiles = async () => {
+  const uploadAssignment = async () => {
     event.preventDefault();
+    const date = formatISO(new Date())
+    const fileNamesArray = getFileNames();
+
+    // setting assignment state
+    setAssignment({
+      ...assignment,
+      userId: userId,
+      dateAssigned: date,
+      fileNames: fileNamesArray
+    })
+    console.log("assignment", assignment)
+    // upload files to s3
     try {
       const uploadPromises = files.map(async (file) => {
         const { data } = await axios.get(`/api/auth/s3/`, {
-          params: { fileName: file.name, fileType: file.type, userId: userId },
+          params: { fileName: file.name, fileType: file.type, userId: userId, title: assignment.title },
         });
         const uploadUrl = data.uploadUrl;
         const uploadResponse = await axios.put(uploadUrl, file, {
@@ -54,9 +70,18 @@ const Assignment = () => {
     } catch (error) {
       console.error("Upload failed:", error);
     }
+
+    // Post assignment to mongodb
+    // const response = axios
   };
 
-
+  const getFileNames = () => {
+    const fileNames = []
+    files.map(file => {
+      fileNames.push(file.name)
+    })
+    return fileNames;
+  }
 
   const AddAssignmentDivider = () => {
     return (
@@ -65,7 +90,7 @@ const Assignment = () => {
           <div className="w-full border-t border-gray-300" />
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-green-300 p-[2px] text-gray-500 rounded-full hover:bg-green-400 hover:cursor-pointer">
+          <span className="bg-gray-300 p-[2px] text-gray-500 rounded-full hover:bg-gray-400 hover:cursor-pointer">
             <PlusIcon onClick={() => setShowAdd(true)} aria-hidden="true" className="size-5 text-gray-500" />
           </span>
         </div>
@@ -86,9 +111,15 @@ const Assignment = () => {
     setFiles(prev => newArray)
   }
 
-  const NewAssignmentForm = () => {
-    return (
-      <form className="p-5">
+  useEffect(() => {
+    console.log("Assignment updated:", assignment);
+  }, [assignment]);
+
+  return (
+    <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] mb-20 flex-wrap rounded-md bg-slate-200  p-10">
+      {isAdmin && <AddAssignmentDivider />}
+      {showAdd && 
+      <form onSubmit={uploadAssignment} className="p-5">
         <div className="space-y-12 sm:space-y-16 ">
           <div>
             <h2 className="text-base/7 font-semibold text-gray-900">New Assignment</h2>
@@ -102,11 +133,11 @@ const Assignment = () => {
                   <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 
                                 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 sm:max-w-md">
                     <input
-                      id="username"
-                      name="username"
-                      type="text"
-                      placeholder="Title"
-                      className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                        type="text"
+                        value={assignment.title}
+                        onChange={(e) => setAssignment(prev => ({ ...prev, title: e.target.value }))}
+                        required
+                        className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
                     />
                   </div>
                 </div>
@@ -121,9 +152,12 @@ const Assignment = () => {
                     id="about"
                     name="about"
                     rows={3}
+                    type="text"
+                    value={assignment.notes}
+                    onChange={(e) => setAssignment(prev => ({ ...prev, notes: e.target.value }))}
                     placeholder=". . . "
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:max-w-2xl sm:text-sm/6"
-                    defaultValue={''}
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 
+                                placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:max-w-2xl sm:text-sm/6"
                   />
                 </div>
               </div>
@@ -170,49 +204,24 @@ const Assignment = () => {
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button onClick={() => setShowAdd(false)} type="button" className="text-sm/6 font-semibold text-gray-900">
+          <button onClick={() => {setShowAdd(false); setFiles([])}} type="button" className="text-sm/6 font-semibold text-gray-900">
             Cancel
           </button>
           <button
-            onClick={uploadFiles}
             type="submit"
             className="inline-flex justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-2 
                       focus-visible:outline-offset-2 focus-visible:outline-green-600">
             Save
           </button>
         </div>
-      </form>
-    )
-  }
 
-  return (
-    <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] mb-20 flex-wrap rounded-md bg-slate-200  p-10">
-      {isAdmin && <AddAssignmentDivider />}
-      {showAdd && 
-        <NewAssignmentForm />
+      </form>
       }
       <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
-      {/* <div className="border-b border-gray-300">
-        <h1 className="text-[24px] font-semibold text-slate-600">Assignments</h1>
-      </div>
-      <div className="mt-10">
-        <h2 className="text-[20px] font-semibold text-slate-600">3/24/2025 - This week's assignment</h2>
-        <p className="m-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-          Nihil laboriosam impedit repellat magnam commodi sint nisi? Magnam aperiam veritatis laborum vero suscipit, 
-          error deserunt harum unde tempora obcaecati. Aspernatur, tempore!
-        </p>
-        <iframe 
-          className="mx-auto w-[700px] h-[400px] max-sm:w-[100%]"
-          src="https://www.youtube.com/embed/bjxTIcuzB6k?si=MTBBI4_nZYxdKqtW" 
-          title="YouTube video player" 
-          frameBorder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          referrerPolicy="strict-origin-when-cross-origin" 
-          allowFullScreen>  
-        </iframe>
-      </div> */}
       
     </div>
+
+    
   )
 }
 

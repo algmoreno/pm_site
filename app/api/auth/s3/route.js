@@ -17,13 +17,14 @@ export async function GET(req, res) {
     const fileName = searchParams.get("fileName");
     const fileType = searchParams.get("fileType");
     const userId = searchParams.get("userId");
+    const title = searchParams.get("title");
 
-    if (!fileName || !fileType || !userId) {
+    if (!fileName || !fileType || !userId || !title) {
       console.error("Missing required query params:", { fileName, fileType, userId });
       return NextResponse.json({ error: "Missing fileName, fileType, or userId" }, { status: 400 });
     }
 
-    const filePath = `pm_yoga/users/${userId}/${fileName}`;
+    const filePath = `pm_yoga/users/${userId}/${title}/${fileName}`;
 
     const params = {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
