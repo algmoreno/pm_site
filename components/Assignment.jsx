@@ -38,19 +38,16 @@ const Assignment = () => {
 
   const uploadFiles = async () => {
     event.preventDefault();
+    console.log("Requesting presigned URL for:", files);
     try {
       const uploadPromises = files.map(async (file) => {
         const { data } = await axios.get(`/api/auth/s3/`, {
           params: { fileName: file.name, fileType: file.type, userId: userId },
         });
-  
-        const uploadURL = data.uploadURL;
-  
-        const uploadResponse = await axios.put(uploadURL, file, {
+        const uploadUrl = data.uploadUrl;
+        const uploadResponse = await axios.put(uploadUrl, file, {
           headers: { "Content-Type": file.type },
         });
-  
-        console.log("File uploaded successfully:", uploadResponse);
       });
   
       await Promise.all(uploadPromises);
@@ -88,7 +85,6 @@ const Assignment = () => {
     let filesArray = files;
     let newArray = filesArray.filter((_, index) => index !== removeIndex)
     setFiles(prev => newArray)
-    console.log(files)
   }
 
   const NewAssignmentForm = () => {

@@ -29,14 +29,13 @@ export async function GET(req, res) {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
       Key: filePath,
       ContentType: fileType,
-      ACL: "public-read",
     };
-    
     const command = new PutObjectCommand(params);
-    const uploadUrl = await getSignedUrl(s3, command, { expiresIn: 60 });
-    return new Response(JSON.stringify({ uploadUrl }), { status: 200 });
+    const uploadUrl = await getSignedUrl(s3, command, { expiresIn: 180 });
+    console.log("uploadUrl", uploadUrl)
+    return NextResponse.json({ uploadUrl }, { status: 200 });
   } catch (error) {
     console.error("Server Error:", error);
-    return new Response(JSON.stringify({ error }), { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
