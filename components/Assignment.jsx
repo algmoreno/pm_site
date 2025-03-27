@@ -165,7 +165,7 @@ const Assignment = () => {
                 <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-gray-900 sm:pt-1.5">
                   Files
                 </label>
-                <div className="flex gap-2 mt-2 sm:col-span-2 sm:mt-0">
+                <div className="flex flex-wrap gap-2 mt-2 sm:col-span-2 sm:mt-0">
                   <div className="flex w-[200px] justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                     <div className="text-center">
                       <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
