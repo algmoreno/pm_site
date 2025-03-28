@@ -38,7 +38,6 @@ const Assignment = () => {
     axios.get(`/api/auth/users/${userId}`)
       .then(res => {
         setUser(res.data.user);
-        console.log("User state set");
       })
       .catch(err => console.error(err));
 
@@ -82,14 +81,15 @@ const Assignment = () => {
     }
   }, [user])
 
+  // upload files to s3
   useEffect(() => {
     if (uploadReady) {
       async function fetchData() {
-        //upload files to s3
         try {
           const uploadPromises = files.map(async (file) => {
+            let newTitle = assignment.title + "-" + format(assignment.dateAssigned, "M-dd-yyyy");
             const { data } = await axios.get(`/api/auth/s3/`, {
-              params: { fileName: file.name, fileType: file.type, userId: userId, title: assignment.title },
+              params: { fileName: file.name, fileType: file.type, userId: userId, title: newTitle,},
             });
             const uploadUrl = data.uploadUrl;
             const uploadResponse = await axios.put(uploadUrl, file, {
@@ -101,6 +101,7 @@ const Assignment = () => {
           console.log("All files uploaded successfully!");
 
           // Post assignment to mongodb
+          console.log("mongo assignment", assignment)
           const response = await axios.post("/api/auth/assignments/", assignment)
           console.log("response", response);
         } catch (error) {
@@ -115,7 +116,7 @@ const Assignment = () => {
     event.preventDefault();
     setUploadReady(false);
     const date = formatISO(new Date())
-    const filePaths = createFilePaths();
+    const filePaths = createFilePaths(date);
     
     // setting assignment state
     setAssignment({
@@ -127,11 +128,12 @@ const Assignment = () => {
     setUploadReady(true);
   };
 
-  const createFilePaths = () => {
+  const createFilePaths = (date) => {
     const filePaths = []
     files.map(file => {
       let formattedTitle = assignment.title.replace(/\s/g, '');
-      let filePath = `${formattedTitle}/${file.name}`;
+      let formattedDate = format(date, "M-dd-yyyy")
+      let filePath = `${formattedTitle}-${formattedDate}/${file.name}`;
       filePaths.push(filePath)
     })
     return filePaths;

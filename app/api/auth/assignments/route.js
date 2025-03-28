@@ -9,7 +9,7 @@ export async function POST(req){
   try {
     await mongoClient(); 
     const { userId, dateAssigned, title, notes, filePaths } = await req.json();
-
+    console.log("dateAssigned", dateAssigned)
     // Find the user
     const user = await User.findById(userId);
     if (!user) {
