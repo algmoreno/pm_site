@@ -19,6 +19,7 @@ const Assignment = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [uploadReady, setUploadReady] = useState(false);
   const [files, setFiles] = useState([]);
+  const [imageSrc, setImageSrc] = useState(null);
   const [password, setPassword] = useState("");
   const [assignments, setAssignments] = useState([]);
   const [assignment, setAssignment] = useState({
@@ -29,30 +30,53 @@ const Assignment = () => {
     filePaths: [],
   });
 
-  // Pull assignments from db
+  // Pull user assignments from db
   useEffect(() => {
-    // pull assignments from db
     axios.get(`/api/auth/users/${userId}`)
     .then(res =>{setUser(res.data.user)})
     .catch(err => console.error(err)); 
   }, [userId])
 
+  // grabbing files for each assignment
   useEffect(() => {
     console.log("user", user)
-    // serve files from s3
-    // map over assignment then over each file path
-    // assignments.filePaths.map(filePath => {
-    //   fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${userId}/${filePath}/`, {
-    //     method: 'GET', 
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': 'Bearer YOUR_TOKEN'
-    //     }
-    //   })
-    //   .then(response => console.log(response.text()))
-    //   .catch(error => console.error('Error:', error));
-    //})
+    async function fetchFiles () {
+      // map over assignment
+      user.assignments.map(async assignment => {
+        let filesArray = [];
+        console.log("assignment", assignment)
+        assignment.filePaths.map(async filePath => {
+          console.log("filePath", filePath)
+          fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${user._id}/${filePath}`, {
+            method: 'GET', 
+            headers: {
+                'Authorization': 'Bearer YOUR_TOKEN'
+            }
+          })
+          .then(response => response.blob()) 
+          .then(blob => {
+            const url = URL.createObjectURL(blob); 
+            setImageSrc(url); // Store in state
+          })
+          .catch(error => console.error('Error:', error));
+          // const blob = await response.blob();
+          // const url = URL.createObjectURL(blob);
+          // setImageSrc(url)
+        })
 
+        // setAssignments([
+        //   ...assignments,
+        //   {
+        //     title: assignment.title,
+        //     notes: assignment.notes,
+        //     files: filesArray
+        //   }
+        // ])
+      })
+    }
+    if (user) {
+      fetchFiles()
+    }
   }, [user])
 
   useEffect(() => {
@@ -89,6 +113,7 @@ const Assignment = () => {
     setUploadReady(false);
     const date = formatISO(new Date())
     const filePaths = getFilePaths();
+    
     // setting assignment state
     setAssignment({
       ...assignment,
@@ -240,7 +265,25 @@ const Assignment = () => {
       </form>
       }
       <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
-      
+      {imageSrc && <img src={imageSrc} alt="Fetched" className="mt-4 w-48" />}
+      {/* <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] flex-wrap rounded-md bg-slate-200 border p-10">
+        <div className="">
+          <h2 className="text-[20px] font-semibold text-slate-600">3/24/2025 - Assignment Example</h2>
+          <p className="m-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Nihil laboriosam impedit repellat magnam commodi sint nisi? Magnam aperiam veritatis laborum vero suscipit, 
+            error deserunt harum unde tempora obcaecati. Aspernatur, tempore!
+          </p>
+          <iframe 
+            className="mx-auto w-[700px] h-[400px] max-sm:w-[100%]"
+            src="https://www.youtube.com/embed/bjxTIcuzB6k?si=MTBBI4_nZYxdKqtW" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerPolicy="strict-origin-when-cross-origin" 
+            allowFullScreen>  
+          </iframe>
+        </div>      
+      </div> */}
     </div>
 
     

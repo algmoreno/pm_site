@@ -19,14 +19,14 @@ export const navOptions = [
     icon: <FaPeopleRobbery size={25} className="m-auto"/>
   },
   {
-    name: "Schedule",
-    href: "/schedule",
-    icon: <RiCalendarLine size={25} className="m-auto"/>
-  },
-  {
     name: "Contact",
     href: "/contact",
     icon: <TiContacts size={25} className="m-auto"/>
+  },
+  {
+    name: "Schedule",
+    href: "/schedule",
+    icon: <RiCalendarLine size={25} className="m-auto"/>
   },
   // {
   //   href: "",
