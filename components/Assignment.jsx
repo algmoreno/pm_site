@@ -87,7 +87,8 @@ const Assignment = () => {
       async function fetchData() {
         try {
           const uploadPromises = files.map(async (file) => {
-            let newTitle = assignment.title + "-" + format(assignment.dateAssigned, "M-dd-yyyy");
+            let formattedTitle = assignment.title.replace(/\s/g, '');
+            let newTitle = formattedTitle + "-" + format(assignment.dateAssigned, "M-dd-yyyy");
             const { data } = await axios.get(`/api/auth/s3/`, {
               params: { fileName: file.name, fileType: file.type, userId: userId, title: newTitle,},
             });
