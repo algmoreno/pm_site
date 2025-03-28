@@ -19,7 +19,7 @@ export async function POST(req){
     const newAssignment = await Assignment.create({ user: userId, dateAssigned, title, notes, filePaths }); 
 
     // pushing Assignment object ref to user Assignment array
-    user.assignment.push(newAssignment._id);
+    user.assignments.push(newAssignment._id);
     await user.save();
 
     return NextResponse.json({ message: "Assignment added!" }, { status: 201 });

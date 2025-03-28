@@ -15,6 +15,7 @@ const Assignment = () => {
   const { data: session, status } = useSession();
   const userId = session?.user.id
   const isAdmin = session?.user.role === "admin";
+  const [user, setUser] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
   const [uploadReady, setUploadReady] = useState(false);
   const [files, setFiles] = useState([]);
@@ -30,32 +31,29 @@ const Assignment = () => {
 
   // Pull assignments from db
   useEffect(() => {
-    async function getAssignments() {
-      // pull assignments from db
-      axios.get(`/api/auth/assignments/`)
-      .then(res =>{setAssignments(res.data.assignments)})
-      .catch(err => console.error(err));      
-    }
-
-    getAssignments();
-  }, [])
+    // pull assignments from db
+    axios.get(`/api/auth/users/${userId}`)
+    .then(res =>{setUser(res.data.user)})
+    .catch(err => console.error(err)); 
+  }, [userId])
 
   useEffect(() => {
-    console.log(assignments)
+    console.log("user", user)
     // serve files from s3
-    assignments.filePaths.map(filePath => {
-      fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${userId}/${filePath}/`, {
-        method: 'GET', 
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer YOUR_TOKEN'
-        }
-      })
-      .then(response => console.log(response.text()))
-      .catch(error => console.error('Error:', error));
-    })
+    // map over assignment then over each file path
+    // assignments.filePaths.map(filePath => {
+    //   fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${userId}/${filePath}/`, {
+    //     method: 'GET', 
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': 'Bearer YOUR_TOKEN'
+    //     }
+    //   })
+    //   .then(response => console.log(response.text()))
+    //   .catch(error => console.error('Error:', error));
+    //})
 
-  }, [assignments])
+  }, [user])
 
   useEffect(() => {
     if (uploadReady) {

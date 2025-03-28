@@ -9,7 +9,7 @@ export async function GET(req, context) {
   const params = await context.params;
   try {
     await mongoClient();
-    const user = await User.findById(params.id).populate("appointments");
+    const user = await User.findById(params.id).populate("appointments").populate("assignments");
 
     return NextResponse.json({ user }, { status: 200 });
   } catch (err) {
