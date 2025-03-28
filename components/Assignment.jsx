@@ -45,6 +45,7 @@ const Assignment = () => {
       user.assignments.map(async assignment => {
         let filesArray = [];
         console.log("assignment", assignment)
+        // map over each filepath
         assignment.filePaths.map(async filePath => {
           console.log("filePath", filePath)
           fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${user._id}/${filePath}`, {
@@ -56,23 +57,21 @@ const Assignment = () => {
           .then(response => response.blob()) 
           .then(blob => {
             const url = URL.createObjectURL(blob); 
-            setImageSrc(url); // Store in state
+            filesArray.push(url)
           })
           .catch(error => console.error('Error:', error));
-          // const blob = await response.blob();
-          // const url = URL.createObjectURL(blob);
-          // setImageSrc(url)
         })
 
-        // setAssignments([
-        //   ...assignments,
-        //   {
-        //     title: assignment.title,
-        //     notes: assignment.notes,
-        //     files: filesArray
-        //   }
-        // ])
+        setAssignments([
+          ...assignments,
+          {
+            title: assignment.title,
+            notes: assignment.notes,
+            files: filesArray
+          }
+        ])
       })
+      console.log("assignments", assignments)
     }
     if (user) {
       fetchFiles()
@@ -265,7 +264,16 @@ const Assignment = () => {
       </form>
       }
       <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
-      {imageSrc && <img src={imageSrc} alt="Fetched" className="mt-4 w-48" />}
+      {assignments.length > 0 && assignments.map((assignment, index) => (
+        <div key={index}>
+          <h1>{assignment.title}</h1>
+          <p>{assignment.notes}</p>
+          {assignment.files.map(file => (
+            <img src={file} alt="Fetched" className="mt-4 w-48" />
+          ))}
+        </div>
+      ))}
+      
       {/* <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] flex-wrap rounded-md bg-slate-200 border p-10">
         <div className="">
           <h2 className="text-[20px] font-semibold text-slate-600">3/24/2025 - Assignment Example</h2>
