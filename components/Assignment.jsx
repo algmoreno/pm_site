@@ -46,40 +46,47 @@ const Assignment = () => {
 
   // grabbing files for each assignment
   useEffect(() => {
-    async function fetchFiles () {
-      // map over assignment
-      user.assignments.map(async assignment => {
-        const filesArray = [];
-        // map over each filepath
-        Promise.all(assignment.filePaths.map((filePath) =>
-          fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${user._id}/${filePath}`, {
-            method: 'GET',
-            headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
-          })
-            .then(response => response.blob())
-            .then(blob => {
+    async function fetchFiles() {
+      try {
+        const updatedAssignments = await Promise.all(user.assignments.map(async (assignment) => {
+          const filesArray = await Promise.all(assignment.filePaths.map(async (filePath) => {
+            try {
+              const response = await fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${user._id}/${filePath}`, {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
+              });
+  
+              if (!response.ok) throw new Error(`Failed to fetch file: ${filePath}`);
+  
+              const contentType = response.headers.get("content-type");
+              const blob = await response.blob();
               const url = URL.createObjectURL(blob);
-              filesArray.push(url); 
-            })
-            .catch(error => console.error('Error fetching file:', error))
-          )
-        ).then(() => {
-          // Once all files are fetched, update state
-          setAssignments(prevAssignments => [
-            ...prevAssignments,
-            {
-              title: assignment.title,
-              notes: assignment.notes,
-              files: filesArray
+  
+              return { url, contentType };
+            } catch (error) {
+              console.error('Error fetching file:', error);
+              return null; // Handle errors gracefully
             }
-          ]);
-        });
-      })
+          }));
+  
+          return {
+            title: assignment.title,
+            notes: assignment.notes,
+            files: filesArray.filter(file => file !== null) 
+          };
+        }));
+  
+        setAssignments(updatedAssignments); 
+      } catch (error) {
+        console.error("Error fetching assignments:", error);
+      }
     }
-    if (user != null){
-      fetchFiles()
+  
+    if (user) {
+      fetchFiles();
     }
-  }, [user])
+  }, [user]);
+  
 
   // upload files to s3
   useEffect(() => {
@@ -273,13 +280,28 @@ const Assignment = () => {
       <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
       {assignments.length > 0 && assignments.map((assignment, index) => (
         <div key={index}>
-          <h1>{assignment.title}</h1>
-          <p>{assignment.notes}</p>
+          <h1 className="text-[20px] font-semibold text-slate-600">{assignment.title}</h1>
+          <p className="m-5">{assignment.notes}</p>
           {Array.isArray(assignment.files) && assignment.files.length > 0 ? (
             assignment.files.map((file, idx) => (
-              <a key={idx} href={file} target="_blank" rel="noopener noreferrer">
-                <img src={file} alt="img" className="mt-4 w-48" />
-              </a>
+            <div key={idx} className="mt-4">
+              {file.contentType.startsWith("image/") ? (
+                <img src={file.url} alt="Fetched file" className="w-48" />
+              ) : file.contentType === "application/pdf" ? (
+                <a href={file.url} target="_blank" rel="noopener noreferrer">
+                  <img src="/pdf-placeholder.png" alt="PDF preview" className="w-48 cursor-pointer" />
+                </a>
+              ) : file.contentType.startsWith("video/") ? (
+                <video controls width="320">
+                  <source src={file.url} type={file.contentType} />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                  Download File
+                </a>
+              )}
+            </div>
             ))
           ) : (
             <p>No files available</p>
