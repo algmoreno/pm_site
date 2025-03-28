@@ -1,6 +1,6 @@
 "use client"
 import axios from "axios";
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useRef , useEffect } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
@@ -16,6 +16,7 @@ const Assignment = () => {
   const userId = session?.user.id
   const isAdmin = session?.user.role === "admin";
   const [user, setUser] = useState(null);
+  const effectRan = useRef(false);
   const [showAdd, setShowAdd] = useState(false);
   const [uploadReady, setUploadReady] = useState(false);
   const [files, setFiles] = useState([]);
@@ -32,48 +33,51 @@ const Assignment = () => {
 
   // Pull user assignments from db
   useEffect(() => {
+    if (effectRan.current) return; // Prevents second call
+    effectRan.current = true;
     axios.get(`/api/auth/users/${userId}`)
-    .then(res =>{setUser(res.data.user)})
-    .catch(err => console.error(err)); 
-  }, [userId])
+      .then(res => {
+        setUser(res.data.user);
+        console.log("User state set");
+      })
+      .catch(err => console.error(err));
+
+  }, [userId]);
+
 
   // grabbing files for each assignment
   useEffect(() => {
-    console.log("user", user)
     async function fetchFiles () {
       // map over assignment
       user.assignments.map(async assignment => {
-        let filesArray = [];
-        console.log("assignment", assignment)
+        const filesArray = [];
         // map over each filepath
-        assignment.filePaths.map(async filePath => {
-          console.log("filePath", filePath)
+        Promise.all(assignment.filePaths.map((filePath) =>
           fetch(`https://defovu6u7yq96.cloudfront.net/pm_yoga/users/${user._id}/${filePath}`, {
-            method: 'GET', 
-            headers: {
-                'Authorization': 'Bearer YOUR_TOKEN'
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
+          })
+            .then(response => response.blob())
+            .then(blob => {
+              const url = URL.createObjectURL(blob);
+              filesArray.push(url); 
+            })
+            .catch(error => console.error('Error fetching file:', error))
+          )
+        ).then(() => {
+          // Once all files are fetched, update state
+          setAssignments(prevAssignments => [
+            ...prevAssignments,
+            {
+              title: assignment.title,
+              notes: assignment.notes,
+              files: filesArray
             }
-          })
-          .then(response => response.blob()) 
-          .then(blob => {
-            const url = URL.createObjectURL(blob); 
-            filesArray.push(url)
-          })
-          .catch(error => console.error('Error:', error));
-        })
-
-        setAssignments([
-          ...assignments,
-          {
-            title: assignment.title,
-            notes: assignment.notes,
-            files: filesArray
-          }
-        ])
+          ]);
+        });
       })
-      console.log("assignments", assignments)
     }
-    if (user) {
+    if (user != null){
       fetchFiles()
     }
   }, [user])
@@ -111,7 +115,7 @@ const Assignment = () => {
     event.preventDefault();
     setUploadReady(false);
     const date = formatISO(new Date())
-    const filePaths = getFilePaths();
+    const filePaths = createFilePaths();
     
     // setting assignment state
     setAssignment({
@@ -123,7 +127,7 @@ const Assignment = () => {
     setUploadReady(true);
   };
 
-  const getFilePaths = () => {
+  const createFilePaths = () => {
     const filePaths = []
     files.map(file => {
       let formattedTitle = assignment.title.replace(/\s/g, '');
@@ -268,9 +272,15 @@ const Assignment = () => {
         <div key={index}>
           <h1>{assignment.title}</h1>
           <p>{assignment.notes}</p>
-          {assignment.files.map(file => (
-            <img src={file} alt="Fetched" className="mt-4 w-48" />
-          ))}
+          {Array.isArray(assignment.files) && assignment.files.length > 0 ? (
+            assignment.files.map((file, idx) => (
+              <a key={idx} href={file} target="_blank" rel="noopener noreferrer">
+                <img src={file} alt="img" className="mt-4 w-48" />
+              </a>
+            ))
+          ) : (
+            <p>No files available</p>
+          )}
         </div>
       ))}
       
