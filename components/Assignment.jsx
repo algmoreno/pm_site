@@ -9,6 +9,7 @@ import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { format, parseISO, formatISO } from 'date-fns';
+import Accordion from 'react-bootstrap/Accordion';
 
 const Assignment = () => {
   const router = useRouter();
@@ -277,59 +278,69 @@ const Assignment = () => {
 
       </form>
       }
-      <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
-      {assignments.length > 0 && assignments.map((assignment, index) => (
-        <div key={index}>
-          <h1 className="text-[20px] font-semibold text-slate-600">{assignment.title}</h1>
-          <p className="m-5">{assignment.notes}</p>
-          {Array.isArray(assignment.files) && assignment.files.length > 0 ? (
-            assignment.files.map((file, idx) => (
-            <div key={idx} className="mt-4">
-              {file.contentType.startsWith("image/") ? (
-                <img src={file.url} alt="Fetched file" className="w-48" />
-              ) : file.contentType === "application/pdf" ? (
-                <a href={file.url} target="_blank" rel="noopener noreferrer">
-                  <img src="/pdf-placeholder.png" alt="PDF preview" className="w-48 cursor-pointer" />
-                </a>
-              ) : file.contentType.startsWith("video/") ? (
-                <video controls width="320">
-                  <source src={file.url} type={file.contentType} />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                  Download File
-                </a>
-              )}
-            </div>
-            ))
-          ) : (
-            <p>No files available</p>
-          )}
-        </div>
-      ))}
-      
-      {/* <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] flex-wrap rounded-md bg-slate-200 border p-10">
-        <div className="">
-          <h2 className="text-[20px] font-semibold text-slate-600">3/24/2025 - Assignment Example</h2>
-          <p className="m-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Nihil laboriosam impedit repellat magnam commodi sint nisi? Magnam aperiam veritatis laborum vero suscipit, 
-            error deserunt harum unde tempora obcaecati. Aspernatur, tempore!
-          </p>
-          <iframe 
-            className="mx-auto w-[700px] h-[400px] max-sm:w-[100%]"
-            src="https://www.youtube.com/embed/bjxTIcuzB6k?si=MTBBI4_nZYxdKqtW" 
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerPolicy="strict-origin-when-cross-origin" 
-            allowFullScreen>  
-          </iframe>
-        </div>      
-      </div> */}
-    </div>
 
-    
+      <div>
+        <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
+        {/* {assignments.length > 0 && assignments.map((assignment, index) => (
+          <div key={index}>
+            <h1 className="text-[20px] font-semibold text-slate-600">{assignment.title}</h1>
+            <p className="m-5">{assignment.notes}</p>
+            {Array.isArray(assignment.files) && assignment.files.length > 0 ? (
+              assignment.files.map((file, idx) => (
+              <div key={idx} className="mt-4">
+                {file.contentType.startsWith("image/") ? (
+                  <img src={file.url} alt="Fetched file" className="w-48" />
+                ) : file.contentType === "application/pdf" ? (
+                  <a href={file.url} target="_blank" rel="noopener noreferrer">
+                    <img src="/pdf-placeholder.png" alt="PDF preview" className="w-48 cursor-pointer" />
+                  </a>
+                ) : file.contentType.startsWith("video/") ? (
+                  <video controls width="320">
+                    <source src={file.url} type={file.contentType} />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                    Download File
+                  </a>
+                )}
+              </div>
+              ))
+            ) : (
+              <p>No files available</p>
+            )}
+          </div>
+        ))} */}
+        
+        <Accordion defaultActiveKey={['0']} alwaysOpen>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Accordion Item #1</Accordion.Header>
+            <Accordion.Body>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+              culpa qui officia deserunt mollit anim id est laborum.
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>Accordion Item #2</Accordion.Header>
+            <Accordion.Body>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+              culpa qui officia deserunt mollit anim id est laborum.
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+      </div>
+    </div>
   )
 }
 
