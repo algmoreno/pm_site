@@ -22,6 +22,8 @@ const Assignment = () => {
   const [user, setUser] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
   const [files, setFiles] = useState([]);
+  const [error, setError] = useState(null);
+  const validTitle = new RegExp('^[^/]+$');
   const [assignments, setAssignments] = useState([]);
   const [assignment, setAssignment] = useState({
     userId: '',
@@ -92,6 +94,9 @@ const Assignment = () => {
   
   const uploadAssignment = async (event) => {
     event.preventDefault();
+    const validated = validation();
+    if (!validated) return;
+
     const date = formatISO(new Date());
     let formattedTitle = assignment.title.replace(/\s/g, '');
     let formattedDate = format(date, "M-dd-yyyy");
@@ -165,6 +170,40 @@ const Assignment = () => {
     return filePaths;
   }
 
+  const validation = () => {
+    if (!validTitle.test(assignment.title)) {
+      setError("Title can't have '/'")
+      return false
+    }
+    return true
+  }
+  
+  const handleFileChange = (event) => {
+    let fileLength = event.target.files.length
+    if (event.target.files && fileLength > 0) {
+      setFiles((prevFiles) => [...prevFiles, ...Array.from(event.target.files)]);
+    }
+  };
+
+  const removeFile = (removeIndex) => {
+    let filesArray = files;
+    let newArray = filesArray.filter((_, index) => index !== removeIndex)
+    setFiles(prev => newArray)
+  }
+
+  const cancelAssignment = () => {
+    setError(null)
+    setFiles([]);
+    setAssignment({
+      ...assignment,
+      dateAssigned: '',
+      title: '',
+      notes: '',
+      filePaths: [],
+    }) 
+    setShowAdd(false)
+  }
+
   const AddAssignmentDivider = () => {
     return (
       <div className="relative mb-10">
@@ -179,20 +218,6 @@ const Assignment = () => {
       </div>
     )
   }
-  
-
-  const handleFileChange = (event) => {
-    let fileLength = event.target.files.length
-    if (event.target.files && fileLength > 0) {
-      setFiles((prevFiles) => [...prevFiles, ...Array.from(event.target.files)]);
-    }
-  };
-
-  const removeFile = (removeIndex) => {
-    let filesArray = files;
-    let newArray = filesArray.filter((_, index) => index !== removeIndex)
-    setFiles(prev => newArray)
-  }
 
   return (
     <div className="block w-[80%] h-auto mx-auto mt-[100px] max-sm:mt-[35%] mb-20 flex-wrap rounded-md bg-slate-200  p-10">
@@ -202,7 +227,13 @@ const Assignment = () => {
         <div className="space-y-12 sm:space-y-16 ">
           <div>
             <h2 className="text-base/7 font-semibold text-gray-900">New Assignment</h2>
-
+            {!!error && (
+              <div className="bg-red-500 p-3 rounded-md flex items-center gap-x-2 text-sm text-red-200 my-6">
+                <p>
+                  {error}
+                </p>
+              </div>
+            )}
             <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
               <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                 <label htmlFor="username" className="block text-sm/6 font-medium text-gray-900 sm:pt-1.5">
@@ -283,7 +314,7 @@ const Assignment = () => {
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button onClick={() => {setShowAdd(false); setFiles([])}} type="button" className="text-sm/6 font-semibold text-gray-900">
+          <button onClick={() => cancelAssignment()} type="button" className="text-sm/6 font-semibold text-gray-900">
             Cancel
           </button>
           <button
