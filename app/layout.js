@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import { Navbar, Footer, Toaster } from '@/components/index';
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/lib/SessionProvider";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Layout = async ({ children }) => {
   const session = await getServerSession();
