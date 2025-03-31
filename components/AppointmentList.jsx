@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 
 const AppointmentList = ({ userId }) => {

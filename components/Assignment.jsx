@@ -32,7 +32,7 @@ const Assignment = ({ userId }) => {
     filePaths: [],
   });
 
-  // Pull user assignments from db
+  // pull user assignments from db
   useEffect(() => {
     if (effectRan.current) return; // Prevents second call
     effectRan.current = true;

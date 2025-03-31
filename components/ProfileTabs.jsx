@@ -3,17 +3,32 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { CalendarDaysIcon , UserIcon, DocumentTextIcon   } from '@heroicons/react/20/solid';
 import { UserDetails, AppointmentList, Assignment } from '@/components/index';
+import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 
 
 const ProfileTabs = () => {
+  const router = useRouter();
   const { id } = useParams();
+  const { data: session, status } = useSession();
+  const sessionId = session?.user.id
   const [currentTab, setCurrentTab] = useState("Profile")
   const [tabs, setTabs] = useState([
     { name: 'Profile', href: '#profile', icon: UserIcon, current: true },
     { name: 'Appointments', href: '#appointments', icon: CalendarDaysIcon , current: false },
     { name: 'Assignments', href: '#assignments', icon: DocumentTextIcon , current: false },
   ])
+
+  // redirect if no user session
+  useEffect(() => {
+    if (!session) {
+      router.push("/login")
+    } else{
+      router.push(`/profile/${id}`)
+    }
+  }, [session])
+  
+  // tab redirect
   const tabRedirect = (currentTab) => {
     setTabs((prevTabs) => 
       prevTabs.map((tab) => ({

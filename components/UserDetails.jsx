@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react';
 import { toast } from "sonner";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FaRegEdit } from "react-icons/fa";
 import { PageLoader } from '@/components/index';
 import axios from "axios";
