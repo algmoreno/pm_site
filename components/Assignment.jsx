@@ -45,7 +45,6 @@ const Assignment = () => {
 
   }, [userId]);
 
-
   // grabbing files for each assignment
   useEffect(() => {
     async function fetchFiles() {
@@ -285,34 +284,38 @@ const Assignment = () => {
         <div className="mt-10">
           {assignments.length > 0 && assignments.map((assignment, index) => (
           <Accordion key={index} defaultActiveKey={['0']} alwaysOpen>
-            <Accordion.Item eventKey={index}>
+            <Accordion.Item eventKey={index} >
               <Accordion.Header>{assignment.title}</Accordion.Header>
-              <Accordion.Body>
-                <p className="m-5">{assignment.notes}</p>
-                {Array.isArray(assignment.files) && assignment.files.length > 0 ? (
-                assignment.files.map((file, idx) => (
-                <div key={idx} className="mt-4">
-                  {file.contentType.startsWith("image/") ? (
-                    <img src={file.url} alt="Fetched file" className="w-48" />
-                  ) : file.contentType === "application/pdf" ? (
-                    <a href={file.url} target="_blank" rel="noopener noreferrer">
-                      <img src="/pdf-placeholder.png" alt="PDF preview" className="w-48 cursor-pointer" />
-                    </a>
-                  ) : file.contentType.startsWith("video/") ? (
-                    <video controls width="320">
-                      <source src={file.url} type={file.contentType} />
-                      Your browser does not support the video tag.
-                    </video>
+              <Accordion.Body className="p-5">
+                <p className="">{assignment.notes}</p>
+                <div className="flex">
+                  {Array.isArray(assignment.files) && assignment.files.length > 0 ? (
+                  assignment.files.map((file, idx) => (
+                  <div key={idx} className="mt-4 flex-wrap">
+                    {file.contentType.startsWith("image/") ? (
+                      <a href={file.url} target="_blank" rel="noopener noreferrer">
+                        <img src={file.url} alt="assignment files" className="w-48" />
+                      </a>
+                    ) : file.contentType === "application/pdf" ? (
+                      <a href={file.url} target="_blank" rel="noopener noreferrer">
+                        <img src="/pdf-placeholder.png" alt="PDF preview" className="w-48 cursor-pointer" />
+                      </a>
+                    ) : file.contentType.startsWith("video/") ? (
+                      <video controls width="320">
+                        <source src={file.url} type={file.contentType} />
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                        Download File
+                      </a>
+                    )}
+                  </div>
+                  ))
                   ) : (
-                    <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                      Download File
-                    </a>
+                  <p>No files available</p>
                   )}
                 </div>
-                ))
-              ) : (
-                <p>No files available</p>
-              )}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
