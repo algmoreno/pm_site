@@ -8,10 +8,9 @@ import { PageLoader } from '@/components/index';
 import axios from "axios";
 import { format } from 'date-fns';
 
-const UserDetails = () => {
+const UserDetails = ({ userId }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const { id } = useParams();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(true);
@@ -23,17 +22,17 @@ const UserDetails = () => {
     if (!session) {
       router.push("/login")
     } else{
-      router.push(`/profile/${id}`)
+      router.push(`/profile/${userId}`)
     }
   }, [session])
 
   useEffect(() => {
-    if (id) {
-      axios.get(`/api/auth/users/${id}`)
+    if (userId) {
+      axios.get(`/api/auth/users/${userId}`)
         .then(res =>{setUser(res.data.user)})
         .catch(err => console.error(err));
     }
-  }, [id]);
+  }, [userId]);
 
   if (status === "loading" || !user) {
     return (
@@ -50,7 +49,7 @@ const UserDetails = () => {
     
     // edit user info
     try {
-      const response = await axios.put(`/api/auth/users/${id}`, user)
+      const response = await axios.put(`/api/auth/users/${userId}`, user)
       setPending(false);
       toast.success(response.data.message);
       router.push("/login")

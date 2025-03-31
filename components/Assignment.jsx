@@ -13,11 +13,10 @@ import { useRouter } from 'next/navigation';
 import { format, parseISO, formatISO } from 'date-fns';
 import Accordion from 'react-bootstrap/Accordion';
 
-const Assignment = () => {
+const Assignment = ({ userId }) => {
   const router = useRouter();
   const effectRan = useRef(false);
   const { data: session, status } = useSession();
-  const userId = session?.user.id
   const isAdmin = session?.user.role === "admin";
   const [user, setUser] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
@@ -87,10 +86,6 @@ const Assignment = () => {
       fetchFiles();
     }
   }, [user]);
-
-  useEffect(() => {
-    console.log("assignments", assignments)
-  }, [assignments])
   
   const uploadAssignment = async (event) => {
     event.preventDefault();

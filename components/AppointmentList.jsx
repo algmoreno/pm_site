@@ -6,9 +6,8 @@ import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 
-const AppointmentList = () => {
+const AppointmentList = ({ userId }) => {
   const router = useRouter();
-  const { id } = useParams();
   const { data: session, status } = useSession();
   const isAdmin = session?.user.role === "admin";
   const [user, setUser] = useState(null);
@@ -21,12 +20,12 @@ const AppointmentList = () => {
 
   // get user
   useEffect(() => {
-    if (id) {
-      axios.get(`/api/auth/users/${id}`)
+    if (userId) {
+      axios.get(`/api/auth/users/${userId}`)
         .then(res =>{setUser(res.data.user)})
         .catch(err => console.error(err));
     }
-  }, [id]);
+  }, [userId]);
 
   if (status === "loading" || !user) {
     return (

@@ -3,16 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { CalendarDaysIcon , UserIcon, DocumentTextIcon   } from '@heroicons/react/20/solid';
 import { UserDetails, AppointmentList, Assignment } from '@/components/index';
+import { useParams, useRouter } from 'next/navigation';
 
 
-const AdminTabs = () => {
+const ProfileTabs = () => {
+  const { id } = useParams();
   const [currentTab, setCurrentTab] = useState("Profile")
   const [tabs, setTabs] = useState([
     { name: 'Profile', href: '#profile', icon: UserIcon, current: true },
     { name: 'Appointments', href: '#appointments', icon: CalendarDaysIcon , current: false },
     { name: 'Assignments', href: '#assignments', icon: DocumentTextIcon , current: false },
   ])
-    
   const tabRedirect = (currentTab) => {
     setTabs((prevTabs) => 
       prevTabs.map((tab) => ({
@@ -73,11 +74,11 @@ const AdminTabs = () => {
           className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500"
         />
       </div>
-        {currentTab === "Profile" && <UserDetails />}
-        {currentTab === "Appointments" && <AppointmentList />}
-        {currentTab === "Assignments" && <Assignment />}
+        {currentTab === "Profile" && <UserDetails userId={id} />}
+        {currentTab === "Appointments" && <AppointmentList userId={id} />}
+        {currentTab === "Assignments" && <Assignment userId={id} />}
     </div>
   )
 }
 
-export default AdminTabs
+export default ProfileTabs;
