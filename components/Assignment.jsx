@@ -57,7 +57,7 @@ const Assignment = ({ userId }) => {
               });
   
               if (!response.ok) throw new Error(`Failed to fetch file: ${filePath}`);
-  
+              console.log("response", response)
               const contentType = response.headers.get("content-type");
               const blob = await response.blob();
               const url = URL.createObjectURL(blob);
@@ -338,11 +338,12 @@ const Assignment = ({ userId }) => {
                   <div key={idx} className="mt-4 flex-wrap">
                     {file.contentType.startsWith("image/") ? (
                       <a href={file.url} target="_blank" rel="noopener noreferrer">
-                        <img src={file.url} alt="assignment files" className="w-48" />
+                        <img src={file.url} alt="assignment files" className="w-[500px]" />
                       </a>
                     ) : file.contentType === "application/pdf" ? (
                       <a href={file.url} target="_blank" rel="noopener noreferrer">
                         <img src="/pdf-placeholder.png" alt="PDF preview" className="w-48 cursor-pointer" />
+                        <p>{file.title}</p>
                       </a>
                     ) : file.contentType.startsWith("video/") ? (
                       <video controls width="320">

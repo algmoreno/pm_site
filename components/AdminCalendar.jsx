@@ -248,18 +248,17 @@ const AdminCalendar = ({ title }) => {
             <time dateTime={appointment.endDatetime}>{format(endTime, 'hh:mm a')}</time>
           </p>
         </div>
-        <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">
+        <Menu as="div" className="relative group-hover:opacity-100 focus-within:opacity-100">
           <div>
-            <MenuButton className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
+            <MenuButton className=" -m-2 flex items-center rounded-full p-1.5 text-black hover:text-gray-600">
               <span className="sr-only">Open options</span>
               <EllipsisVerticalIcon className="size-6" aria-hidden="true" />
             </MenuButton>
           </div>
-  
           <MenuItems
             transition
-            className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 hover:cursor-pointer focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-          >
+            className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 hover:cursor-pointer 
+              focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
             <div className="py-1">
               <MenuItem>
                 <p
