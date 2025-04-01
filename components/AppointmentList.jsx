@@ -31,18 +31,6 @@ const AppointmentList = ({ userId }) => {
       .catch(err => console.error(err));
     }
   }, [userId]);
-
-   // get all appointments
-   useEffect(() => {
-    axios.get(`/api/auth/appointments/`)
-      .then(res =>{setAppointments(res.data.appointments)})
-      .catch(err => console.error(err));
-  }, []);
-
-  const handleEdit = (appointment) => {
-    setSelectedAppointment((prev) => appointment);
-    setShowEdit((prev) => true);
-  }; 
   
   if (status === "loading" || !user) {
     return (
@@ -64,34 +52,34 @@ const AppointmentList = ({ userId }) => {
 
   const seeDetails = (apptId) => {
       router.push(`/appointment/${apptId}`)
-    }
-
-    const editAppointment = async () => {
-    const apptId = selectedAppointment._id;
-    let hourPlusOne = addHours(newDatetime, 1)
-  
-    setSelectedAppointment(prev => {
-        const updatedAppointment = {
-            ...prev,
-        startDatetime: formatISO(newDatetime),
-        endDatetime: formatISO(addHours(newDatetime, 1)),
-      };
-      console.log(updatedAppointment);
-      axios.put(`/api/auth/appointments/${apptId}`, updatedAppointment)
-        .then(response => console.log("Appointment updated:", response.data))
-        .catch(error => console.error("Error updating appointment:", error));
-
-      return updatedAppointment;
-    });
-
-    // pull user and populate appointments !!
-    // reload appointments
-    axios.get(`/api/auth/appointments/`)
-    .then(res =>{setAppointments(res.data.appointments)})
-    .catch(err => console.error(err));
-    setShowEdit(false)
-    toast.success("Changes saved.")
   }
+
+  // const editAppointment = async () => {
+  //   const apptId = selectedAppointment._id;
+  //   let hourPlusOne = addHours(newDatetime, 1)
+  
+  //   setSelectedAppointment(prev => {
+  //       const updatedAppointment = {
+  //           ...prev,
+  //       startDatetime: formatISO(newDatetime),
+  //       endDatetime: formatISO(addHours(newDatetime, 1)),
+  //     };
+  //     console.log(updatedAppointment);
+  //     axios.put(`/api/auth/appointments/${apptId}`, updatedAppointment)
+  //       .then(response => console.log("Appointment updated:", response.data))
+  //       .catch(error => console.error("Error updating appointment:", error));
+
+  //     return updatedAppointment;
+  //   });
+
+  //   // pull user and populate appointments !!
+  //   // reload appointments
+  //   axios.get(`/api/auth/appointments/`)
+  //   .then(res =>{setAppointments(res.data.appointments)})
+  //   .catch(err => console.error(err));
+  //   setShowEdit(false)
+  //   toast.success("Changes saved.")
+  // }
 
   const deleteAppointment = async () => {
     const apptId = selectedAppointment._id;
@@ -104,33 +92,6 @@ const AppointmentList = ({ userId }) => {
     setShowDelete(false)
     setSelectedAppointment(null);
     toast.success("Removed appointment.")
-  }
-
-  // Time slot component
-  const Slot = ({ hour }) => {
-    const slotRef = useRef(null);
-    let hourPlusOne = addHours(hour, 1)
-
-    const handleSelect = () => {
-      setSelectedHour(hour);
-      setAppointment((prevAppt) => ({
-        ...appointment,
-        startDatetime: formatISO(hour),
-        endDatetime: formatISO(hourPlusOne),
-      }));
-    }
-
-    return (
-      <div ref={slotRef} tabIndex="0" onClick={handleSelect}
-        className={classNames(
-          isEqual(hour, selectedHour) && 'bg-gray-200 border-2', 
-          'col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-2 focus:outline-offset-2 focus:outline-gray-200 focus:bg-gray-200 hover:bg-gray-200 hover:cursor-pointer border border-white')}>
-        <p className="mt-0.5 ">
-          <time dateTime={hour}>{format(hour, 'hh:mm a')}</time>-{' '}
-          <time dateTime={hourPlusOne}>{format(hourPlusOne, 'hh:mm a')}</time>
-        </p>
-      </div>
-    )
   }
 
   // // Edit appt modal component 

@@ -19,6 +19,18 @@ const UserList = () => {
     }
   }, [session])
   
+  useEffect(() => {
+    Load()
+  }, [users])
+
+  function Load() {
+    if (users.length == 0) {
+      return (
+        <PageLoader />
+      )
+    }
+  }
+
   // pull all users
   useEffect(() => {
     axios.get(`/api/auth/users/`)
@@ -26,17 +38,6 @@ const UserList = () => {
     .catch(err => console.error(err));
   }, []);
   
-  useEffect(() => {
-    Load()
-  }, [users])
-
-  function Load(){
-    if (status === "loading") {
-      return (
-        <PageLoader />
-      )
-    }
-  }
 
   const seeDetails = (userId) => {
     router.push(`/profile/${userId}`)

@@ -36,7 +36,7 @@ const Calendar = ({ title }) => {
   const { data: session, status } = useSession();
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
-  
+  const [appointments, setAppointments] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false)
   const [reload, setReload] = useState(false);
   const id = session?.user.id

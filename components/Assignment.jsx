@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, { useState, useRef, useEffect } from 'react'
 import { toast } from "sonner";
-import {useDropzone} from 'react-dropzone'
+import { PageLoader } from '@/components/index';
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { CiSquareRemove, CiFileOn  } from "react-icons/ci";
@@ -31,6 +31,18 @@ const Assignment = ({ userId }) => {
     notes: '',
     filePaths: [],
   });
+
+  useEffect(() => {
+    Load()
+  }, [assignments])
+
+  function Load() {
+    if (assignments.length == 0) {
+      return (
+        <PageLoader />
+      )
+    }
+  }
 
   // pull user assignments from db
   useEffect(() => {
@@ -220,7 +232,7 @@ const Assignment = ({ userId }) => {
       <form onSubmit={uploadAssignment} className="p-5">
         <div className="space-y-12 sm:space-y-16 ">
           <div>
-            <h2 className="text-base/7 font-semibold text-gray-900">New Assignment</h2>
+            <h2 className="text-[18px] font-semibold text-gray-900">New Assignment</h2>
             {!!error && (
               <div className="bg-red-500 p-3 rounded-md flex items-center gap-x-2 text-sm text-red-200 my-6">
                 <p>

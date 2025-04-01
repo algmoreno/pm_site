@@ -50,22 +50,23 @@ const AdminCalendar = ({ title }) => {
   }, [isAdmin])
 
   useEffect(() => {
-    axios.get(`/api/auth/appointments/`)
-      .then(res =>{setAppointments(res.data.appointments)})
-      .catch(err => console.error(err));
-  }, []);
-
-  useEffect(() => {
     Load()
-  }, [session])
+  }, [appointments])
 
   function Load() {
-    if (status === "loading" || !userId) {
+    if (appointments.length == 0) {
       return (
         <PageLoader />
       )
     }
   }
+
+  useEffect(() => {
+    axios.get(`/api/auth/appointments/`)
+      .then(res =>{setAppointments(res.data.appointments)})
+      .catch(err => console.error(err));
+  }, []);
+
 
   const nextMonth = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })

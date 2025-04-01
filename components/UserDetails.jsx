@@ -26,6 +26,7 @@ const UserDetails = ({ userId }) => {
     }
   }, [session])
 
+
   useEffect(() => {
     if (userId) {
       axios.get(`/api/auth/users/${userId}`)
