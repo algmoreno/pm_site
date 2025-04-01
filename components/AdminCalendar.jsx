@@ -33,6 +33,7 @@ const AdminCalendar = ({ title }) => {
   const { data: session, status } = useSession();
   const userId = session?.user.id
   const isAdmin = session?.user.role === "admin";
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
   const [newDatetime, setNewDatetime] = useState();
@@ -50,20 +51,8 @@ const AdminCalendar = ({ title }) => {
   }, [isAdmin])
 
   useEffect(() => {
-    Load()
-  }, [appointments])
-
-  function Load() {
-    if (appointments.length == 0) {
-      return (
-        <PageLoader />
-      )
-    }
-  }
-
-  useEffect(() => {
     axios.get(`/api/auth/appointments/`)
-      .then(res =>{setAppointments(res.data.appointments)})
+      .then(res =>{setAppointments(res.data.appointments); setLoading(false)})
       .catch(err => console.error(err));
   }, []);
 
@@ -278,7 +267,8 @@ const AdminCalendar = ({ title }) => {
 
   return (
     <div className="w-[1500px] mx-auto mb-[5%] mt-[150px] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
-      <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
+      {!loading ? (
+        <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
           <div className="flex items-center">
             <h2 className="flex-auto text-sm font-semibold text-gray-900">
@@ -358,6 +348,10 @@ const AdminCalendar = ({ title }) => {
         </section>
         <DeleteModal />
       </div>
+      ) : (
+        <PageLoader />
+      )}
+      
     </div>
   )
 }

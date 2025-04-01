@@ -4,7 +4,7 @@ import "@/styles/page-loader.css";
 const PageLoader = () => {
   return (
     <div className="flex flex-wrap m-auto">
-      <div className="h-[500px] mx-auto my-[7%] rounded-md flex">
+      <div className="m-auto rounded-md flex">
         <div className="m-auto">
           <div className="load-row">
             <span />

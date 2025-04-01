@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 const UserDetails = ({ userId }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(true);
@@ -30,16 +31,10 @@ const UserDetails = ({ userId }) => {
   useEffect(() => {
     if (userId) {
       axios.get(`/api/auth/users/${userId}`)
-        .then(res =>{setUser(res.data.user)})
+        .then(res =>{setUser(res.data.user); setLoading(false)})
         .catch(err => console.error(err));
     }
   }, [userId]);
-
-  if (status === "loading" || !user) {
-    return (
-      <PageLoader />
-    )
-  }
 
   const handleSubmit = async(e) => {     
     e.preventDefault();
@@ -91,7 +86,8 @@ const UserDetails = ({ userId }) => {
 
   return (
     <div className="w-full mx-auto mt-[150px] mb-20 flex flex-wrap">
-      <form className="w-[800px] mx-auto max-sm:w-[100%]  bg-slate-200 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
+      {!loading ? (
+        <form className="w-[800px] mx-auto max-sm:w-[100%]  bg-slate-200 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
@@ -212,6 +208,10 @@ const UserDetails = ({ userId }) => {
         </div>
         }
       </form>      
+      ) : (
+        <PageLoader />
+      )}
+      
     </div>
   )
 }

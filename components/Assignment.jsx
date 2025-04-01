@@ -17,6 +17,7 @@ const Assignment = ({ userId }) => {
   const router = useRouter();
   const effectRan = useRef(false);
   const { data: session, status } = useSession();
+  const [loading, setLoading] = useState(true);
   const isAdmin = session?.user.role === "admin";
   const [user, setUser] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
@@ -32,18 +33,6 @@ const Assignment = ({ userId }) => {
     filePaths: [],
   });
 
-  useEffect(() => {
-    Load()
-  }, [assignments])
-
-  function Load() {
-    if (assignments.length == 0) {
-      return (
-        <PageLoader />
-      )
-    }
-  }
-
   // pull user assignments from db
   useEffect(() => {
     if (effectRan.current) return; // Prevents second call
@@ -51,6 +40,7 @@ const Assignment = ({ userId }) => {
     axios.get(`/api/auth/users/${userId}`)
       .then(res => {
         setUser(res.data.user);
+        setLoading(false);
       })
       .catch(err => console.error(err));
 
@@ -334,7 +324,8 @@ const Assignment = ({ userId }) => {
       </form>
       }
 
-      <div>
+      {!loading ? (
+        <div>
         <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
         <div className="mt-10">
           {assignments.length > 0 && assignments.map((assignment, index) => (
@@ -379,6 +370,10 @@ const Assignment = ({ userId }) => {
         </div>
 
       </div>
+      ) : (
+        <PageLoader />
+      ) }
+      
     </div>
   )
 }
