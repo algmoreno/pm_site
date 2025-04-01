@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
@@ -20,8 +20,8 @@ const AppointmentList = ({ userId }) => {
   const [showEdit, setShowEdit] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [appointments, setAppointments] = useState([]);
   const [newDatetime, setNewDatetime] = useState();
-  const [triggerRerender, setTriggerRerender] = useState(false);
   
   // get user
   useEffect(() => {
@@ -31,6 +31,13 @@ const AppointmentList = ({ userId }) => {
       .catch(err => console.error(err));
     }
   }, [userId]);
+
+   // get all appointments
+   useEffect(() => {
+    axios.get(`/api/auth/appointments/`)
+      .then(res =>{setAppointments(res.data.appointments)})
+      .catch(err => console.error(err));
+  }, []);
 
   const handleEdit = (appointment) => {
     setSelectedAppointment((prev) => appointment);
@@ -99,74 +106,102 @@ const AppointmentList = ({ userId }) => {
     toast.success("Removed appointment.")
   }
 
-  // Edit appt modal component 
-  const EditModal = () => {
-    const now = formatISO(new Date());
-    const isWithin24Hours = selectedAppointment
-    ? differenceInHours(formatISO(selectedAppointment.startDatetime), now) <= 24
-    : false;
+  // Time slot component
+  const Slot = ({ hour }) => {
+    const slotRef = useRef(null);
+    let hourPlusOne = addHours(hour, 1)
+
+    const handleSelect = () => {
+      setSelectedHour(hour);
+      setAppointment((prevAppt) => ({
+        ...appointment,
+        startDatetime: formatISO(hour),
+        endDatetime: formatISO(hourPlusOne),
+      }));
+    }
 
     return (
-      <Dialog open={showEdit} onClose={setShowEdit} className="relative z-10">
-        <DialogBackdrop
-          transition
-          className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
-        />
-
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <DialogPanel
-              transition
-              className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
-            >
-              <div>
-                <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-amber-100">
-                  <MdEdit aria-hidden="true" className="size-6 text-amber-600" />
-                </div>
-                <div className="mt-3 text-center sm:mt-5">
-                  <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
-                    Edit appointment
-                  </DialogTitle>
-                  {!isWithin24Hours ? (
-                  selectedAppointment !== null &&
-                    <form className="mt-2">
-                      <input
-                        type="datetime-local"
-                        id="meeting-time"
-                        name="meeting-time"
-                        value={newDatetime}
-                        onChange={(e) => setNewDatetime((prevDate) => e.target.value)} />
-                    </form>
-                  ) 
-                  : (
-                    <p className="text-[14px]">Unable to reschedule within 24 hrs. of appointment.</p>
-                  ) }
-
-                </div>
-              </div>
-              <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                <button
-                  type="button"
-                  onClick={editAppointment}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
-                >
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  data-autofocus
-                  onClick={() => setShowEdit(false)}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                >
-                  Cancel
-                </button>
-              </div>
-            </DialogPanel>
-          </div>
-        </div>
-      </Dialog>
+      <div ref={slotRef} tabIndex="0" onClick={handleSelect}
+        className={classNames(
+          isEqual(hour, selectedHour) && 'bg-gray-200 border-2', 
+          'col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-2 focus:outline-offset-2 focus:outline-gray-200 focus:bg-gray-200 hover:bg-gray-200 hover:cursor-pointer border border-white')}>
+        <p className="mt-0.5 ">
+          <time dateTime={hour}>{format(hour, 'hh:mm a')}</time>-{' '}
+          <time dateTime={hourPlusOne}>{format(hourPlusOne, 'hh:mm a')}</time>
+        </p>
+      </div>
     )
   }
+
+  // // Edit appt modal component 
+  // const EditModal = () => {
+  //   const now = formatISO(new Date());
+  //   const isWithin24Hours = selectedAppointment
+  //   ? differenceInHours(formatISO(selectedAppointment.startDatetime), now) <= 24
+  //   : false;
+
+  //   return (
+  //     <Dialog open={showEdit} onClose={setShowEdit} className="relative z-10">
+  //       <DialogBackdrop
+  //         transition
+  //         className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+  //       />
+
+  //       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+  //         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+  //           <DialogPanel
+  //             transition
+  //             className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+  //           >
+  //             <div>
+  //               <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-amber-100">
+  //                 <MdEdit aria-hidden="true" className="size-6 text-amber-600" />
+  //               </div>
+  //               <div className="mt-3 text-center sm:mt-5">
+  //                 <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
+  //                   Edit appointment
+  //                 </DialogTitle>
+  //                 {!isWithin24Hours ? (
+  //                 selectedAppointment !== null &&
+  //                 <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-700">
+  //                 {availableHours.length > 0 && !isBeforeToday ? (
+  //                   availableHours.map((hour, index) => (
+  //                     <Slot key={index} hour={hour}/>
+  //                   ))
+  //                 ) : (
+  //                   <p>No availability today.</p>
+  //                 )}
+  //               </div>
+  //                 ) 
+  //                 : (
+  //                   <p className="text-[14px]">Unable to reschedule within 24 hrs. of appointment.</p>
+  //                 ) }
+
+  //               </div>
+  //             </div>
+  //             <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+  //               <button
+  //                 type="button"
+  //                 onClick={editAppointment}
+  //                 className="mt-3 inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+  //               >
+  //                 Submit
+  //               </button>
+  //               <button
+  //                 type="button"
+  //                 data-autofocus
+  //                 onClick={() => setShowEdit(false)}
+  //                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+  //               >
+  //                 Cancel
+  //               </button>
+  //             </div>
+  //           </DialogPanel>
+  //         </div>
+  //       </div>
+  //     </Dialog>
+  //   )
+  // }
 
   // Delete appt modal component 
   const DeleteModal = () => {
@@ -255,27 +290,12 @@ const AppointmentList = ({ userId }) => {
               className="absolute right-0 z-50 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 hover:cursor-pointer 
                 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
               <div className="py-1">
-                <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
-                  <p
-                    onClick={(e) => {setSelectedAppointment(appointment); setShowEdit(true)}}
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
-                    Reschedule
-                  </p>
-                </MenuItem>
-                <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
+                <MenuItem className="hover:bg-gray-200">
                   <p
                     onClick={(e) => {setSelectedAppointment(appointment); setShowDelete(true)}}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Cancel Appointment
                   </p>                
-                </MenuItem>
-                <MenuItem className="hover:bg-gray-200">
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
-                  >
-                    Exit
-                  </a>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -283,7 +303,6 @@ const AppointmentList = ({ userId }) => {
         </li>
         ))}
       </ul>
-      <EditModal />
       <DeleteModal />
     </div>
   )

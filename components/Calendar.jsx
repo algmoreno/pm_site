@@ -20,8 +20,8 @@ const Calendar = ({ title }) => {
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
   let firstHourOfDay = set(selectedDay, { hours: 9 })
   let lastHourOfDay = set(selectedDay, { hours: 16 })
-  let days = eachDayOfInterval({ start: firstDayCurrentMonth, end: endOfWeek(endOfMonth(firstDayCurrentMonth)) })
   let hoursOfDay = eachHourOfInterval({ start: firstHourOfDay, end: lastHourOfDay })
+  let days = eachDayOfInterval({ start: firstDayCurrentMonth, end: endOfWeek(endOfMonth(firstDayCurrentMonth)) })
   let colStartClasses = [
     '',
     'col-start-2',
@@ -36,7 +36,7 @@ const Calendar = ({ title }) => {
   const { data: session, status } = useSession();
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
-  const [appointments, setAppointments] = useState([]);
+  
   const [showConfirm, setShowConfirm] = useState(false)
   const [reload, setReload] = useState(false);
   const id = session?.user.id

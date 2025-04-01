@@ -124,63 +124,63 @@ const AdminCalendar = ({ title }) => {
   }
 
   // Edit appt modal component 
-  const EditModal = () => {
-    return (
-      <Dialog open={showEdit} onClose={setShowEdit} className="relative z-10">
-        <DialogBackdrop
-          transition
-          className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
-        />
+  // const EditModal = () => {
+  //   return (
+  //     <Dialog open={showEdit} onClose={setShowEdit} className="relative z-10">
+  //       <DialogBackdrop
+  //         transition
+  //         className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+  //       />
 
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <DialogPanel
-              transition
-              className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
-            >
-              <div>
-                <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-amber-100">
-                  <MdEdit aria-hidden="true" className="size-6 text-amber-600" />
-                </div>
-                <div className="mt-3 text-center sm:mt-5">
-                  <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
-                    Edit appointment
-                  </DialogTitle>
-                  {selectedAppointment !== null &&
-                  <form className="mt-2">
-                    <input
-                      type="datetime-local"
-                      id="meeting-time"
-                      name="meeting-time"
-                      value={newDatetime}
-                      onChange={(e) => setNewDatetime((prevDate) => e.target.value)} />
-                  </form>
-                  }
-                </div>
-              </div>
-              <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                <button
-                  type="button"
-                  onClick={editAppointment}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
-                >
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  data-autofocus
-                  onClick={() => setShowEdit(false)}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                >
-                  Cancel
-                </button>
-              </div>
-            </DialogPanel>
-          </div>
-        </div>
-      </Dialog>
-    )
-  }
+  //       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+  //         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+  //           <DialogPanel
+  //             transition
+  //             className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+  //           >
+  //             <div>
+  //               <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-amber-100">
+  //                 <MdEdit aria-hidden="true" className="size-6 text-amber-600" />
+  //               </div>
+  //               <div className="mt-3 text-center sm:mt-5">
+  //                 <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
+  //                   Edit appointment
+  //                 </DialogTitle>
+  //                 {selectedAppointment !== null &&
+  //                 <form className="mt-2">
+  //                   <input
+  //                     type="datetime-local"
+  //                     id="meeting-time"
+  //                     name="meeting-time"
+  //                     value={newDatetime}
+  //                     onChange={(e) => setNewDatetime((prevDate) => e.target.value)} />
+  //                 </form>
+  //                 }
+  //               </div>
+  //             </div>
+  //             <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+  //               <button
+  //                 type="button"
+  //                 onClick={editAppointment}
+  //                 className="mt-3 inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+  //               >
+  //                 Submit
+  //               </button>
+  //               <button
+  //                 type="button"
+  //                 data-autofocus
+  //                 onClick={() => setShowEdit(false)}
+  //                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+  //               >
+  //                 Cancel
+  //               </button>
+  //             </div>
+  //           </DialogPanel>
+  //         </div>
+  //       </div>
+  //     </Dialog>
+  //   )
+  // }
 
   // Delete appt modal component 
   const DeleteModal = () => {
@@ -263,25 +263,10 @@ const AdminCalendar = ({ title }) => {
             <div className="py-1">
               <MenuItem>
                 <p
-                  onClick={() => {setShowEdit(true); setSelectedAppointment(appointment)}}
-                  className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
-                  Edit
-                </p>
-              </MenuItem>
-              <MenuItem>
-                <p
                   onClick={(e) => {setShowDelete(true); setSelectedAppointment(appointment)}}
                   className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                   Delete
                 </p>                
-              </MenuItem>
-              <MenuItem>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900"
-                >
-                  Cancel
-                </a>
               </MenuItem>
             </div>
           </MenuItems>
@@ -370,7 +355,6 @@ const AdminCalendar = ({ title }) => {
               
           </ol>
         </section>
-        <EditModal />
         <DeleteModal />
       </div>
     </div>
