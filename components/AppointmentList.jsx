@@ -43,7 +43,17 @@ const AppointmentList = ({ userId }) => {
     )
   }
 
-  let nonPastAppointments = user.appointments.filter((appointment) => !isBefore(parseISO(appointment.startDatetime), today));
+  let now = new Date();
+  let nonPastAppointments = user.appointments.filter((appointment) => differenceInHours(parseISO(appointment.startDatetime), now) >= -1);
+  let orderedAppointments = nonPastAppointments.sort((a, b) => {
+    if (a.startDatetime < b.startDatetime) {
+      return -1; 
+    }
+    if (a.startDatetime > b.startDatetime) {
+      return 1; 
+    }
+    return 0; 
+  });
 
   const seeDetails = (apptId) => {
       router.push(`/appointment/${apptId}`)
@@ -91,6 +101,11 @@ const AppointmentList = ({ userId }) => {
 
   // Edit appt modal component 
   const EditModal = () => {
+    const now = formatISO(new Date());
+    const isWithin24Hours = selectedAppointment
+    ? differenceInHours(formatISO(selectedAppointment.startDatetime), now) <= 24
+    : false;
+
     return (
       <Dialog open={showEdit} onClose={setShowEdit} className="relative z-10">
         <DialogBackdrop
@@ -112,16 +127,21 @@ const AppointmentList = ({ userId }) => {
                   <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
                     Edit appointment
                   </DialogTitle>
-                  {selectedAppointment !== null &&
-                  <form className="mt-2">
-                    <input
-                      type="datetime-local"
-                      id="meeting-time"
-                      name="meeting-time"
-                      value={newDatetime}
-                      onChange={(e) => setNewDatetime((prevDate) => e.target.value)} />
-                  </form>
-                  }
+                  {!isWithin24Hours ? (
+                  selectedAppointment !== null &&
+                    <form className="mt-2">
+                      <input
+                        type="datetime-local"
+                        id="meeting-time"
+                        name="meeting-time"
+                        value={newDatetime}
+                        onChange={(e) => setNewDatetime((prevDate) => e.target.value)} />
+                    </form>
+                  ) 
+                  : (
+                    <p className="text-[14px]">Unable to reschedule within 24 hrs. of appointment.</p>
+                  ) }
+
                 </div>
               </div>
               <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
@@ -214,7 +234,7 @@ const AppointmentList = ({ userId }) => {
         <h1 className="mb-2 text-gray-900">Upcoming Appointments</h1>
       </div>
       <ul role="list" className="relative flex flex-wrap mt-5 gap-4 divide-y">
-        {nonPastAppointments.map((appointment, index) => (
+        {orderedAppointments.map((appointment, index) => (
         <li key={appointment._id} className="w-[300px] group flex items-center bg-white rounded-md gap-x-4 px-4 py-4 border-2 border-gray-300 focus-within:bg-gray-100 hover:bg-gray-100">
           <div onClick={(e) => seeDetails(appointment._id)} className="flex-auto">
             <p className="text-gray-900">{format(parseISO(appointment.startDatetime), 'MMMM dd, yyyy')}</p>
