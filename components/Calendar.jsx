@@ -163,7 +163,7 @@ const Calendar = ({ title }) => {
       <div ref={slotRef} tabIndex="0" onClick={handleSelect}
         className={classNames(
           isEqual(hour, selectedHour) && 'bg-gray-200 border-2', 
-          'col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-2 focus:outline-offset-2 focus:outline-gray-200 focus:bg-gray-200 hover:bg-gray-200 hover:cursor-pointer border border-gray-500')}>
+          'col-span-1 items-center gap-x-4 rounded-xl px-4 py-2 focus:border-2 focus:outline-offset-2 focus:outline-gray-200 focus:bg-gray-200 hover:bg-gray-200 hover:cursor-pointer border border-white')}>
         <p className="mt-0.5 ">
           <time dateTime={hour}>{format(hour, 'hh:mm a')}</time>-{' '}
           <time dateTime={hourPlusOne}>{format(hourPlusOne, 'hh:mm a')}</time>
@@ -297,7 +297,7 @@ const Calendar = ({ title }) => {
           <h2 className="text-base font-semibold text-gray-900">
             Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>
-          <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-500">
+          <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-700">
             {availableHours.length > 0 && !isBeforeToday ? (
               availableHours.map((hour, index) => (
                 <Slot key={index} hour={hour}/>
@@ -309,7 +309,7 @@ const Calendar = ({ title }) => {
           </div>
           {availableHours.length > 0 && !isBeforeToday ? (
             <div className="mt-6 flex items-center justify-end gap-x-6">
-              <button type="button" className="text-sm/6 font-semibold text-gray-900">
+              <button onClick={() => setSelectedHour(null)} type="button" className="text-sm/6 font-semibold text-gray-900">
                 Cancel
               </button>
               <button

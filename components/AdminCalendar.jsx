@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { PageLoader } from '@/components/index';
 import { toast } from "sonner";
 import { format, startOfToday, eachDayOfInterval, startOfMonth, endOfMonth, endOfWeek, isToday, addHours,
-  isSameDay, isSameMonth, isEqual, parse, add, getDay, parseISO, formatISO } from 'date-fns';
+  isSameDay, isSameMonth, isEqual, parse, add, getDay, parseISO, formatISO, isBefore  } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon } from '@heroicons/react/24/outline'
@@ -77,7 +77,8 @@ const AdminCalendar = ({ title }) => {
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
   }
 
-  let selectedDayAppointments = appointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay))
+  let nonPastAppointments = appointments.filter((appointment) => !isBefore(parseISO(appointment.startDatetime), today))
+  let selectedDayAppointments = nonPastAppointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay));
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -345,13 +346,11 @@ const AdminCalendar = ({ title }) => {
                   </time>
                 </button>
                 <div className="w-1 h-1 mx-auto mt-1">
-                  {appointments.some((appointment) => isSameDay(parseISO(appointment.startDatetime), day)
+                  {nonPastAppointments.some((appointment) => isSameDay(parseISO(appointment.startDatetime), day)
                   ) && (
                     <div className="w-1 h-1 rounded-full bg-sky-600"></div>
                   )}
-                </div>
-                
-                
+                </div>                              
               </div>
             ))}
           </div>
