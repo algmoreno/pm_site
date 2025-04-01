@@ -31,24 +31,11 @@ const AppointmentList = ({ userId }) => {
       .catch(err => console.error(err));
     }
   }, [userId]);
-  
-  useEffect(() => {
-    console.log("Selected appointment changed:", selectedAppointment);
-  }, [selectedAppointment]);
 
   const handleEdit = (appointment) => {
     setSelectedAppointment((prev) => appointment);
     setShowEdit((prev) => true);
   }; 
-  
-  const handleDelete = () => {
-    // setSelectedAppointment((prev) => appointment);
-    // setShowDelete(true);
-  };
-
-  const exampleFunc = () => {
-    console.log("hello")
-  }
   
   if (status === "loading" || !user) {
     return (
@@ -222,11 +209,11 @@ const AppointmentList = ({ userId }) => {
   }
 
   return (
-    <div className="flex w-[1400px] mx-auto mt-[100px] mb-[5%] p-5 rounded-md flex-wrap overflow-visible">
+    <div className="w-[1400px] flex flex-wrap mx-auto mt-[100px] mb-[5%] p-5 rounded-md">
       <div className="text-[24px] border-b-2 border-gray-900">
         <h1 className="mb-2 text-gray-900">Upcoming Appointments</h1>
       </div>
-      <ul role="list" className="relative flex mt-5 gap-4 divide-y">
+      <ul role="list" className="relative flex flex-wrap mt-5 gap-4 divide-y">
         {nonPastAppointments.map((appointment, index) => (
         <li key={appointment._id} className="w-[300px] group flex items-center bg-white rounded-md gap-x-4 px-4 py-4 border-2 border-gray-300 focus-within:bg-gray-100 hover:bg-gray-100">
           <div onClick={(e) => seeDetails(appointment._id)} className="flex-auto">
@@ -250,14 +237,14 @@ const AppointmentList = ({ userId }) => {
               <div className="py-1">
                 <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
                   <p
-                    onClick={(e) => handleEdit(appointment)}
+                    onClick={(e) => {setSelectedAppointment(appointment); setShowEdit(true)}}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Reschedule
                   </p>
                 </MenuItem>
                 <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
                   <p
-                    onClick={exampleFunc}
+                    onClick={(e) => {setSelectedAppointment(appointment); setShowDelete(true)}}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Cancel Appointment
                   </p>                
