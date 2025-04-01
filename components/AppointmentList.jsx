@@ -5,7 +5,7 @@ import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
-import { format, addHours, parse, add, parseISO, formatISO } from 'date-fns';
+import { format, addHours, parse, add, parseISO, formatISO, differenceInHours } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon } from '@heroicons/react/24/outline'
@@ -20,12 +20,6 @@ const AppointmentList = ({ userId }) => {
   const [showDelete, setShowDelete] = useState(false)
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [newDatetime, setNewDatetime] = useState();
-
-  useEffect(() => {
-    if (!isAdmin) {
-      router.push("/unauthorized")
-    }
-  }, [isAdmin])
 
   // get user
   useEffect(() => {
@@ -64,6 +58,7 @@ const AppointmentList = ({ userId }) => {
       return updatedAppointment;
     });
 
+    // pull user and populate appointments !!
     // reload appointments
     axios.get(`/api/auth/appointments/`)
     .then(res =>{setAppointments(res.data.appointments)})
@@ -73,7 +68,6 @@ const AppointmentList = ({ userId }) => {
   }
 
   const deleteAppointment = async () => {
-    //const is24HrsBefore = 
     const apptId = selectedAppointment._id;
     const params = { id: apptId }
     const response = await axios.delete(`/api/auth/appointments/${apptId}`, { data: { userId } });
@@ -147,6 +141,12 @@ const AppointmentList = ({ userId }) => {
 
   // Delete appt modal component 
   const DeleteModal = () => {
+    const now = formatISO(new Date());
+    let isWithin24Hours;
+    if (selectedAppointment != null){
+      isWithin24Hours = differenceInHours(formatISO(selectedAppointment?.startDatetime), now) <= 24; 
+    }
+
     return (
       <Dialog open={showDelete} onClose={setShowDelete} className="relative z-10">
         <DialogBackdrop
@@ -168,23 +168,28 @@ const AppointmentList = ({ userId }) => {
                   <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
                     Delete Appointment
                   </DialogTitle>
-                  <p className="text-[14px]">Are you sure you want to delete this appointment?</p>
+                  {!isWithin24Hours ? (
+                    <p className="text-[14px]">Are you sure you want to delete this appointment?</p>
+                  ) 
+                  : (
+                    <p className="text-[14px]">Within 24hrs of appointment. Unable to cancel appointment.</p>
+                  ) }
                 </div>
               </div>
               <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                 <button
                   type="button"
                   onClick={() => deleteAppointment()}
-                  className="inline-flex w-full justify-center rounded-md bg-red-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
-                >
+                  disabled={isWithin24Hours}
+                  className={`${isWithin24Hours ? 'bg-gray-200 hover:cursor-default' : 'bg-red-700 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'} inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs  sm:col-start-2`}>
                   Delete
                 </button>
                 <button
                   type="button"
                   data-autofocus
                   onClick={() => setShowDelete(false)}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                >
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 
+                  shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:col-start-1 sm:mt-0">
                   Cancel
                 </button>
               </div>
@@ -212,7 +217,7 @@ const AppointmentList = ({ userId }) => {
           </div> 
           <Menu as="div" className="relative group-hover:opacity-100 focus-within:opacity-100">
             <div>
-              <MenuButton className=" -m-2 flex items-center rounded-full p-1.5 text-black hover:text-gray-600">
+              <MenuButton className="relative -m-2 flex items-center rounded-full p-1.5 text-black hover:text-gray-600">
                 <span className="sr-only">Open options</span>
                 <EllipsisVerticalIcon className="size-6" aria-hidden="true" />
               </MenuButton>
@@ -224,7 +229,7 @@ const AppointmentList = ({ userId }) => {
               <div className="py-1">
                 <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
                   <p
-                    onClick={() => {setShowEdit(true); setSelectedAppointment(appointment)}}
+                    onClick={(e) => {setShowEdit(true); setSelectedAppointment(appointment)}}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Reschedule
                   </p>

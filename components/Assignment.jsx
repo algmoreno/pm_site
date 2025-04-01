@@ -57,7 +57,6 @@ const Assignment = ({ userId }) => {
               });
   
               if (!response.ok) throw new Error(`Failed to fetch file: ${filePath}`);
-              console.log("response", response)
               const contentType = response.headers.get("content-type");
               const blob = await response.blob();
               const url = URL.createObjectURL(blob);
