@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import axios from 'axios';
 import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
@@ -21,13 +21,14 @@ const AppointmentList = ({ userId }) => {
   const [showDelete, setShowDelete] = useState(false)
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [newDatetime, setNewDatetime] = useState();
-
+  const [triggerRerender, setTriggerRerender] = useState(false);
+  
   // get user
   useEffect(() => {
     if (userId) {
       axios.get(`/api/auth/users/${userId}`)
-        .then(res =>{setUser(res.data.user)})
-        .catch(err => console.error(err));
+      .then(res =>{setUser(res.data.user)})
+      .catch(err => console.error(err));
     }
   }, [userId]);
   
@@ -35,36 +36,39 @@ const AppointmentList = ({ userId }) => {
     console.log("Selected appointment changed:", selectedAppointment);
   }, [selectedAppointment]);
 
-  const handleEditClick = useCallback((appointment) => {
-    setShowEdit(true);
-    setSelectedAppointment(appointment);
-  }, [setShowEdit, setSelectedAppointment]);
+  const handleEdit = (appointment) => {
+    setSelectedAppointment((prev) => appointment);
+    setShowEdit((prev) => true);
+  }; 
+  
+  const handleDelete = () => {
+    // setSelectedAppointment((prev) => appointment);
+    // setShowDelete(true);
+  };
 
-  const handleDeleteClick = useCallback((appointment) => {
-    setShowDelete(true);
-    setSelectedAppointment(appointment);
-  }, [setShowDelete, setSelectedAppointment]);
-
+  const exampleFunc = () => {
+    console.log("hello")
+  }
+  
   if (status === "loading" || !user) {
     return (
       <PageLoader />
     )
   }
 
-
-  let nonPastAppointments = user.appointments.filter((appointment) => !isBefore(parseISO(appointment.startDatetime), today))
+  let nonPastAppointments = user.appointments.filter((appointment) => !isBefore(parseISO(appointment.startDatetime), today));
 
   const seeDetails = (apptId) => {
-    router.push(`/appointment/${apptId}`)
-  }
+      router.push(`/appointment/${apptId}`)
+    }
 
-  const editAppointment = async () => {
+    const editAppointment = async () => {
     const apptId = selectedAppointment._id;
     let hourPlusOne = addHours(newDatetime, 1)
-
+  
     setSelectedAppointment(prev => {
-      const updatedAppointment = {
-        ...prev,
+        const updatedAppointment = {
+            ...prev,
         startDatetime: formatISO(newDatetime),
         endDatetime: formatISO(addHours(newDatetime, 1)),
       };
@@ -97,8 +101,6 @@ const AppointmentList = ({ userId }) => {
     setSelectedAppointment(null);
     toast.success("Removed appointment.")
   }
-
-
 
   // Edit appt modal component 
   const EditModal = () => {
@@ -162,10 +164,9 @@ const AppointmentList = ({ userId }) => {
   // Delete appt modal component 
   const DeleteModal = () => {
     const now = formatISO(new Date());
-    let isWithin24Hours;
-    if (selectedAppointment != null){
-      isWithin24Hours = differenceInHours(formatISO(selectedAppointment?.startDatetime), now) <= 24; 
-    }
+    const isWithin24Hours = selectedAppointment
+    ? differenceInHours(formatISO(selectedAppointment.startDatetime), now) <= 24
+    : false;
 
     return (
       <Dialog open={showDelete} onClose={setShowDelete} className="relative z-10">
@@ -221,18 +222,18 @@ const AppointmentList = ({ userId }) => {
   }
 
   return (
-    <div className="w-[700px] h-[600px] min-h-[500px] mx-auto mt-[150px] mb-[5%] border-2 border-gray-500 bg-slate-50 p-5 rounded-md flex-wrap overflow-auto">
+    <div className="flex w-[1400px] mx-auto mt-[100px] mb-[5%] p-5 rounded-md flex-wrap overflow-visible">
       <div className="text-[24px] border-b-2 border-gray-900">
-        <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
+        <h1 className="mb-2 text-gray-900">Upcoming Appointments</h1>
       </div>
-      <ul role="list" className="divide-y divide-gray-800">
+      <ul role="list" className="relative flex mt-5 gap-4 divide-y">
         {nonPastAppointments.map((appointment, index) => (
-        <li key={appointment._id} className="group flex items-center gap-x-4 px-4 py-4 border-b focus-within:bg-gray-100 hover:bg-gray-100">
+        <li key={appointment._id} className="w-[300px] group flex items-center bg-white rounded-md gap-x-4 px-4 py-4 border-2 border-gray-300 focus-within:bg-gray-100 hover:bg-gray-100">
           <div onClick={(e) => seeDetails(appointment._id)} className="flex-auto">
             <p className="text-gray-900">{format(parseISO(appointment.startDatetime), 'MMMM dd, yyyy')}</p>
             <p className="mt-0.5">
-              <time dateTime={appointment.startDatetime}>{format(parseISO(appointment.startDatetime), 'hh:mm a')}</time> -{' '}
-              <time dateTime={appointment.endDatetime}>{format(parseISO(appointment.endDatetime), 'hh:mm a')}</time>
+              <time dateTime={appointment.startDatetime}>{format(parseISO(appointment.startDatetime), 'h:mm a')}</time> -{' '}
+              <time dateTime={appointment.endDatetime}>{format(parseISO(appointment.endDatetime), 'h:mm a')}</time>
             </p>
           </div> 
           <Menu as="div" className="relative group-hover:opacity-100 focus-within:opacity-100">
@@ -244,19 +245,19 @@ const AppointmentList = ({ userId }) => {
             </div>
             <MenuItems
               transition
-              className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 hover:cursor-pointer 
+              className="absolute right-0 z-50 mt-2 w-36 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 hover:cursor-pointer 
                 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
               <div className="py-1">
                 <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
                   <p
-                    onClick={(e) => handleEditClick(appointment)}
+                    onClick={(e) => handleEdit(appointment)}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Reschedule
                   </p>
                 </MenuItem>
                 <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
                   <p
-                    onClick={(e) => handleDeleteClick(appointment)}
+                    onClick={exampleFunc}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Cancel Appointment
                   </p>                
