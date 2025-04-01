@@ -137,9 +137,10 @@ const Calendar = ({ title }) => {
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
   }
 
+  let now = new Date()
   let selectedDayAppointments = appointments.filter((appointment) => isSameDay(parseISO(appointment.startDatetime), selectedDay))
   let availableHours = hoursOfDay.filter((hour) => !selectedDayAppointments.some((appointment) => isSameHour(parseISO(appointment.startDatetime), hour)))
-  let isBeforeToday = isBefore(selectedDay, today)
+  let isBeforeToday = isBefore(selectedDay, now)
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -206,7 +207,7 @@ const Calendar = ({ title }) => {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
                 >
                   Confirm
                 </button>
@@ -228,7 +229,7 @@ const Calendar = ({ title }) => {
 
   return (
     <div className="w-[1500px] h-[auto] mx-auto mt-[9%] mb-20 max-sm:mt-[25%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
-      <h2 className="text-[24px] text-gray-900 my-5 border-b">Book A Session</h2>
+      <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
       <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 max-md:flex-wrap">
         <div className="md:pr-14">
           <div className="flex items-center">
@@ -283,7 +284,7 @@ const Calendar = ({ title }) => {
                   </time>
                 </button>
                 <div className="w-1 h-1 mx-auto mt-1">
-                  {availableHours.length > 0 && !isBefore(day, today) && (
+                  {availableHours.length > 0 && !isBefore(day, today) && !isToday(day) && (
                     <div className="w-1 h-1 rounded-full bg-gray-400"></div>
                   )}
                 </div>

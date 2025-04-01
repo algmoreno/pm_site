@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios';
 import { PageLoader } from '@/components/index';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
-import { format, addHours, parse, add, parseISO, formatISO, differenceInHours } from 'date-fns';
+import { format, addHours, parse, add, parseISO, formatISO, differenceInHours, isBefore, startOfToday } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon } from '@heroicons/react/24/outline'
@@ -13,6 +13,7 @@ import { MdEdit, MdDelete } from "react-icons/md";
 
 const AppointmentList = ({ userId }) => {
   const router = useRouter();
+  let today = new Date();
   const { data: session, status } = useSession();
   const isAdmin = session?.user.role === "admin";
   const [user, setUser] = useState(null);
@@ -29,12 +30,29 @@ const AppointmentList = ({ userId }) => {
         .catch(err => console.error(err));
     }
   }, [userId]);
+  
+  useEffect(() => {
+    console.log("Selected appointment changed:", selectedAppointment);
+  }, [selectedAppointment]);
+
+  const handleEditClick = useCallback((appointment) => {
+    setShowEdit(true);
+    setSelectedAppointment(appointment);
+  }, [setShowEdit, setSelectedAppointment]);
+
+  const handleDeleteClick = useCallback((appointment) => {
+    setShowDelete(true);
+    setSelectedAppointment(appointment);
+  }, [setShowDelete, setSelectedAppointment]);
 
   if (status === "loading" || !user) {
     return (
       <PageLoader />
     )
   }
+
+
+  let nonPastAppointments = user.appointments.filter((appointment) => !isBefore(parseISO(appointment.startDatetime), today))
 
   const seeDetails = (apptId) => {
     router.push(`/appointment/${apptId}`)
@@ -80,6 +98,8 @@ const AppointmentList = ({ userId }) => {
     toast.success("Removed appointment.")
   }
 
+
+
   // Edit appt modal component 
   const EditModal = () => {
     return (
@@ -119,7 +139,7 @@ const AppointmentList = ({ userId }) => {
                 <button
                   type="button"
                   onClick={editAppointment}
-                  className="inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
                 >
                   Submit
                 </button>
@@ -172,7 +192,7 @@ const AppointmentList = ({ userId }) => {
                     <p className="text-[14px]">Are you sure you want to delete this appointment?</p>
                   ) 
                   : (
-                    <p className="text-[14px]">Within 24hrs of appointment. Unable to cancel appointment.</p>
+                    <p className="text-[14px]">Unable to cancel within 24 hrs. of appointment.</p>
                   ) }
                 </div>
               </div>
@@ -181,7 +201,7 @@ const AppointmentList = ({ userId }) => {
                   type="button"
                   onClick={() => deleteAppointment()}
                   disabled={isWithin24Hours}
-                  className={`${isWithin24Hours ? 'bg-gray-200 hover:cursor-default' : 'bg-red-700 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'} inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs  sm:col-start-2`}>
+                  className={`${isWithin24Hours ? 'bg-gray-200 hover:cursor-default' : 'bg-red-700 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'} mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs  sm:col-start-2`}>
                   Delete
                 </button>
                 <button
@@ -206,8 +226,8 @@ const AppointmentList = ({ userId }) => {
         <h1 className="mb-5 text-gray-900">Upcoming Appointments</h1>
       </div>
       <ul role="list" className="divide-y divide-gray-800">
-        {user.appointments.map((appointment, index) => (
-        <li key={index} className="group flex items-center gap-x-4 px-4 py-4 border-b focus-within:bg-gray-100 hover:bg-gray-100">
+        {nonPastAppointments.map((appointment, index) => (
+        <li key={appointment._id} className="group flex items-center gap-x-4 px-4 py-4 border-b focus-within:bg-gray-100 hover:bg-gray-100">
           <div onClick={(e) => seeDetails(appointment._id)} className="flex-auto">
             <p className="text-gray-900">{format(parseISO(appointment.startDatetime), 'MMMM dd, yyyy')}</p>
             <p className="mt-0.5">
@@ -229,14 +249,14 @@ const AppointmentList = ({ userId }) => {
               <div className="py-1">
                 <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
                   <p
-                    onClick={(e) => {setShowEdit(true); setSelectedAppointment(appointment)}}
+                    onClick={(e) => handleEditClick(appointment)}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Reschedule
                   </p>
                 </MenuItem>
                 <MenuItem className="border-b border-gray-300 hover:bg-gray-200">
                   <p
-                    onClick={(e) => {setShowDelete(true); setSelectedAppointment(appointment)}}
+                    onClick={(e) => handleDeleteClick(appointment)}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900">
                     Cancel Appointment
                   </p>                
