@@ -58,6 +58,7 @@ const Calendar = ({ title }) => {
       router.push("/login")
     } else{
       router.push(`/schedule`)
+      setAppointment((prevAppointment) => ({...appointment, userId: userId }))
     }
   }, [session])
 
@@ -72,67 +73,62 @@ const Calendar = ({ title }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-
-    // create zoom meeting
     try {
-      const response = await fetch("/api/auth/zoom", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: "jchill@example.com", 
-          startDatetime: appointment.startDatetime, 
-        }),
-      });
-  
-      const data = await response.json();
-      console.log("Meeting Created:", data);
-    } catch (error) {
-      console.error("Error creating Zoom meeting:", error);
+      // add appt to db
+      const response = await axios.post('/api/auth/appointments', appointment);
+      if (response.status == 201) {
+        // pull all appointments again
+        axios.get(`/api/auth/appointments/`)
+        .then(res =>{setAppointments(res.data.appointments)})
+        .catch(err => console.error(err));
+
+        // create zoom meeting
+        const response = await fetch("/api/auth/zoom", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email, 
+            startDatetime: appointment.startDatetime, 
+          }),
+        });
+    
+        const data = await response.json();
+        console.log("Meeting Created:", data);
+        const zoomJoinUrl = data.join_url;
+
+        // send confirmation email
+        emailjs.send(
+          'service_qjdjgk9',
+          'template_w5n6h43',
+          {
+            from_name: "PM Yoga Appointment Manager",
+            to_name: name,
+            to_email: email, //add paula email
+            message: `Appointment booked for ${name} on ${format(appointment.startDatetime, "MMMM dd, yyyy")} ${format(appointment.startDatetime, "h:mm a")}-${format(appointment.endDatetime, "h:mm a")}. 
+            Join Zoom meeting here: ${zoomJoinUrl}`,
+          }, 'GDA7yUKvlEcVbask0')
+          .then(() => {
+            setPending(false);        
+            setAppointment({
+              userId: userId,
+              startDatetime: '',
+              endDatetime: '',
+              price: 50,
+            })
+            toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
+            from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
+          }, (error) => {
+            setPending(false);
+            console.log(error);
+            toast.error("Confirmation email failed to send.")
+          }
+        )
+      }
+
+    } catch (err) {
+      toast.error("Something went wrong. Try again.")
+      console.log(err);
     }
-
-    // add appt
-    // try {
-
-    //   setAppointment((prevAppointment) => ({...appointment, userId: userId }))
-    //   const response = await axios.post('/api/auth/appointments', appointment);
-    //   if (response.status == 201) {
-    //     // pull all appointments again
-    //     axios.get(`/api/auth/appointments/`)
-    //     .then(res =>{setAppointments(res.data.appointments)})
-    //     .catch(err => console.error(err));
-
-    //     // send confirmation email
-    //     // emailjs.send(
-    //     //   'service_qjdjgk9',
-    //     //   'template_w5n6h43',
-    //     //   {
-    //     //     from_name: "Appointment Manager",
-    //     //     to_name: 'Alan',
-    //     //     to_email: 'alg.moreno00@gmail.com',
-    //     //     message: `${appointment.duration} min. session booked for ${name} at ${appointment.date}`,
-    //     //   }, 'GDA7yUKvlEcVbask0')
-    //     //   .then(() => {
-    //     //     setPending(false);        
-    //     //     setAppointment({
-    //     //       date: '',
-    //     //       duration: '',
-    //     //       price: 50,
-    //     //       userId: userId
-    //     //     })
-    //     //     toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
-    //     //     from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
-    //     //   }, (error) => {
-    //     //     setPending(false);
-    //     //     console.log(error);
-    //     //     toast.error("Confirmation email failed to send.")
-    //     //   })
-    //   }
-
-    // } catch (err) {
-    //   toast.error("Something went wrong. Try again.")
-    //   console.log(err);
-    // }
     setShowConfirm(false)
     setSelectedHour(null)
   }

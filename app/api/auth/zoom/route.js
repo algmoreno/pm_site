@@ -1,7 +1,7 @@
 import axios from "axios";
 import { zoomOptions } from '@/constants';
 import { NextResponse } from 'next/server';
-import { getZoomAccessToken } from "@/lib/zoomAuth";
+import { getZoomAccessToken } from "@/app/lib/zoomAuth";
 
 export async function POST(req, res) {
   const { email, startDatetime } = req.body;
@@ -10,7 +10,7 @@ export async function POST(req, res) {
   const options = {
     method: 'POST',
     url: 'https://api.zoom.us/v2/users/alg.moreno00@gmail.com/meetings',
-    headers: {'Content-Type': 'application/json', Authorization: `Bearer ${process.env.accessToken}`},
+    headers: {'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}`},
     data: {
       agenda: 'None',
       default_password: false,
@@ -19,15 +19,12 @@ export async function POST(req, res) {
       pre_schedule: true,
       schedule_for: email,
       settings: {
-        contact_email: 'alg.moreno00@gmail.com',
-        contact_name: 'Alan Moreno',
+        contact_email: 'pmoreno@me.com',
+        contact_name: 'Paula Moreno',
         email_notification: false,
         waiting_room: true,
         continuous_meeting_chat: {
           enable: false,
-          auto_add_invited_external_users: true,
-          auto_add_meeting_participants: true,
-          who_is_added: 'all_users'
         },
       },
       start_time: startDatetime,

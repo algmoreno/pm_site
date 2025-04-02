@@ -9,7 +9,6 @@ let zoomAuth = {
 // Function to refresh access token
 const refreshZoomToken = async () => {
   try {
-    console.log("Refreshing Zoom access token...");
     const response = await axios.post("https://zoom.us/oauth/token", null, {
       params: {
         grant_type: "refresh_token",
@@ -26,7 +25,6 @@ const refreshZoomToken = async () => {
     zoomAuth.refreshToken = response.data.refresh_token;
     zoomAuth.expiresAt = Date.now() + response.data.expires_in * 1000; 
 
-    console.log("New Zoom Access Token:", zoomAuth.accessToken);
   } catch (error) {
     console.error("Failed to refresh Zoom token:", error.response?.data || error.message);
   }
