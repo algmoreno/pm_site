@@ -72,11 +72,15 @@ const Calendar = ({ title }) => {
   // submit appointment to api
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowConfirm(false)
+    setSelectedHour(null)
 
     try {
       // add appt to db
       const response = await axios.post('/api/auth/appointments', appointment);
       if (response.status == 201) {
+        toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
+        from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
         // pull all appointments again
         axios.get(`/api/auth/appointments/`)
         .then(res =>{setAppointments(res.data.appointments)})
@@ -115,8 +119,6 @@ const Calendar = ({ title }) => {
               endDatetime: '',
               price: 50,
             })
-            toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
-            from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
           }, (error) => {
             setPending(false);
             console.log(error);
@@ -129,10 +131,8 @@ const Calendar = ({ title }) => {
       toast.error("Something went wrong. Try again.")
       console.log(err);
     }
-    setShowConfirm(false)
-    setSelectedHour(null)
   }
-  
+
   const nextMonth = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
