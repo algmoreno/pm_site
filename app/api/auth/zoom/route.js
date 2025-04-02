@@ -1,14 +1,16 @@
 import axios from "axios";
 import { zoomOptions } from '@/constants';
 import { NextResponse } from 'next/server';
+import { getZoomAccessToken } from "@/lib/zoomAuth";
 
 export async function POST(req, res) {
   const { email, startDatetime } = req.body;
+  const accessToken = await getZoomAccessToken();
   // set zoom options 
   const options = {
     method: 'POST',
     url: 'https://api.zoom.us/v2/users/alg.moreno00@gmail.com/meetings',
-    headers: {'Content-Type': 'application/json', Authorization: `Bearer ${process.env.ZOOM_ACCESS_TOKEN}`},
+    headers: {'Content-Type': 'application/json', Authorization: `Bearer ${process.env.accessToken}`},
     data: {
       agenda: 'None',
       default_password: false,
