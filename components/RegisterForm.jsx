@@ -19,15 +19,15 @@ const SignUpForm = () => {
   const [error, setError] = useState(null);
   const router = useRouter();
   const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
-  const validPassword = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$');
+  const validPassword = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,}$');
 
-  const handleSubmit = async(e) => {     
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setPending(true);
+    setPending(false);
+    setError(null)
     const validated = validation();
-
     if (!validated) return;
-    
+
     // add user
     try {
       const response = await axios.post('/api/auth/users', user)
@@ -43,14 +43,16 @@ const SignUpForm = () => {
 
   const validation = () => {
     if (!validEmail.test(user.email)) {
+      console.log("1");
       setError("Invalid email format.")
       return false
     }
     if (!validPassword.test(user.password)) {
-      setError("Password must include: number, special character, and both lower case and upper case letters.")
+      setError("Password must be at least 7 characters and include: number, special character, and both lower case and upper case letters.")
       return false
     }
     if (user.confirmPassword !== user.password) {
+      console.log("3");
       setError("Password does not match.")
       return false
     }
@@ -158,12 +160,12 @@ const SignUpForm = () => {
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button type="button" className="text-sm/6 font-semibold text-gray-900">
+          <button onClick={() => setUser({...user, password: "", confirmPassword:""})} type="button" className="text-sm/6 font-semibold text-gray-900">
             Cancel
           </button>
           <button
             type="submit"
-            disabled={pending}
+            disabled={false}
             className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-300 focus-visible:outline-2 f
                         ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
             Submit

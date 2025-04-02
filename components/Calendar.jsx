@@ -10,7 +10,8 @@ import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMon
   isSameHour, isSameDay, isSameMonth, isEqual, isBefore, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline'
+import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline';
+import { zoomOptions } from '@/constants';
 
 const Calendar = ({ title }) => {
   let today = startOfToday()
@@ -40,17 +41,17 @@ const Calendar = ({ title }) => {
   const [appointments, setAppointments] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false)
   const [reload, setReload] = useState(false);
-  const id = session?.user.id
+  const userId = session?.user.id
   const name = session?.user.firstName + " " + session?.user.lastName
   const email = session?.user.email
   const appointmentRef = useRef({ startDatetime: null, endDatetime: null });
   const [appointment, setAppointment] = useState({
-    userId: id,
+    userId: userId,
     startDatetime: '',
     endDatetime: '',
     price: 50,
   });
-  
+
   // redirect if no user session
   useEffect(() => {
     if (!session) {
@@ -71,46 +72,67 @@ const Calendar = ({ title }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // add appt
-    try {
-      setAppointment((prevAppointment) => ({...appointment, userId: id }))
-      const response = await axios.post('/api/auth/appointments', appointment);
-      if (response.status == 201) {
-        // pull all appointments again
-        axios.get(`/api/auth/appointments/`)
-        .then(res =>{setAppointments(res.data.appointments)})
-        .catch(err => console.error(err));
-        // send confirmation email
-        // emailjs.send(
-        //   'service_qjdjgk9',
-        //   'template_w5n6h43',
-        //   {
-        //     from_name: "Appointment Manager",
-        //     to_name: 'Alan',
-        //     to_email: 'alg.moreno00@gmail.com',
-        //     message: `${appointment.duration} min. session booked for ${name} at ${appointment.date}`,
-        //   }, 'GDA7yUKvlEcVbask0')
-        //   .then(() => {
-        //     setPending(false);        
-        //     setAppointment({
-        //       date: '',
-        //       duration: '',
-        //       price: 50,
-        //       userId: id
-        //     })
-        //     toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
-        //     from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
-        //   }, (error) => {
-        //     setPending(false);
-        //     console.log(error);
-        //     toast.error("Confirmation email failed to send.")
-        //   })
-      }
+    
 
-    } catch (err) {
-      toast.error("Something went wrong. Try again.")
-      console.log(err);
+    // create zoom meeting
+    try {
+      const response = await fetch("/api/auth/zoom", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: "jchill@example.com", 
+          startDatetime: appointment.startDatetime, 
+        }),
+      });
+  
+      const data = await response.json();
+      console.log("Meeting Created:", data);
+    } catch (error) {
+      console.error("Error creating Zoom meeting:", error);
     }
+
+    // add appt
+    // try {
+
+    //   setAppointment((prevAppointment) => ({...appointment, userId: userId }))
+    //   const response = await axios.post('/api/auth/appointments', appointment);
+    //   if (response.status == 201) {
+    //     // pull all appointments again
+    //     axios.get(`/api/auth/appointments/`)
+    //     .then(res =>{setAppointments(res.data.appointments)})
+    //     .catch(err => console.error(err));
+
+    //     // send confirmation email
+    //     // emailjs.send(
+    //     //   'service_qjdjgk9',
+    //     //   'template_w5n6h43',
+    //     //   {
+    //     //     from_name: "Appointment Manager",
+    //     //     to_name: 'Alan',
+    //     //     to_email: 'alg.moreno00@gmail.com',
+    //     //     message: `${appointment.duration} min. session booked for ${name} at ${appointment.date}`,
+    //     //   }, 'GDA7yUKvlEcVbask0')
+    //     //   .then(() => {
+    //     //     setPending(false);        
+    //     //     setAppointment({
+    //     //       date: '',
+    //     //       duration: '',
+    //     //       price: 50,
+    //     //       userId: userId
+    //     //     })
+    //     //     toast.success(`Appointment scheduled for ${format(appointment.startDatetime, "MMMM dd, yyyy")} 
+    //     //     from ${format(appointment.startDatetime, "h:mm a")} to ${format(appointment.endDatetime, "h:mm a")}`)
+    //     //   }, (error) => {
+    //     //     setPending(false);
+    //     //     console.log(error);
+    //     //     toast.error("Confirmation email failed to send.")
+    //     //   })
+    //   }
+
+    // } catch (err) {
+    //   toast.error("Something went wrong. Try again.")
+    //   console.log(err);
+    // }
     setShowConfirm(false)
     setSelectedHour(null)
   }
