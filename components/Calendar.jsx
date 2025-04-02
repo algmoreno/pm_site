@@ -35,6 +35,7 @@ const Calendar = ({ title }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [pending, setPending] = useState(false);
   const [appointments, setAppointments] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false)
@@ -62,22 +63,9 @@ const Calendar = ({ title }) => {
   // get all appointments
   useEffect(() => {
     axios.get(`/api/auth/appointments/`)
-      .then(res =>{setAppointments(res.data.appointments)})
+      .then(res =>{setAppointments(res.data.appointments); setLoading(false)})
       .catch(err => console.error(err));
   }, []);
-
-  // if loading show loader
-  useEffect(() => {
-    if (status === "loading" || !id) {
-      Load()
-    }
-  }, [id])
-
-  function Load() {
-    return (
-      <PageLoader />
-    )
-  }
   
   // submit appointment to api
   const handleSubmit = async (e) => {
@@ -229,104 +217,111 @@ const Calendar = ({ title }) => {
 
   return (
     <div className="w-[1500px] h-[auto] mx-auto mt-[9%] mb-20 max-sm:mt-[25%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
-      <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
-      <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 max-md:flex-wrap">
-        <div className="md:pr-14">
-          <div className="flex items-center">
-            <h2 className="flex-auto text-sm font-semibold text-gray-900">
-              {format(firstDayCurrentMonth, 'MMMM yyyy')}
-            </h2>
-            <button
-              onClick={prevMonth}
-              type="button"
-              className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">Previous month</span>
-              <ChevronLeftIcon className="size-5" aria-hidden="true" />
-            </button>
-            <button
-              onClick={nextMonth}
-              type="button"
-              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">Next month</span>
-              <ChevronRightIcon className="size-5" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-600">
-            <div>S</div>
-            <div>M</div>
-            <div>T</div>
-            <div>W</div>
-            <div>T</div>
-            <div>F</div>
-            <div>S</div>
-          </div>
-          <div className="mt-2 grid grid-cols-7 text-sm bg-slate-50">
-            {days.map((day, dayIdx) => (
-              <div key={day.toString()} onClick={() => setSelectedDay(day)} 
-                className={classNames(
-                  isEqual(day, selectedDay) && 'bg-blue-100',
-                  dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2 hover:bg-blue-100 hover:cursor-pointer')}>
-                <button
-                  type="button"
-                  className={classNames(
-                    !isEqual(day, selectedDay) && isToday(day) && 'text-red-600',
-                    !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && 'text-gray-900',
-                    !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
-                    isToday(day) && 'text-red-600',
-                    (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
-                    'max-md:h-4 mx-auto flex size-8 items-center justify-center rounded-full',
-                  )}
-                >
-                  <time dateTime={format(day, 'yyyy-MM-dd')}>
-                    {format(day, 'd')}
-                  </time>
-                </button>
-                <div className="w-1 h-1 mx-auto mt-1">
-                  {availableHours.length > 0 && !isBefore(day, today) && !isToday(day) && (
-                    <div className="w-1 h-1 rounded-full bg-gray-400"></div>
-                  )}
-                </div>
-                
-                
-              </div>
-            ))}
-          </div>
-        </div>
-        <section className="max-md:my-5 mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
-          <h2 className="text-base font-semibold text-gray-900">
-            Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
-          </h2>
-          <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-700">
-            {availableHours.length > 0 && !isBeforeToday ? (
-              availableHours.map((hour, index) => (
-                <Slot key={index} hour={hour}/>
-              ))
-            ) : (
-              <p>No availability today.</p>
-            )}
-              
-          </div>
-          {availableHours.length > 0 && !isBeforeToday ? (
-            <div className="mt-6 flex items-center justify-end gap-x-6">
-              <button onClick={() => setSelectedHour(null)} type="button" className="text-sm/6 font-semibold text-gray-900">
-                Cancel
+      {!loading ? (
+        <div>
+          <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
+        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 max-md:flex-wrap">
+          <div className="md:pr-14">
+            <div className="flex items-center">
+              <h2 className="flex-auto text-sm font-semibold text-gray-900">
+                {format(firstDayCurrentMonth, 'MMMM yyyy')}
+              </h2>
+              <button
+                onClick={prevMonth}
+                type="button"
+                className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+              >
+                <span className="sr-only">Previous month</span>
+                <ChevronLeftIcon className="size-5" aria-hidden="true" />
               </button>
               <button
-                onClick={selectedHour == null ? () => {toast.error("Must select a time slot")} : () => {setShowConfirm(true)}}
-                type="submit"
-                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
-                            ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
-                Submit
+                onClick={nextMonth}
+                type="button"
+                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+              >
+                <span className="sr-only">Next month</span>
+                <ChevronRightIcon className="size-5" aria-hidden="true" />
               </button>
             </div>
-          ) : (
-            <div></div>
-          )}
-        </section>
-        <ConfirmModal />
-      </div>
+            <div className="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-600">
+              <div>S</div>
+              <div>M</div>
+              <div>T</div>
+              <div>W</div>
+              <div>T</div>
+              <div>F</div>
+              <div>S</div>
+            </div>
+            <div className="mt-2 grid grid-cols-7 text-sm bg-slate-50">
+              {days.map((day, dayIdx) => (
+                <div key={day.toString()} onClick={() => setSelectedDay(day)} 
+                  className={classNames(
+                    isEqual(day, selectedDay) && 'bg-blue-100',
+                    dayIdx === 0 && colStartClasses[getDay(day)], 'border border-gray-100 py-2 hover:bg-blue-100 hover:cursor-pointer')}>
+                  <button
+                    type="button"
+                    className={classNames(
+                      !isEqual(day, selectedDay) && isToday(day) && 'text-red-600',
+                      !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && 'text-gray-900',
+                      !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
+                      isToday(day) && 'text-red-600',
+                      (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
+                      'max-md:h-4 mx-auto flex size-8 items-center justify-center rounded-full',
+                    )}
+                  >
+                    <time dateTime={format(day, 'yyyy-MM-dd')}>
+                      {format(day, 'd')}
+                    </time>
+                  </button>
+                  <div className="w-1 h-1 mx-auto mt-1">
+                    {availableHours.length > 0 && !isBefore(day, today) && !isToday(day) && (
+                      <div className="w-1 h-1 rounded-full bg-gray-400"></div>
+                    )}
+                  </div>
+                  
+                  
+                </div>
+              ))}
+            </div>
+          </div>
+          <section className="max-md:my-5 mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
+            <h2 className="text-base font-semibold text-gray-900">
+              Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
+            </h2>
+            <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-700">
+              {availableHours.length > 0 && !isBeforeToday ? (
+                availableHours.map((hour, index) => (
+                  <Slot key={index} hour={hour}/>
+                ))
+              ) : (
+                <p>No availability today.</p>
+              )}
+                
+            </div>
+            {availableHours.length > 0 && !isBeforeToday ? (
+              <div className="mt-6 flex items-center justify-end gap-x-6">
+                <button onClick={() => setSelectedHour(null)} type="button" className="text-sm/6 font-semibold text-gray-900">
+                  Cancel
+                </button>
+                <button
+                  onClick={selectedHour == null ? () => {toast.error("Must select a time slot")} : () => {setShowConfirm(true)}}
+                  type="submit"
+                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
+                              ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
+                  Submit
+                </button>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </section>
+          <ConfirmModal />
+        </div>
+        </div>
+      ) : (
+        <PageLoader />
+      ) }
+      
     </div>          
   )
 }

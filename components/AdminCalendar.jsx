@@ -74,31 +74,31 @@ const AdminCalendar = ({ title }) => {
     return classes.filter(Boolean).join(' ')
   }
 
-  const editAppointment = async () => {
-    const apptId = selectedAppointment._id;
-    let hourPlusOne = addHours(newDatetime, 1)
+  // const editAppointment = async () => {
+  //   const apptId = selectedAppointment._id;
+  //   let hourPlusOne = addHours(newDatetime, 1)
 
-    setSelectedAppointment(prev => {
-      const updatedAppointment = {
-        ...prev,
-        startDatetime: formatISO(newDatetime),
-        endDatetime: formatISO(addHours(newDatetime, 1)),
-      };
-      console.log(updatedAppointment);
-      axios.put(`/api/auth/appointments/${apptId}`, updatedAppointment)
-        .then(response => console.log("Appointment updated:", response.data))
-        .catch(error => console.error("Error updating appointment:", error));
+  //   setSelectedAppointment(prev => {
+  //     const updatedAppointment = {
+  //       ...prev,
+  //       startDatetime: formatISO(newDatetime),
+  //       endDatetime: formatISO(addHours(newDatetime, 1)),
+  //     };
+  //     console.log(updatedAppointment);
+  //     axios.put(`/api/auth/appointments/${apptId}`, updatedAppointment)
+  //       .then(response => console.log("Appointment updated:", response.data))
+  //       .catch(error => console.error("Error updating appointment:", error));
 
-      return updatedAppointment;
-    });
+  //     return updatedAppointment;
+  //   });
 
-    // reload appointments
-    axios.get(`/api/auth/appointments/`)
-    .then(res =>{setAppointments(res.data.appointments)})
-    .catch(err => console.error(err));
-    setShowEdit(false)
-    toast.success("Changes saved.")
-  }
+  //   // reload appointments
+  //   axios.get(`/api/auth/appointments/`)
+  //   .then(res =>{setAppointments(res.data.appointments)})
+  //   .catch(err => console.error(err));
+  //   setShowEdit(false)
+  //   toast.success("Changes saved.")
+  // }
 
   const deleteAppointment = async () => {
     const apptId = selectedAppointment._id;
