@@ -128,7 +128,7 @@ const Calendar = ({ title }) => {
       }
 
     } catch (err) {
-      toast.error("Something went wrong. Try again.")
+      toast.error("Something went wrong. Try again.") 
       console.log(err);
     }
   }

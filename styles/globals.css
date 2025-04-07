@@ -42,6 +42,12 @@
   background-size: cover;
 }
 
+.bg-4 {
+  background-image: linear-gradient(to bottom, transparent 9%, #ffffff 20%), url("/assets/bg_1.jpg");
+  background-size:cover;
+  background-repeat: no-repeat;
+}
+
 
 
 @layer base {

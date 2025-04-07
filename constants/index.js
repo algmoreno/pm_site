@@ -9,14 +9,14 @@ import { UserDropdown } from '@/components/index';
 
 export const navOptions = [
   {
-    name: "About",
-    href: "/#about",
-    icon: <SiPersonio size={25} className="m-auto"/>,
-  },
-  {
     name: "Services",
     href: "/#services",
     icon: <FaPeopleRobbery size={25} className="m-auto"/>
+  },
+  {
+    name: "About",
+    href: "/#about",
+    icon: <SiPersonio size={25} className="m-auto"/>,
   },
   {
     name: "Contact",
