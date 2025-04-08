@@ -8,8 +8,7 @@ const SectionWrapper = (Component, idName) =>
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: .25 }}
-                            className={`max-w-7xl p-[none] z-0 m-[none]`}>
-
+                            className={`max-w-7xl z-0 m-[none]`}>
                 <Component/>
             </motion.section>
         )

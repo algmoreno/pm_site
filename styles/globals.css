@@ -15,6 +15,19 @@
   font-style: normal;
 }
 
+.word {
+  font-size: 2rem;
+  transition: opacity .5s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
 .bg-0 {
   background-image: url("/assets/bg_0.jpg");
   background-repeat: no-repeat;
