@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from "react"
 import { Html } from '@react-three/drei';
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-three/drei"
-import { useControls } from "leva"
 
 const Landing = () => {
   return (
@@ -50,9 +49,9 @@ const Words = () => {
     const animate = async () => {
       while (isMounted) {
         setShow(true); // fade in
-        await new Promise((res) => setTimeout(res, 4000)); // stay visible
+        await new Promise((res) => setTimeout(res, 3000)); // stay visible
         setShow(false); // fade out
-        await new Promise((res) => setTimeout(res, 4000)); // wait for fade out
+        await new Promise((res) => setTimeout(res, 3000)); // wait for fade out
         randomizeFontSize();
         randomizeXY();
         setCurrentWordIndex((prev) => (prev + 1) % words.length); // switch word
@@ -73,12 +72,29 @@ const Words = () => {
   )
 }
 
-
-
-
-function Sky() {
+const Sky = () => {
   const ref = useRef()
   const cloud0 = useRef();
+  const [volume, setVolume] = useState(400)
+  const [decrement, setDecrement] = useState(true);
+  console.log("volume", volume);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (decrement){
+        setVolume(prev => prev - .5)
+        if (volume < 200){
+          setDecrement(false)
+        }
+      } 
+      else {
+        setVolume(prev => prev + .5)
+        if (volume > 395) {
+          setDecrement(true)
+        }
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  })
 
   useFrame((state, delta) => {
     cloud0.current.rotation.x -= .001
@@ -93,12 +109,12 @@ function Sky() {
         mieDirectionalG={0.8}/>
       <group ref={ref}>
         <Clouds material={THREE.MeshLambertMaterial} limit={400} range="500">
-          <Cloud ref={cloud0} speed=".2" bounds={[6, 1, 1]} color="#ffffff" position={[-15, 0, 0]} />
-          <Cloud bounds={[6, 1, 1]} speed=".2" color="#a1a1a1" seed={2} position={[15, 0, 0]} />
+          <Cloud ref={cloud0} speed=".2" bounds={[6, 1, 1]} color="#ffffff" position={[-150, 0, 0]} />
+          {/* <Cloud bounds={[6, 1, 1]} speed=".2" color="#a1a1a1" seed={2} position={[15, 0, 0]} /> */}
           {/* <Cloud {...config} bounds={[x, y, z]} color="#d0e0d0" seed={3} position={[-15, 0, 0]} /> */}
-          <Cloud bounds={[6, 1, 1]} color="#a0b0d0" seed={4} position={[0, 0, -12]} />
+          <Cloud bounds={[6, 1, 1]} speed=".2" color="#a0b0d0" seed={4} position={[0, 0, -1]} />
           <Cloud bounds={[6, 1, 1]} color="#c0c0dd" seed={5} position={[0, 0, 12]} />
-          <Cloud concentrate="outside" growth={100} color="#ffccdd" opacity={1.25} seed={0.3} bounds={200} volume={150} />
+          <Cloud concentrate="outside" growth={100} color="#ffccdd" opacity={1.25} seed={0.3} bounds={200} volume={volume} />
         </Clouds>
       </group>
     </>
