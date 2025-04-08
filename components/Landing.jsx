@@ -9,7 +9,7 @@ import { useControls } from "leva"
 
 const Landing = () => {
   return (
-    <div id="canvas-container" className="w-full h-[500px]  max-sm:mt-[25%] ">
+    <div id="canvas-container" className="w-full h-[700px] max-sm:mt-[25%] ">
       <Canvas camera={{ position: [10, -10, 10], fov: 45 }}>
         {/* <StatsGl /> */}
         <Sky />
@@ -52,7 +52,7 @@ function Sky() {
       <group ref={ref}>
         <Clouds material={THREE.MeshLambertMaterial} limit={400} range="500">
           <Cloud ref={cloud0} speed=".2" bounds={[6, 1, 1]} color="#ffffff" position={[-15, 0, 0]} />
-          <Cloud bounds={[6, 1, 1]} speed=".1" color="#a1a1a1" seed={2} position={[15, 0, 0]} />
+          <Cloud bounds={[6, 1, 1]} speed=".2" color="#a1a1a1" seed={2} position={[15, 0, 0]} />
           {/* <Cloud {...config} bounds={[x, y, z]} color="#d0e0d0" seed={3} position={[-15, 0, 0]} /> */}
           <Cloud bounds={[6, 1, 1]} color="#a0b0d0" seed={4} position={[0, 0, -12]} />
           <Cloud bounds={[6, 1, 1]} color="#c0c0dd" seed={5} position={[0, 0, 12]} />
