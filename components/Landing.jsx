@@ -9,13 +9,13 @@ import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-t
 
 const Landing = () => {
   return (
-    <div id="canvas-container" className={`flex w-full h-[850px] relative max-sm:mt-[25%] text-center`}>
+    <div id="canvas-container" className={`flex w-full h-[700px] relative max-sm:mt-[25%] text-center`}>
       <Canvas camera={{ position: [10, -10, 10], fov: 45 }}>
         <Sky />
         {/* <Words /> */}
-        <Html position={[-10, 12, 0]} className="w-[350px] text-black font-light italic">
+        <Html position={[-10, 12, 0]} className="w-[350px] bg-black">
           <img className="m-auto w-[50%]" src="/assets/lotus1.png" alt="lotus logo" />
-          <p>
+          <p className="text-black font-light italic text-shadow-2xs text-shadow-sky-300">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A autem suscipit maxime. 
             Ex, quas commodi accusantium fugit praesentium quod nisi ratione ea earum esse expedita est non suscipit dignissimos. Reprehenderit.
           </p>
@@ -66,8 +66,7 @@ const Words = () => {
         setCurrentWordIndex((prev) => (prev + 1) % words.length); // switch word
       }
     };
-    
-    
+      
     animate();
 
     return () => {
