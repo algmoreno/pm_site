@@ -10,6 +10,7 @@ import { format, startOfToday, eachDayOfInterval, eachHourOfInterval, startOfMon
   isSameHour, isSameDay, isSameMonth, isEqual, isBefore, parse, add, addHours, set, getDay, parseISO, formatISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline';
 import { zoomOptions } from '@/constants';
 
@@ -40,6 +41,7 @@ const Calendar = ({ title }) => {
   const [pending, setPending] = useState(false);
   const [appointments, setAppointments] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false)
+  const [highlightSelect, setHighlightSelect] = useState(false);
   const [reload, setReload] = useState(false);
   const userId = session?.user.id
   const name = session?.user.firstName + " " + session?.user.lastName
@@ -49,6 +51,7 @@ const Calendar = ({ title }) => {
     userId: userId,
     startDatetime: '',
     endDatetime: '',
+    service: '',
     price: 50,
   });
 
@@ -62,6 +65,10 @@ const Calendar = ({ title }) => {
     }
   }, [session])
 
+  useEffect(() => {
+    console.log("highlight select", highlightSelect);
+  }, [highlightSelect])
+
   // get all appointments
   useEffect(() => {
     axios.get(`/api/auth/appointments/`)
@@ -73,6 +80,7 @@ const Calendar = ({ title }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowConfirm(false)
+    setHighlightSelect(false);
     setSelectedHour(null)
 
     try {
@@ -133,6 +141,18 @@ const Calendar = ({ title }) => {
     }
   }
 
+  const handleConfirm = () => {
+    if (selectedHour == null) {
+      toast.error("Must select a time slot.")
+    } else if (appointment.service == "Select" || appointment.service == "") {
+      setHighlightSelect(true);
+      toast.error("Must select an appointment type.")
+    }
+    else {
+      setShowConfirm(true)
+    }
+  }
+
   const nextMonth = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
     setCurrentMonth(format(firstDayNextMonth, 'MMMM-yyyy'))
@@ -185,8 +205,7 @@ const Calendar = ({ title }) => {
       <Dialog open={showConfirm} onClose={setShowConfirm} className="relative z-10">
         <DialogBackdrop
           transition
-          className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
-        />
+          className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"/>
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -234,7 +253,7 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] h-[auto] mx-auto mt-[9%] mb-20 max-sm:mt-[25%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div className="w-[1500px] h-[auto] mx-auto mt-[50px] mb-20 max-sm:mt-[25%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
       {!loading ? (
         <div>
           <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
@@ -302,10 +321,32 @@ const Calendar = ({ title }) => {
               ))}
             </div>
           </div>
-          <section className="max-md:my-5 mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
-            <h2 className="text-base font-semibold text-gray-900">
-              Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
-            </h2>
+          <section className="mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
+            <div className="flex">
+              <h2 className="text-base font-semibold text-gray-900">
+                Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
+              </h2>
+              <div className="flex gap-5 ml-auto">
+
+                <div className="grid grid-cols-1">
+                  <select
+                    id="service"
+                    name="service"
+                    defaultValue="Select"
+                    onChange={(e) => setAppointment({ ...appointment, service: e.target.value})}
+                    className="col-start-1 row-start-1 w-full flex-wrap appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6">
+                    <option>Select</option>
+                    <option>Yoga</option>
+                    <option>Yoga Therapy</option>
+                  </select>
+                  <ChevronDownIcon
+                    aria-hidden="true"
+                    className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"/>
+                </div>
+              </div>
+            </div>
+
+            
             <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-700">
               {availableHours.length > 0 && !isBeforeToday ? (
                 availableHours.map((hour, index) => (
@@ -318,11 +359,11 @@ const Calendar = ({ title }) => {
             </div>
             {availableHours.length > 0 && !isBeforeToday ? (
               <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button onClick={() => setSelectedHour(null)} type="button" className="text-sm/6 font-semibold text-gray-900">
+                <button onClick={() => {setSelectedHour(null); setHighlightSelect(false)}} type="button" className="text-sm/6 font-semibold text-gray-900">
                   Cancel
                 </button>
                 <button
-                  onClick={selectedHour == null ? () => {toast.error("Must select a time slot")} : () => {setShowConfirm(true)}}
+                  onClick={handleConfirm}
                   type="submit"
                   className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
                               ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
