@@ -13,7 +13,7 @@ const Landing = () => {
       <Canvas camera={{ position: [10, -10, 10], fov: 45 }}>
         <Sky />
         {/* <Words /> */}
-        <Html position={[-10, 12, 0]} className="w-[350px] bg-black">
+        <Html position={[-10, 12, 0]} className="w-[350px]">
           <img className="m-auto w-[50%]" src="/assets/lotus1.png" alt="lotus logo" />
           <p className="text-black font-light italic text-shadow-2xs text-shadow-sky-300">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A autem suscipit maxime. 
