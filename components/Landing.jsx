@@ -9,10 +9,10 @@ import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-t
 
 const Landing = () => {
   return (
-    <div id="canvas-container" className={`flex w-full h-[750px] relative max-sm:mt-[25%] text-center`}>
+    <div id="canvas-container" className={`flex w-full h-[850px] relative max-sm:mt-[25%] text-center`}>
       <Canvas camera={{ position: [10, -10, 10], fov: 45 }}>
         <Sky />
-        <Words />
+        {/* <Words /> */}
         <Html position={[-10, 12, 0]} className="w-[350px] text-black font-light italic">
           <img className="m-auto w-[50%]" src="/assets/lotus1.png" alt="lotus logo" />
           <p>
@@ -33,7 +33,7 @@ const Words = () => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   const [z, setZ] = useState(0);
-  const [fontSize, setFontSize] = useState("text-[60px]");
+  const [fontSize, setFontSize] = useState("text-[100px]");
   const words = ['This', 'World', 'Moves', 'Fast', 'Slow', 'Down', 'And', 'Look', 'Around'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [show, setShow] = useState(true);
@@ -61,7 +61,7 @@ const Words = () => {
         await new Promise((res) => setTimeout(res, 4000)); // stay visible
         setShow(false); // fade out
         await new Promise((res) => setTimeout(res, 4000)); // wait for fade out
-        randomizeFontSize();
+        // randomizeFontSize();
         randomizeXYZ();
         setCurrentWordIndex((prev) => (prev + 1) % words.length); // switch word
       }
@@ -76,7 +76,7 @@ const Words = () => {
   }, []);
 
   return (
-    <Html position={[x, 0, z]} className={`fixed z-100 word ${show ? 'fade-in' : 'fade-out'} text-center font-semibold text-gray-600 ${fontSize}`}>
+    <Html position={[x, y, z]} className={`fixed z-100 word ${show ? 'fade-in' : 'fade-out'} text-center font-semibold text-gray-500 ${fontSize}`}>
         {words[currentWordIndex]}
     </Html>
   )
@@ -85,7 +85,7 @@ const Words = () => {
 const Sky = () => {
   const ref = useRef()
   const cloud0 = useRef();
-  const [volume, setVolume] = useState(400)
+  const [volume, setVolume] = useState(300)
   const [decrement, setDecrement] = useState(true);
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -123,7 +123,7 @@ const Sky = () => {
           {/* <Cloud {...config} bounds={[x, y, z]} color="#d0e0d0" seed={3} position={[-15, 0, 0]} /> */}
           <Cloud bounds={[6, 1, 1]} speed=".01" color="#ffffff" seed={4} position={[0, 0, -10]} />
           <Cloud bounds={[6, 1, 1]} color="#c0c0dd" seed={5} position={[0, 0, 12]} />
-          <Cloud concentrate="outside" speed=".05" growth={100} color="#ffccdd" opacity={.75} seed={1} bounds={200} volume={volume} />
+          <Cloud concentrate="outside" speed=".1" growth={100} color="#ffccdd" opacity={.75} seed={1} bounds={200} volume={volume} />
         </Clouds>
       </group>
     </>
