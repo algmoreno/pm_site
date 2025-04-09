@@ -49,17 +49,47 @@
 }
 
 .bg-3 {
-  background-image: url("/assets/bg_5.jpg");
+  background-image: url("/assets/bg_3.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
 
 .bg-4 {
-  background-image: linear-gradient(to bottom, transparent 9%, #ffffff 20%), url("/assets/bg_1.jpg");
-  background-size:cover;
+  background-image: url("/assets/bg_4.jpg");
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
+
+.bg-5 {
+  background-image: url("/assets/bg_5.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-5-1 {
+  background-image: linear-gradient(to left, #ffffff 10%, transparent 55%, #ffffff 90%), url("/assets/bg_5.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-6 {
+  background-image: url("/assets/bg_6.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-7 {
+  background-image: url("/assets/bg_7.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
 
 
 

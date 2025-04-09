@@ -3,10 +3,11 @@ import React from 'react'
 import { motion } from 'framer-motion';
 import { SectionWrapper } from '@/hoc/index'
 import { fadeIn, textVariant, slideIn  } from '@/lib/motion.js';
+import "@/styles/globals.css"
 
 const Services = () => {
   return (
-    <div id="services" className="min-h-[850px] w-auto justify-items-center">
+    <div id="services" className="min-h-[850px] w-auto justify-items-center bg-5-1">
       {/* <div className="">
         <h1 className="text-[38px]">
           Services
