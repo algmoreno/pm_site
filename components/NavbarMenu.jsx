@@ -34,7 +34,7 @@ const NavbarMenu = () => {
     <Popover className="relative">
       {({ open, close }) => (
       <>
-      <PopoverButton className="inline-flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 border-none ml-auto focus:outline-none">
+      <PopoverButton className="inline-flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 border-none ml-auto focus:outline-hidden">
           <CiMenuBurger className={`${!showMenu ? 'text-black' : 'text-slate-400'} h-auto w-[35px] m-auto`} onClick={() => setShowMenu((prevShowMenu) => !prevShowMenu)}/>
       </PopoverButton>
       

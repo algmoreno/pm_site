@@ -1,4 +1,4 @@
-import { Landing, About, Services } from '@/components/index';
+import { Landing, About, Services, SkyCanvas } from '@/components/index';
 
 const Home = () => {
   return (

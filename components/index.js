@@ -1,5 +1,6 @@
 // Main
 export { default as Toaster } from './Sonner';
+export { default as SkyCanvas } from './SkyCanvas';
 export { default as Navbar } from './Navbar';
 export { default as NavbarMenu } from './NavbarMenu';
 export { default as UserDropdown } from './UserDropdown';

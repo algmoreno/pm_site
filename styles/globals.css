@@ -16,8 +16,8 @@
 }
 
 .word {
-  font-size: 2rem;
-  transition: opacity .5s ease-in-out;
+  transition: opacity .6s ease-in-out;
+  opacity: 0;
 }
 
 .fade-in {
@@ -49,18 +49,53 @@
 }
 
 .bg-3 {
-  background-image: url("/assets/bg_5.jpg");
+  background-image: url("/assets/bg_3.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
 
 .bg-4 {
-  background-image: linear-gradient(to bottom, transparent 9%, #ffffff 20%), url("/assets/bg_1.jpg");
-  background-size:cover;
+  background-image: url("/assets/bg_4.jpg");
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
+.bg-5 {
+  background-image: url("/assets/bg_5.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-5-1 {
+  background-image: linear-gradient(to left, #ffffff 15%, transparent 50%, #ffffff 85%), url("/assets/bg_5.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-6 {
+  background-image: url("/assets/bg_6.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-7 {
+  background-image: url("/assets/bg_7.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-yoga {
+  background-image: linear-gradient(to right, #ffffff 10%, transparent 45%, #ffffff 90%), url("/assets/yoga1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 
 @layer base {
