@@ -70,7 +70,7 @@
 }
 
 .bg-5-1 {
-  background-image: linear-gradient(to left, #ffffff 10%, transparent 55%, #ffffff 90%), url("/assets/bg_5.jpg");
+  background-image: linear-gradient(to left, #ffffff 10%, transparent 50%, #ffffff 75%), url("/assets/bg_5.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -90,7 +90,12 @@
   background-size: cover;
 }
 
-
+.bg-yoga {
+  background-image: linear-gradient(to right, #ffffff 10%, transparent 45%, #ffffff 90%), url("/assets/yoga1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 
 @layer base {

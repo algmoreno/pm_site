@@ -15,7 +15,7 @@ const Services = () => {
       </div> */}
 
       <motion.div variants={fadeIn("right", "spring", 0, 3)}>
-      <div className="mx-auto w-auto flex ">
+      <div className="mx-auto w-auto flex">
         <img className="m-auto w-[60%] border-r border-black" src="/assets/yoga1.jpg" alt="yoga pose" />
         <div className="justify-items-center align-middle my-auto">
           <h1 className="text-[24px] font-light">Yoga</h1>
@@ -41,6 +41,7 @@ const Services = () => {
             </div>
           </div>
           <img className="ml-auto w-[60%] border-l border-black" src="/assets/wellness.jpg" alt="yoga pose" />
+
         </div>
       </motion.div>
     </div>
