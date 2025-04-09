@@ -55,7 +55,7 @@ const UserDropdown = () => {
       ) : (
       isAdmin ? (
         <DropdownMenu modal={false}>
-          <DropdownMenuTrigger className="outline-none relative">
+          <DropdownMenuTrigger className="outline-hidden relative">
             <div className="flex gap-4 items-center">
               <span>{session.user?.firstName}</span>
               <Avatar className="size-10 hover:opacity-75 transition">
@@ -79,7 +79,7 @@ const UserDropdown = () => {
         </DropdownMenu>
         ) : (
         <DropdownMenu modal={false}>
-          <DropdownMenuTrigger className="outline-none relative">
+          <DropdownMenuTrigger className="outline-hidden relative">
             <div className="flex gap-4 items-center">
               <span>{session.user?.firstName}</span>
               <Avatar className="size-10 hover:opacity-75 transition">
