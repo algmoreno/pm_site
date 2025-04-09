@@ -15,13 +15,8 @@ const Services = () => {
       </div> */}
 
       <motion.div variants={fadeIn("right", "spring", 0, 3)}>
-<<<<<<< HEAD
-      <div className="mx-auto w-auto flex ">
-        <img className="m-auto w-[60%] border-2 border-black" src="/assets/yoga1.jpg" alt="yoga pose" />
-=======
       <div className="mx-auto w-auto flex">
         <img className="m-auto w-[60%] border-r border-black" src="/assets/yoga1.jpg" alt="yoga pose" />
->>>>>>> sky
         <div className="justify-items-center align-middle my-auto">
           <h1 className="text-[24px] font-light">Yoga</h1>
           <div>
@@ -45,12 +40,8 @@ const Services = () => {
               </p>
             </div>
           </div>
-<<<<<<< HEAD
-          <img className="ml-auto w-[60%] border-2 border-black" src="/assets/wellness.jpg" alt="yoga pose" />
-=======
           <img className="ml-auto w-[60%] border-l border-black" src="/assets/wellness.jpg" alt="yoga pose" />
 
->>>>>>> sky
         </div>
       </motion.div>
     </div>

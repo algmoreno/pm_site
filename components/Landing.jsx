@@ -45,9 +45,6 @@ const Landing = () => {
   );
 }
 
-<<<<<<< HEAD
-
-=======
 const Words = () => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
@@ -147,6 +144,5 @@ const Sky = () => {
     </>
   )
 }
->>>>>>> sky
 
 export default Landing
