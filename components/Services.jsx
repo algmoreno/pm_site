@@ -7,7 +7,7 @@ import "@/styles/globals.css"
 
 const Services = () => {
   return (
-    <div id="services" className="min-h-[850px] w-auto justify-items-center bg-5-1">
+    <div id="services" className="min-h-[850px] w-auto justify-items-center ">
       {/* <div className="">
         <h1 className="text-[38px]">
           Services
