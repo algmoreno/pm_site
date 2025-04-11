@@ -34,7 +34,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto mt-[9%] mb-20 bg-2 max-sm:mt-20 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] h-auto mx-auto mt-auto mb-20 max-sm:mt-20 ">
 
       <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
         <div className="space-y-2">

@@ -13,7 +13,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="min-h-[250px] w-full gap-4 font-primary flex bg-[#fcfafc] text-black">
+    <div className="min-h-[250px] w-full gap-4 font-primary flex bg-white text-black">
       <div className="text-[30px] m-auto flex">
         <h1 className="my-auto z-10 text-[38px] max-[860px]:hidden">
           <Link href='/'>PMYT</Link>

@@ -4,7 +4,7 @@ import { LoginForm } from '@/components/index';
 const Login = async () => {
   
   return (
-    <div className="flex flex-wrap m-auto bg-0"> 
+    <div className="flex m-auto"> 
       <LoginForm />
     </div>
   )

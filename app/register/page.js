@@ -3,7 +3,7 @@ import { RegisterForm } from '@/components/index';
 
 const SignUp = () => {
   return (
-    <div className="flex flex-wrap m-auto bg-0"> 
+    <div className="flex flex-wrap m-auto"> 
       <RegisterForm />
     </div>
   )
