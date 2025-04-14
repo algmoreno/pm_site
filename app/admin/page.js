@@ -3,7 +3,7 @@ import { AdminTabs } from '@/components/index';
 
 const Admin = () => {
   return (
-    <div className="flex flex-wrap m-auto bg-3">
+    <div className="flex flex-wrap m-auto">
       <AdminTabs />
     </div>
   )

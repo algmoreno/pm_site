@@ -33,7 +33,7 @@ const UserList = () => {
   }
 
   return (
-    <div className="w-[80%] mx-auto mb-[9%] mt-[150px] bg-slate-300 border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] rounded-md p-5">
+    <div className="w-[80%] mx-auto mb-[9%] mt-10 p-5 bg-slate-200 rounded-md">
       {!loading ? (
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
