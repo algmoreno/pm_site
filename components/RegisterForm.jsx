@@ -3,8 +3,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast } from "sonner";
 import { useRouter } from 'next/navigation';
+import { EnterAnimation } from '@/hoc/index';
 
-const SignUpForm = () => { 
+const RegisterForm = () => { 
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -177,4 +178,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm
+export default EnterAnimation(RegisterForm, "registerForm")

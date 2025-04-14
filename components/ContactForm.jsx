@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast } from "sonner";
 import emailjs from '@emailjs/browser';
+import { EnterAnimation } from '@/hoc/index';
 
 const ContactForm = () => {
   const [form, setForm] = useState({
@@ -46,7 +47,7 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="w-[800px] mx-auto mt-[8%] max-sm:mt-[20%] mb-10  bg-2 rounded-md border-2 border-gray-300 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
+    <div className="w-[800px] mx-auto max-sm:mt-[20%] mb-10">
 
       <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
         <div className="space-y-2">
@@ -133,4 +134,4 @@ const ContactForm = () => {
   )
 }
 
-export default ContactForm
+export default EnterAnimation(ContactForm, "contactForm")

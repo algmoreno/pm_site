@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from "sonner";
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { EnterAnimation } from '@/hoc/index';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="w-[800px] h-auto mx-auto mt-auto mb-20 max-sm:mt-20 ">
+    <div id="loginForm" className="w-[800px] h-auto mx-auto mt-auto mb-20 max-sm:mt-20">
 
       <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
         <div className="space-y-2">
@@ -103,7 +104,8 @@ const LoginForm = () => {
 
       </form>
     </div>
+
   )
 }
 
-export default LoginForm
+export default EnterAnimation(LoginForm, "loginForm")

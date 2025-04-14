@@ -1,3 +1,4 @@
 import SectionWrapper from "./SectionWrapper";
+import EnterAnimation from "./EnterAnimation";
 
-export { SectionWrapper };
+export { SectionWrapper, EnterAnimation };

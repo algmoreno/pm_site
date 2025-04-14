@@ -13,6 +13,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { EllipsisVerticalIcon, CheckIcon  } from '@heroicons/react/24/outline';
 import { zoomOptions } from '@/constants';
+import { EnterAnimation } from '@/hoc/index';
+
 
 const Calendar = ({ title }) => {
   let today = startOfToday()
@@ -253,7 +255,7 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] h-[auto] mx-auto mt-[50px] mb-20 max-sm:mt-[25%] rounded-md border-[4px] border-gray-300 bg-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] p-5">
+    <div id="calendar" className="w-[1500px] h-[auto] mx-auto p-5 mb-20 max-sm:mt-[25%]">
       {!loading ? (
         <div>
           <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
@@ -376,15 +378,14 @@ const Calendar = ({ title }) => {
           </section>
           <ConfirmModal />
         </div>
-        </div>
+          </div>
+        
       ) : (
         <PageLoader />
       ) }
+    </div> 
       
-    </div>          
   )
 }
 
-
-
-export default Calendar
+export default EnterAnimation(Calendar, "calendar")

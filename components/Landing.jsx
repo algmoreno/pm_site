@@ -8,21 +8,6 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-three/drei"
 
 const Landing = () => {
-  const words = ['Hello', 'World', 'React', 'Next.js'];
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [show, setShow] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShow(false); // fade out
-      setTimeout(() => {
-        setCurrentWordIndex((prev) => (prev + 1) % words.length);
-        setShow(true); // fade in
-      }, 500); // match this to fade-out duration
-    }, 4000); 
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div id="canvas-container" className={`flex w-full h-[700px] relative max-sm:mt-[25%] text-center`}>
@@ -45,63 +30,13 @@ const Landing = () => {
   );
 }
 
-const Words = () => {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [z, setZ] = useState(0);
-  const [fontSize, setFontSize] = useState("text-[100px]");
-  const words = ['This', 'World', 'Moves', 'Fast', 'Slow', 'Down', 'And', 'Look', 'Around'];
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [show, setShow] = useState(true);
-
-  function randomizeXYZ() {
-    const minCeiled = Math.ceil(-10);
-    const maxFloored = Math.floor(10);
-    setX(Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)); 
-    setY(Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)); 
-    setZ(Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)); 
-  }
-
-  const sizes = ['text-[20px]', 'text-[30px]','text-[40px]', 'text-[50px]', 'text-[60px]', 'text-[70px]', 'text-[80px]'];
-  const randomizeFontSize = () => {
-    const size = sizes[Math.floor(Math.random() * sizes.length)];
-    setFontSize(size);
-  };
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const animate = async () => {
-      while (isMounted) {
-        setShow(true); // fade in
-        await new Promise((res) => setTimeout(res, 4000)); // stay visible
-        setShow(false); // fade out
-        await new Promise((res) => setTimeout(res, 4000)); // wait for fade out
-        // randomizeFontSize();
-        randomizeXYZ();
-        setCurrentWordIndex((prev) => (prev + 1) % words.length); // switch word
-      }
-    };
-      
-    animate();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  return (
-    <Html position={[x, y, z]} className={`fixed z-100 word ${show ? 'fade-in' : 'fade-out'} text-center font-semibold text-gray-500 ${fontSize}`}>
-        {words[currentWordIndex]}
-    </Html>
-  )
-}
-
 const Sky = () => {
   const ref = useRef()
   const cloud0 = useRef();
   const [volume, setVolume] = useState(300)
   const [decrement, setDecrement] = useState(true);
+  
+  // clouds clearing/gathering effect
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     if (decrement){
@@ -144,5 +79,57 @@ const Sky = () => {
     </>
   )
 }
+
+// const Words = () => {
+//   const [x, setX] = useState(0);
+//   const [y, setY] = useState(0);
+//   const [z, setZ] = useState(0);
+//   const [fontSize, setFontSize] = useState("text-[100px]");
+//   const words = ['This', 'World', 'Moves', 'Fast', 'Slow', 'Down', 'And', 'Look', 'Around'];
+//   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+//   const [show, setShow] = useState(true);
+
+//   function randomizeXYZ() {
+//     const minCeiled = Math.ceil(-10);
+//     const maxFloored = Math.floor(10);
+//     setX(Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)); 
+//     setY(Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)); 
+//     setZ(Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)); 
+//   }
+
+//   const sizes = ['text-[20px]', 'text-[30px]','text-[40px]', 'text-[50px]', 'text-[60px]', 'text-[70px]', 'text-[80px]'];
+//   const randomizeFontSize = () => {
+//     const size = sizes[Math.floor(Math.random() * sizes.length)];
+//     setFontSize(size);
+//   };
+
+//   useEffect(() => {
+//     let isMounted = true;
+
+//     const animate = async () => {
+//       while (isMounted) {
+//         setShow(true); // fade in
+//         await new Promise((res) => setTimeout(res, 4000)); // stay visible
+//         setShow(false); // fade out
+//         await new Promise((res) => setTimeout(res, 4000)); // wait for fade out
+//         // randomizeFontSize();
+//         randomizeXYZ();
+//         setCurrentWordIndex((prev) => (prev + 1) % words.length); // switch word
+//       }
+//     };
+      
+//     animate();
+
+//     return () => {
+//       isMounted = false;
+//     };
+//   }, []);
+
+//   return (
+//     <Html position={[x, y, z]} className={`fixed z-100 word ${show ? 'fade-in' : 'fade-out'} text-center font-semibold text-gray-500 ${fontSize}`}>
+//         {words[currentWordIndex]}
+//     </Html>
+//   )
+// }
 
 export default Landing

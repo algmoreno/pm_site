@@ -4,7 +4,7 @@ import { ContactForm } from '@/components/index'
 
 const Contact = () => {
   return (
-    <div className="flex flex-wrap m-auto bg-0"> 
+    <div className="flex flex-wrap m-auto"> 
         <ContactForm />
     </div>
   );
