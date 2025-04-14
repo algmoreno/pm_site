@@ -324,7 +324,7 @@ const Assignment = ({ userId }) => {
       </form>
       }
 
-      {!loading ? (
+      {!loading ? (assignments.length > 0 ? (
         <div>
         <h1 className="text-[24px] border-b border-gray-300">Assignments</h1>
         <div className="mt-10">
@@ -370,6 +370,14 @@ const Assignment = ({ userId }) => {
         </div>
 
       </div>
+      ) : (
+        <div className="flex justify-center align-middle">
+          <h1 className="mx-auto">
+            No assignments.
+          </h1>
+        </div>
+      )
+        
       ) : (
         <PageLoader />
       ) }
