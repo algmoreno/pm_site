@@ -7,6 +7,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { PageLoader } from '@/components/index';
 import axios from "axios";
 import { format } from 'date-fns';
+import { EnterAnimation } from '@/hoc/index';
 
 const UserDetails = ({ userId }) => {
   const router = useRouter();
@@ -85,9 +86,9 @@ const UserDetails = ({ userId }) => {
   }
 
   return (
-    <div className="w-full mx-auto mt-[150px] mb-20 flex flex-wrap">
+    <div className="w-full mx-auto mt-10 mb-20 flex flex-wrap">
       {!loading ? (
-        <form className="w-[800px] mx-auto max-sm:w-[100%]  bg-slate-200 rounded-md border-2 border-gray-300 p-10" onSubmit={handleSubmit}>
+        <form className="w-[800px] mx-auto max-sm:w-[100%] p-10" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Profile</h2>
@@ -215,6 +216,5 @@ const UserDetails = ({ userId }) => {
     </div>
   )
 }
-
 
 export default UserDetails

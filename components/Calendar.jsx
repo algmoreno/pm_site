@@ -97,44 +97,44 @@ const Calendar = ({ title }) => {
         .catch(err => console.error(err));
 
         // create zoom meeting
-        const response = await fetch("/api/auth/zoom", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email, 
-            startDatetime: appointment.startDatetime, 
-          }),
-        });
+        // const response = await fetch("/api/auth/zoom", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify({
+        //     email: email, 
+        //     startDatetime: appointment.startDatetime, 
+        //   }),
+        // });
     
-        const data = await response.json();
-        console.log("Meeting Created:", data);
-        const zoomJoinUrl = data.join_url;
+        // const data = await response.json();
+        // console.log("Meeting Created:", data);
+        // const zoomJoinUrl = data.join_url;
 
         // send confirmation email
-        emailjs.send(
-          'service_qjdjgk9',
-          'template_w5n6h43',
-          {
-            from_name: "PM Yoga Appointment Manager",
-            to_name: name,
-            to_email: email, //add paula email
-            message: `Appointment booked for ${name} on ${format(appointment.startDatetime, "MMMM dd, yyyy")} ${format(appointment.startDatetime, "h:mm a")}-${format(appointment.endDatetime, "h:mm a")}. 
-            Join Zoom meeting here: ${zoomJoinUrl}`,
-          }, 'GDA7yUKvlEcVbask0')
-          .then(() => {
-            setPending(false);        
-            setAppointment({
-              userId: userId,
-              startDatetime: '',
-              endDatetime: '',
-              price: 50,
-            })
-          }, (error) => {
-            setPending(false);
-            console.log(error);
-            toast.error("Confirmation email failed to send.")
-          }
-        )
+        // emailjs.send(
+        //   'service_qjdjgk9',
+        //   'template_w5n6h43',
+        //   {
+        //     from_name: "PM Yoga Appointment Manager",
+        //     to_name: name,
+        //     to_email: email, //add paula email
+        //     message: `Appointment booked for ${name} on ${format(appointment.startDatetime, "MMMM dd, yyyy")} ${format(appointment.startDatetime, "h:mm a")}-${format(appointment.endDatetime, "h:mm a")}. 
+        //     Join Zoom meeting here: ${zoomJoinUrl}`,
+        //   }, 'GDA7yUKvlEcVbask0')
+        //   .then(() => {
+        //     setPending(false);        
+        //     setAppointment({
+        //       userId: userId,
+        //       startDatetime: '',
+        //       endDatetime: '',
+        //       price: 50,
+        //     })
+        //   }, (error) => {
+        //     setPending(false);
+        //     console.log(error);
+        //     toast.error("Confirmation email failed to send.")
+        //   }
+        // )
       }
 
     } catch (err) {
@@ -388,4 +388,4 @@ const Calendar = ({ title }) => {
   )
 }
 
-export default EnterAnimation(Calendar, "calendar")
+export default EnterAnimation(Calendar)

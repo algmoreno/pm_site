@@ -134,4 +134,4 @@ const ContactForm = () => {
   )
 }
 
-export default EnterAnimation(ContactForm, "contactForm")
+export default EnterAnimation(ContactForm)

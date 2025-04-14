@@ -10,6 +10,8 @@ import { Menu, MenuButton, MenuItem, MenuItems, Dialog, DialogBackdrop, DialogPa
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { EllipsisVerticalIcon, CheckIcon } from '@heroicons/react/24/outline'
 import { MdEdit, MdDelete } from "react-icons/md";
+import { EnterAnimation } from '@/hoc/index';
+
 
 const AppointmentList = ({ userId }) => {
   const router = useRouter();
@@ -75,9 +77,9 @@ const AppointmentList = ({ userId }) => {
     const params = { id: apptId }
     const response = await axios.delete(`/api/auth/appointments/${apptId}`, { data: { userId } });
     // reload appointments
-    axios.get(`/api/auth/appointments/`)
-    .then(res =>{setAppointments(res.data.appointments)})
-    .catch(err => console.error(err));
+    axios.get(`/api/auth/users/${userId}`)
+      .then(res =>{setUser(res.data.user); setLoading(false)})
+      .catch(err => console.error(err));
     setShowDelete(false)
     setSelectedAppointment(null);
     toast.success("Removed appointment.")
@@ -214,8 +216,9 @@ const AppointmentList = ({ userId }) => {
   }
 
   return (
-    <div className="w-[1400px] flex flex-wrap mx-auto mt-[100px] mb-[5%] p-5 rounded-md">
+    <div className="w-[1400px] flex flex-wrap mx-auto mb-[5%] p-5 rounded-md">
       {!loading ? (
+        orderedAppointments.length > 0 ? (
         <div>
         <div className="text-[24px] border-b-2 border-gray-900">
           <h1 className="mb-2 text-gray-900">Upcoming Appointments</h1>
@@ -257,11 +260,14 @@ const AppointmentList = ({ userId }) => {
         </ul>
         <DeleteModal />
         </div>
+        ) : (
+          <div className="flex justify-center align-middle w-full">
+            <h1 className="mx-auto">No upcoming appointments.</h1>
+          </div>
+        ) 
       ) : (
         <PageLoader />
       )}
-      
-      
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { staggerContainer, slideIn, fadeIn } from '@/lib/motion'
 import * as motion from "motion/react-client";
 
-const EnterAnimation = (Component, idName) => 
+const EnterAnimation = (Component) => 
   function hoc(){
     return (
       <motion.div

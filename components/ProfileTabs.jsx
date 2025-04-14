@@ -44,8 +44,8 @@ const ProfileTabs = () => {
   }
   
   return (
-    <div className="w-full mt-[5%] mx-auto justify-center flex flex-wrap">
-      <div className="fixed z-10 top-[100px] bg-blue-100 w-full md:px-[20%] px-[5%] hover:cursor-pointer max-sm:hidden">
+    <div className="w-full mx-auto justify-center flex flex-wrap">
+      <div className="w-full bg-blue-100 md:px-[20%] px-[5%] hover:cursor-pointer max-sm:hidden">
         <div className="border-b border-gray-200 m-auto ">
           <nav aria-label="Tabs" className="-mb-px flex space-x-8 ">
             {tabs.map((tab) => (

@@ -3,7 +3,7 @@ import { ProfileTabs } from '@/components/index';
 
 const Profile = () => {
   return (
-    <div className="flex flex-wrap m-auto bg-slate-200">
+    <div className="flex flex-wrap m-auto">
       <ProfileTabs />
     </div>
   )

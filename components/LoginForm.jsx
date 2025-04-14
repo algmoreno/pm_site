@@ -108,4 +108,4 @@ const LoginForm = () => {
   )
 }
 
-export default EnterAnimation(LoginForm, "loginForm")
+export default EnterAnimation(LoginForm)
