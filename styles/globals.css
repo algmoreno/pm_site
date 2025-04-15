@@ -91,7 +91,14 @@
 }
 
 .bg-yoga {
-  background-image: linear-gradient(to right, #ffffff 10%, transparent 45%, #ffffff 90%), url("/assets/yoga1.jpg");
+  background-image: linear-gradient(to right, transparent 20%, #ffffff 80%), url("/assets/yoga1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-yoga-therapy {
+  background-image: linear-gradient(to left, transparent 40%, #ffffff 60%), url("/assets/wellness.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
