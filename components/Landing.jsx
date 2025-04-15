@@ -5,7 +5,7 @@ import "@/styles/globals.css"
 import { useState, useEffect, useRef } from "react"
 import { Html } from '@react-three/drei';
 import { Canvas, useFrame } from "@react-three/fiber"
-import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-three/drei"
+import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-three/drei";
 
 const Landing = () => {
 
@@ -71,7 +71,7 @@ const Sky = () => {
           <Cloud ref={cloud0} speed=".1" bounds={[6, 1, 1]} color="#ffffff" position={[-150, 0, 0]} />
           {/* <Cloud bounds={[6, 1, 1]} speed=".2" color="#a1a1a1" seed={2} position={[15, 0, 0]} /> */}
           {/* <Cloud {...config} bounds={[x, y, z]} color="#d0e0d0" seed={3} position={[-15, 0, 0]} /> */}
-          <Cloud bounds={[6, 1, 1]} speed=".01" color="#ffffff" seed={4} position={[0, 0, -10]} />
+          <Cloud bounds={[6, 1, 1]} speed=".09" color="#ffffff" seed={4} position={[0, 0, -10]} />
           <Cloud bounds={[6, 1, 1]} color="#c0c0dd" seed={5} position={[0, 0, 12]} />
           <Cloud concentrate="outside" speed=".1" growth={100} color="#ffccdd" opacity={.75} seed={1} bounds={200} volume={volume} />
         </Clouds>
