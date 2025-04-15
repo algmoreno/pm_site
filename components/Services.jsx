@@ -1,137 +1,167 @@
 "use client";
-import React from 'react'
-import { motion } from 'framer-motion';
+import { forwardRef, SVGProps, useState } from "react"
+import { AnimatePresence, motion, usePresenceData, wrap } from "motion/react"
 import { SectionWrapper } from '@/hoc/index'
 import { fadeIn, textVariant, slideIn  } from '@/lib/motion.js';
 import "@/styles/globals.css"
 
 const Services = () => {
-  const services= [
-    ["Yoga", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error voluptate animi eius sint, ad minus libero nisi ex mollitia voluptatibus illo, dolorem, iusto ea ratione dicta voluptatum ullam culpa quo! ", "/assets/yoga1.jpg"],
-    ["Yoga Therapy", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error voluptate animi eius sint, ad minus libero nisi ex mollitia voluptatibus illo, dolorem, iusto ea ratione dicta voluptatum ullam culpa quo!", "/assets/wellness.jpg"],
-  ]
+  // const items = [
+  //   ["Yoga", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error voluptate animi eius sint, ad minus libero nisi ex mollitia voluptatibus illo, dolorem, iusto ea ratione dicta voluptatum ullam culpa quo! ", "/assets/yoga1.jpg"],
+  //   ["Yoga Therapy", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error voluptate animi eius sint, ad minus libero nisi ex mollitia voluptatibus illo, dolorem, iusto ea ratione dicta voluptatum ullam culpa quo!", "/assets/wellness.jpg"]
+  // ]
+  
+  // const items = [
+  //   {
+  //     name: "Yoga Therapy",
+  //     description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos molestias, voluptatibus reprehenderit quam ipsam dolores magni. Quis numquam rerum, sunt, esse placeat laudantium nobis aperiam minima expedita ex quos aut.",
+  //     image: "/assets/wellness.jpg"
+  //   },
+  //   {
+  //     name: "Yoga",
+  //     description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos molestias, voluptatibus reprehenderit quam ipsam dolores magni. Quis numquam rerum, sunt, esse placeat laudantium nobis aperiam minima expedita ex quos aut.",
+  //     image: "/assets/yoga1.jpg"
+  //   }
+  // ]
 
-  const container = {
-    margin: "100px auto",
-    maxWidth: 500,
-    paddingBottom: 100,
-    width: "100%",
+  const items = [["blag", "blah", "black"], ["blag", "blah", "black"]]
+  const [iterateIndex, setIterateIndex] = useState(0)
+  const [selectedItem, setSelectedItem] = useState(items[0])
+  const [direction, setDirection] = useState(1)
+
+  function setSlide(newDirection) {
+    setIterateIndex(prev => prev + 1)
+    console.log("newDirection", newDirection)
+    const nextItem = items[iterateIndex % items.length]
+    console.log("nextItem", nextItem)
+    setSelectedItem(nextItem)
+    setDirection(newDirection)
   }
 
-  const cardContainer = {
-    overflow: "hidden",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    paddingTop: 20,
-    marginBottom: -120,
-  }
-
-  const splash = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    clipPath: `path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z")`,
-  }
-
-  const card = {
-    fontSize: 16,
-    width: 1800,
-    height: 830,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    transformOrigin: "10% 60%",
-  }
-
-  const cardVariants = {
-    offscreen: {
-        y: 0,
-        transition: {
-          type: "spring",
-          bounce: 0,
-          duration: 2.8,
-      },
-    },
-    onscreen: {
-        y: 900,
-        rotate: 0,
-        transition: {
-            type: "spring",
-            bounce: 0,
-            duration: 2.8,
-        },
-    },
-  }
-
-  function Card({ name, description, image}) {
-
-    return (
-        <motion.div
-            style={cardContainer}
-            initial="onscreen"
-            whileInView="offscreen"
-            viewport={{ amount: .7 }}>
-            {/* <div style={{ ...splash,  }} /> */}
-            <motion.div style={card} variants={cardVariants} className="card">
-            <div className="mx-auto w-auto flex">
-              <img className="m-auto w-[70%]" src={image} alt="service image" />
-              <div className="justify-items-center align-middle my-auto">
-                <h1 className="text-[16px] font-light">{name}</h1>
-                <div>
-                  <p className="p-20">
-                    {description}
-                  </p>
-                </div>
-              </div>
-            </div>
-            </motion.div>
-        </motion.div>
-    )
-  }
+  const color = "white"
 
   return (
-    <div id="services" className="min-h-[850px] w-auto justify-items-center ">
-
-      {/* <motion.div variants={fadeIn("right", "spring", 0, 3)}>
-      <div className="mx-auto w-auto flex">
-        <img className="m-auto w-[60%] border-r border-black" src="/assets/yoga1.jpg" alt="yoga pose" />
-        <div className="justify-items-center align-middle my-auto">
-          <h1 className="text-[24px] font-light">Yoga</h1>
-          <div>
-            <p className="p-20">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-              Reiciendis reprehenderit consectetur est, facere exercitationem maiores magni perspiciatis quaerat, voluptas at quae dicta, odit natus in quod sed et ratione neque!
-            </p>
-          </div>
-        </div>
-      </div>
-      </motion.div>
-
-      <motion.div variants={fadeIn("left", "spring", 2, 3)}>
-      <div className="mx-auto w-auto flex gap-4">
-        <div className="justify-items-center align-middle my-auto">
-            <h1 className="text-[24px] font-light">Yoga Therapy</h1>
-            <div>
-              <p className="p-20">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                Reiciendis reprehenderit consectetur est, facere exercitationem maiores magni perspiciatis quaerat, voluptas at quae dicta, odit natus in quod sed et ratione neque!
-              </p>
-            </div>
-          </div>
-          <img className="ml-auto w-[60%] border-l border-black" src="/assets/wellness.jpg" alt="yoga pose" />
-
-        </div>
-      </motion.div> */}
-      {services.map(([name, description, image], i) => (
-        <Card name={name} description={description} image={image} key={i}/>
-    ))}
+    <div className="flex relative justify-center align-middle gap-10" >
+      <motion.button
+        className="flex justify-center align-middle relative z-1 bg-black w-20 h-20"
+        initial={false}
+        animate={{ backgroundColor: "blue" }}
+        aria-label="Previous"
+        onClick={() => setSlide(-1)}
+        whileFocus={{ outline: `2px solid black` }}
+        whileTap={{ scale: 0.9 }}>
+          <ArrowLeft />
+      </motion.button>
+      <AnimatePresence
+          custom={1}
+          initial={false}
+          mode="popLayout">
+          <Slide key={selectedItem} service={selectedItem} color={color} />
+      </AnimatePresence>
+      <motion.button
+        className="flex justify-center align-middle relative z-1 bg-black w-20 h-20"
+        initial={false}
+        animate={{ backgroundColor: "blue" }}
+        aria-label="Next"
+        onClick={() => setSlide(1)}
+        whileFocus={{ outline: `2px solid black` }}
+        whileTap={{ scale: 0.9 }}>
+          <ArrowRight />
+      </motion.button>
     </div>
+
+    // <div id="services" className="min-h-[850px] w-auto justify-items-center ">
+      
+    //   <motion.div exit={{ opacity: 0 }}>
+    //   <div className="mx-auto w-auto flex">
+    //     <img className="m-auto w-[60%] border-r border-black" src="/assets/yoga1.jpg" alt="yoga pose" />
+    //     <div className="justify-items-center align-middle my-auto">
+    //       <h1 className="text-[24px] font-light">Yoga</h1>
+    //       <div>
+            
+    //         <motion.p exit={{ y: 10 }} className="p-20">
+    //           Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+    //           Reiciendis reprehenderit consectetur est, facere exercitationem maiores magni perspiciatis quaerat, voluptas at quae dicta, odit natus in quod sed et ratione neque!
+    //         </motion.p>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   </motion.div>
+
+    //   <motion.div variants={fadeIn("left", "spring", 2, 3)}>
+    //   <div className="mx-auto w-auto flex gap-4">
+    //     <div className="justify-items-center align-middle my-auto">
+    //         <h1 className="text-[24px] font-light">Yoga Therapy</h1>
+    //         <div>
+    //           <p className="p-20">
+    //             Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+    //             Reiciendis reprehenderit consectetur est, facere exercitationem maiores magni perspiciatis quaerat, voluptas at quae dicta, odit natus in quod sed et ratione neque!
+    //           </p>
+    //         </div>
+    //       </div>
+    //       <img className="ml-auto w-[60%] border-l border-black" src="/assets/wellness.jpg" alt="yoga pose" />
+
+    //     </div>
+    //   </motion.div>
+    // </div>
   )
 }
+
+const Slide = forwardRef(function Slide({ color }, ref) {
+  const direction = usePresenceData()
+  return (
+    <motion.div
+      className="w-full h-[800px] border-2 border-slate-400"
+      ref={ref}
+      initial={{ opacity: 0, x: direction * 50 }}
+      animate={{
+          opacity: 1,
+          x: 0,
+          transition: {
+              delay: 0,
+              type: "spring",
+              visualDuration: 2,
+              bounce: 0,
+          },
+      }}
+      exit={{ opacity: 0.1, x: direction * -50, transition: { visualDuration: 4 } }}>
+      Text here
+    </motion.div >
+  )
+})
+
+const iconsProps= {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "500",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: "2",
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+}
+
+function ArrowLeft() {
+    return (
+        <svg {...iconsProps}>
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+        </svg>
+    )
+}
+
+function ArrowRight() {
+    return (
+        <svg {...iconsProps}>
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+        </svg>
+    )
+}
+
+
+
 
 export default Services
 // export default SectionWrapper(Services, "services")
