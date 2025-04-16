@@ -97,13 +97,35 @@
   background-size: cover;
 }
 
+.bg-yoga-div {
+  display: flex;
+  width: 900px;
+  margin-left: auto;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* .bg-yoga-span {
+  display: block;
+  width: 900px;
+  margin: auto 0px auto 0px;
+  padding: 20px;
+  border: 1px solid gray;
+  justify-content: center;
+} */
+
+.bg-yoga-h1 {
+  margin: 0px auto;
+  font-size: 104px;
+  color: gray;
+}
+
 .bg-yoga-therapy {
   background-image: linear-gradient(to left, transparent 40%, #ffffff 60%), url("/assets/wellness.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
-
 
 
 @layer base {
