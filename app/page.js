@@ -3,9 +3,9 @@ import { Landing, About, Services, SkyCanvas } from '@/components/index';
 const Home = () => {
   return (
     <div className="" > 
-      <Services />
       <Landing />
-      {/* <About /> */}
+      <Services />
+      <About />
     </div>
   );
 }

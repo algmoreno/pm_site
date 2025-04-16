@@ -10,7 +10,7 @@ const Services = () => {
     {
       class: "bg-yoga-therapy",
       name: "Yoga Therapy",
-      description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos molestias, voluptatibus reprehenderit quam ipsam dolores magni. Quis numquam rerum, sunt, esse placeat laudantium nobis aperiam minima expedita ex quos aut.",
+      description: "Yoga therapy is a mind-body practice that focuses on your physical, emotional and mental health. The practice uses movement, mindfulness, meditation, relaxation and breathing exercises to help you relax, relieve stress and manage underlying conditions or symptoms in addition to treatment by a healthcare provider.",
       image: "/assets/wellness.jpg"
     },
     {
@@ -33,14 +33,14 @@ const Services = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setSlide()
-    }, 6000);
+    }, 600000);
     return () => clearInterval(interval);
   })
 
   const Slide = forwardRef(function Slide({ service }, ref) {
     return (
       <motion.div
-        className={`flex w-full h-[700px] `}
+        className={`flex w-full h-[950px] `}
         ref={ref}
         initial={{ opacity: 0, x: 25 }}
         animate={{
@@ -54,11 +54,11 @@ const Services = () => {
             },
         }}
         exit={{ opacity: 0, x: -25, transition: { visualDuration: 2 } }}>
-        <div className={`${selectedItem.class}-div relative z-0`}>
-          <div className="flex absolute bottom-10 right-0">
+        <div className={`${selectedItem.class}-div `}>
+          <div className={`${selectedItem.class}-header-div `}>
             <h1 className={`${selectedItem.class}-h1 `}>{service.name}</h1>
           </div>
-          <span className={`${selectedItem.class}-span my-auto w-[400px] justify-center text-center`}>
+          <span className={`${selectedItem.class}-span backdrop-blur-md`}>
             <p>{service.description}</p>
           </span>
         </div>
