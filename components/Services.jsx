@@ -21,64 +21,65 @@ const Services = () => {
     }
   ]
 
-  const [iterateIndex, setIterateIndex] = useState(0)
-  const [selectedItem, setSelectedItem] = useState(items[0])
-
-  function setSlide() {
-    setIterateIndex(prev => prev + 1)
-    const nextItem = items[iterateIndex % items.length]
-    setSelectedItem(nextItem)
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSlide()
-    }, 12000);
-    return () => clearInterval(interval);
-  })
-
-  const Slide = forwardRef(function Slide({ service }, ref) {
-    return (
-      // <motion.div
-      //   className={`flex w-full h-[850px] backdrop-blur-[7px]`}
-      //   ref={ref}
-      //   initial={{ opacity: 0, x: 25 }}
-      //   animate={{
-      //       opacity: 1,
-      //       x: 0,
-      //       transition: {
-      //           delay: 0,
-      //           type: "spring",
-      //           visualDuration: 2,
-      //           bounce: 0,
-      //       },
-      //   }}
-      //   exit={{ opacity: 0, x: -25, transition: { visualDuration: 2 } }}>
-      <div className={`flex w-full h-[850px] `}>
-        <div className={`${selectedItem.class}-div `}>
-          <div className={`${selectedItem.class}-header-div `}>
-            <h1 className={`${selectedItem.class}-h1 `}>{service.name}</h1>
+  return (
+    // Configuration 1
+    <div id="services" className={``}>
+      <div className="bg-yoga-therapy flex w-full h-[850px] justify-center relative align-middle ">
+        <div className={`bg-yoga-therapy-div`}>
+          <div className={`bg-yoga-therapy-header-div `}>
+            <h1 className={`bg-yoga-therapy-h1 `}>Yoga Therapy</h1>
           </div>
-          <span className={`${selectedItem.class}-span `}>
-            <p>{service.description}</p>
+          <span className={`bg-yoga-therapy-span `}>
+            <p>Yoga therapy is a mind-body practice that focuses on your physical, emotional and mental health. The practice uses movement, mindfulness, 
+              meditation, relaxation and breathing exercises to help you relax, 
+              relieve stress and manage underlying conditions or symptoms in addition to treatment by a healthcare provider.
+            </p>
           </span>
         </div>
       </div>
-      // {/* </motion.div > */}
-    )
-  })
-
-  return (
-    <div id="services" className={`flex justify-center relative align-middle gap-10 ${selectedItem.class}`} >
-      <button className="bg-red-400 absolute top-0 right-0 z-100" onClick={setSlide}>Next</button>
-      <AnimatePresence
-          custom={1}
-          initial={false}
-          mode="popLayout">
-          <Slide key={selectedItem.name} service={selectedItem}  />
-      </AnimatePresence>
+      <div className="bg-yoga flex w-full h-[850px] justify-center relative align-middle ">
+        <div className={`bg-yoga-div `}>
+          <div className={`bg-yoga-header-div `}>
+            <h1 className={`bg-yoga-h1 `}>Yoga</h1>
+          </div>
+          <span className={`bg-yoga-span `}>
+            <p>Yoga is a holistic practice that combines physical postures (asanas), breath control (pranayama), and meditation (dhyana) to 
+              connect the body, mind, and spirit. It aims to create a sense of balance and well-being by harmonizing these aspects. Yoga is often described as a union, 
+              or yoking together, of these three elements.
+            </p>
+          </span>
+        </div>
+      </div>
     </div>
-
+    // Configuration 2
+    // <div id="services" className={`p-5`}>
+    //   <div className="flex w-full h-auto justify-center relative align-middle ">
+    //     <div className={`bg-yoga-therapy-div`}>
+    //       <div className={`bg-yoga-therapy-header-div `}>
+    //         <h1 className={`bg-yoga-therapy-h1 `}>Yoga Therapy</h1>
+    //       </div>
+    //       <span className={`bg-yoga-therapy-span `}>
+    //         <p>Yoga therapy is a mind-body practice that focuses on your physical, emotional and mental health. The practice uses movement, mindfulness, 
+    //           meditation, relaxation and breathing exercises to help you relax, 
+    //           relieve stress and manage underlying conditions or symptoms in addition to treatment by a healthcare provider.
+    //         </p>
+    //       </span>
+    //     </div>
+    //   </div>
+    //   <div className="flex w-full h-full justify-center relative align-middle ">
+    //     <div className={`bg-yoga-div `}>
+    //       <div className={`bg-yoga-header-div `}>
+    //         <h1 className={`bg-yoga-h1 `}>Yoga</h1>
+    //       </div>
+    //       <span className={`bg-yoga-span `}>
+    //         <p>Yoga is a holistic practice that combines physical postures (asanas), breath control (pranayama), and meditation (dhyana) to 
+    //           connect the body, mind, and spirit. It aims to create a sense of balance and well-being by harmonizing these aspects. Yoga is often described as a union, 
+    //           or yoking together, of these three elements.
+    //         </p>
+    //       </span>
+    //     </div>
+    //   </div>
+    // </div>
   )
 }
 
