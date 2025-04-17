@@ -90,7 +90,7 @@ const About = () => {
 
 
   return (
-    <div id="about" className="flex min-h-[900px] justify-items-center w-auto">
+    <div id="about" className="flex min-h-[700px] justify-items-center w-auto">
       <div className="m-auto flex">
         <div className="flex-wrap w-[50%]">
           <img className="w-[50%] m-auto rounded-md border-l border-black" src="/assets/wellness.jpg" alt="yoga pose" />

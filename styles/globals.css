@@ -100,7 +100,7 @@
 .bg-yoga-div {
   display: flex;
   width: 900px;
-  margin: auto 50px auto auto;
+  margin: auto 0px auto auto;
   justify-content: center;
   position: relative;
   border-radius: 10px;
@@ -141,7 +141,7 @@
 .bg-yoga-therapy-div {
   display: flex;
   width: 900px;
-  margin: auto auto auto 50px;
+  margin: auto auto auto 0px;
   justify-content: center;
   position: relative;
   border-radius: 10px;
