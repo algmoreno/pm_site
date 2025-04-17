@@ -39,21 +39,22 @@ const Services = () => {
 
   const Slide = forwardRef(function Slide({ service }, ref) {
     return (
-      <motion.div
-        className={`flex w-full h-[850px] backdrop-blur-[7px]`}
-        ref={ref}
-        initial={{ opacity: 0, x: 25 }}
-        animate={{
-            opacity: 1,
-            x: 0,
-            transition: {
-                delay: 0,
-                type: "spring",
-                visualDuration: 2,
-                bounce: 0,
-            },
-        }}
-        exit={{ opacity: 0, x: -25, transition: { visualDuration: 2 } }}>
+      // <motion.div
+      //   className={`flex w-full h-[850px] backdrop-blur-[7px]`}
+      //   ref={ref}
+      //   initial={{ opacity: 0, x: 25 }}
+      //   animate={{
+      //       opacity: 1,
+      //       x: 0,
+      //       transition: {
+      //           delay: 0,
+      //           type: "spring",
+      //           visualDuration: 2,
+      //           bounce: 0,
+      //       },
+      //   }}
+      //   exit={{ opacity: 0, x: -25, transition: { visualDuration: 2 } }}>
+      <div className={`flex w-full h-[850px] `}>
         <div className={`${selectedItem.class}-div `}>
           <div className={`${selectedItem.class}-header-div `}>
             <h1 className={`${selectedItem.class}-h1 `}>{service.name}</h1>
@@ -62,8 +63,8 @@ const Services = () => {
             <p>{service.description}</p>
           </span>
         </div>
-        {/* <img className="flex-wrap ml-auto w-[60%]" src={service.image} alt="yoga pose" /> */}
-      </motion.div >
+      </div>
+      // {/* </motion.div > */}
     )
   })
 

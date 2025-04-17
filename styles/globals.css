@@ -104,10 +104,10 @@
   justify-content: center;
   position: relative;
   border-radius: 10px;
-  /* background-image: url("/assets/yoga.jpg");
+  background-image: url("/assets/yoga.jpg");
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size:cover contain;
-  background-position: center -400px;  */
 }
 
 .bg-yoga-header-div{
@@ -145,11 +145,11 @@
   justify-content: center;
   position: relative;
   border-radius: 10px;
-  /* background-image: url("/assets/wellness.jpg");
+  background-image: url("/assets/wellness.jpg");
   background-repeat: no-repeat;
-  padding: 20px;
+  background-attachment: fixed;
   background-size: cover contain;
-  background-position: top 100px;  */
+  background-position: top 100px; 
 }
 
 .bg-yoga-therapy-header-div{
