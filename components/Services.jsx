@@ -33,14 +33,14 @@ const Services = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setSlide()
-    }, 600000);
+    }, 12000);
     return () => clearInterval(interval);
   })
 
   const Slide = forwardRef(function Slide({ service }, ref) {
     return (
       <motion.div
-        className={`flex w-full h-[850px] `}
+        className={`flex w-full h-[850px] backdrop-blur-[7px]`}
         ref={ref}
         initial={{ opacity: 0, x: 25 }}
         animate={{
