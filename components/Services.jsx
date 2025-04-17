@@ -40,7 +40,7 @@ const Services = () => {
   const Slide = forwardRef(function Slide({ service }, ref) {
     return (
       <motion.div
-        className={`flex w-full h-[950px] `}
+        className={`flex w-full h-[850px] `}
         ref={ref}
         initial={{ opacity: 0, x: 25 }}
         animate={{
@@ -58,7 +58,7 @@ const Services = () => {
           <div className={`${selectedItem.class}-header-div `}>
             <h1 className={`${selectedItem.class}-h1 `}>{service.name}</h1>
           </div>
-          <span className={`${selectedItem.class}-span backdrop-blur-md`}>
+          <span className={`${selectedItem.class}-span `}>
             <p>{service.description}</p>
           </span>
         </div>

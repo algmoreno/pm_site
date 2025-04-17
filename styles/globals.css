@@ -91,7 +91,6 @@
 }
 
 .bg-yoga {
-  /* background-image: linear-gradient(to left, transparent 40%, #ffffff 60%), url("/assets/wellness.jpg"); */
   background-image: url("/assets/yoga.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -102,20 +101,18 @@
   display: flex;
   width: 900px;
   margin: auto 0px auto auto;
-  padding: 20px;
   justify-content: center;
   position: relative;
   border-radius: 10px;
+  background-image: url("/assets/yoga.jpg");
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-size:cover contain;
+  background-position: center -400px; 
 }
 
 .bg-yoga-header-div{
   display: flex;
-  border-radius: 10px;
-  background-image: url("/assets/yoga.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size:contain;
-  background-position: left; 
 }
 
 .bg-yoga-h1 {
@@ -145,26 +142,25 @@
 .bg-yoga-therapy-div {
   display: flex;
   width: 900px;
-  margin: auto;
-  padding: 20px;
+  margin: auto auto 50px 0px;
   justify-content: center;
   position: relative;
   border-radius: 10px;
+  background-image: url("/assets/wellness.jpg");
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-size:cover contain;
+  background-position: right; 
 }
 
 .bg-yoga-therapy-header-div{
   display: flex;
-  border-radius: 10px;
-  background-image: url("/assets/wellness.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size:contain;
 }
 
 .bg-yoga-therapy-h1 {
   margin: 0px auto;
   font-size: 104px;
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
 }
 
 .bg-yoga-therapy-span {
@@ -173,7 +169,7 @@
   text-align: right;
   justify-content: center;
   font-size: 24px;
-  color:rgb(255, 255, 255);
+  color:rgb(0, 0, 0);
   padding: 10px;
 }
 
