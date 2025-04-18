@@ -7,21 +7,6 @@ import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 import "@/styles/globals.css"
 
 const Services = () => {
-  const items = [
-    {
-      class: "bg-yoga-therapy",
-      name: "Yoga Therapy",
-      description: "Yoga therapy is a mind-body practice that focuses on your physical, emotional and mental health. The practice uses movement, mindfulness, meditation, relaxation and breathing exercises to help you relax, relieve stress and manage underlying conditions or symptoms in addition to treatment by a healthcare provider.",
-      image: "/assets/wellness.jpg"
-    },
-    {
-      class: "bg-yoga",
-      name: "Yoga",
-      description: "Yoga is a holistic practice that combines physical postures (asanas), breath control (pranayama), and meditation (dhyana) to connect the body, mind, and spirit. It aims to create a sense of balance and well-being by harmonizing these aspects. Yoga is often described as a union, or yoking together, of these three elements. ",
-      image: "/assets/yoga1.jpg"
-    }
-  ]
-
   return (
     <div id="services" className={`grid grid-cols-2 p-5 gap-2`}>
       <div className="flex w-[900px] rounded-[10px] justify-center bg-2">
