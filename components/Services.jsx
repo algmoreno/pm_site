@@ -3,6 +3,7 @@ import { forwardRef, SVGProps, useState, useEffect } from "react"
 import { AnimatePresence, motion, } from "motion/react"
 import { SectionWrapper } from '@/hoc/index'
 import { fadeIn, textVariant, slideIn  } from '@/lib/motion.js';
+import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 import "@/styles/globals.css"
 
 const Services = () => {
@@ -59,7 +60,7 @@ const Services = () => {
         </div>
       </div>
 
-      <div className={`bg-yoga-therapy-div`}>
+      <div className={`bg-yoga-therapy-div border-1 border-blue-200`}>
         <div className={`bg-yoga-therapy-header-div `}>
           <h1 className={`bg-yoga-therapy-h1`}>Yoga Therapy</h1>
         </div>
@@ -71,7 +72,7 @@ const Services = () => {
         </span>
       </div>
 
-      <div className={`bg-yoga-div `}>
+      <div className={`bg-yoga-div border-1 border-blue-200`}>
         <span className={`bg-yoga-span backdrop-blur-md font-light`}>
           <p>Yoga is a holistic practice that combines physical postures (asanas), breath control (pranayama), and meditation (dhyana) to 
             connect the body, mind, and spirit. It aims to create a sense of balance and well-being by harmonizing these aspects. Yoga is often described as a union, 
@@ -85,9 +86,11 @@ const Services = () => {
 
       <div className="flex w-[900px] rounded-[10px] justify-center ">
         <div className="flex justify-center items-center">
+          
           <h1 className="my-auto font-bold"> 
             Ready to try? <br />
-            <span className="font-light">Book now.</span>
+            <HiOutlineCalendarDateRange size={50} />
+            <a href="/login" className="font-light hover:text-blue-500 underline decoration-1">Log in and book a session.</a>
           </h1>
         </div>
       </div>
