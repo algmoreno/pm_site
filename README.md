@@ -37,3 +37,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 Days Worked:
 2/21 (1), 2/24-2/28 (5), 3/3-3/7 (5), 3/10-3/12 (3), 3/17-3/19 (3), 3/24-3/29 (5), 3/31-4/3 (4), 4/7-4/9 (3), 4/14 
+
+Todos:
+-customizable availability for admin
+-EmailJs account for Paula -> assignment & appointment notification templates
+-Enable calendar notification/email and zoom
+-proper loading for all pages. Immediate loading
