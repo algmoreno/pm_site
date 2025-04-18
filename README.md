@@ -43,3 +43,4 @@ Todos:
 -EmailJs account for Paula -> assignment & appointment notification templates
 -Enable calendar notification/email and zoom
 -proper loading for all pages. Immediate loading
+-faster loading
