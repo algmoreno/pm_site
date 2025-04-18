@@ -255,7 +255,7 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div id="calendar" className="w-[1500px] h-[auto] mx-auto p-5 mb-20 max-sm:mt-[25%]">
+    <div id="calendar" className="w-[1500px] h-[auto] mx-auto p-5 max-sm:mt-[25%]">
       {!loading ? (
         <div>
           <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
@@ -329,7 +329,7 @@ const Calendar = ({ title }) => {
                 Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
               </h2>
               <div className="flex gap-5 ml-auto">
-
+                {!isBeforeToday &&
                 <div className="grid grid-cols-1">
                   <select
                     id="service"
@@ -345,6 +345,7 @@ const Calendar = ({ title }) => {
                     aria-hidden="true"
                     className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"/>
                 </div>
+}
               </div>
             </div>
 
