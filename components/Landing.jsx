@@ -10,7 +10,7 @@ import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-t
 const Landing = () => {
 
   return (
-    <div id="canvas-container" className={`flex w-full h-[700px] relative max-sm:mt-[25%] text-center`}>
+    <div id="canvas-container" className={`flex w-full h-[550px] relative max-sm:mt-[25%] text-center`}>
       <Canvas camera={{ position: [10, -10, 10], fov: 45 }}>
         <Sky />
         {/* <Words /> */}
