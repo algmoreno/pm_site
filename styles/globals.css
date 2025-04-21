@@ -90,9 +90,16 @@
   background-size: cover;
 }
 
+.bg-8 {
+  background-image: linear-gradient(to top, #ffffff 10%, #e9f1ff 90%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .services-header{
   font-size: 144px;
-  background: -webkit-linear-gradient(#d2dbe5, #c4bc9f);
+  background: -webkit-linear-gradient(#e6edf5, #e9f1ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

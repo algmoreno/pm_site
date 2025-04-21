@@ -9,7 +9,7 @@ import "@/styles/globals.css"
 const Services = () => {
   return (
     <div id="services" className={`grid grid-cols-2 p-5 gap-2`}>
-      <div className="flex w-[900px] rounded-[10px] justify-center bg-2">
+      <div className="flex w-[900px] rounded-[10px] justify-center bg-8">
         <div className={`flex justify-center relative`}>
           <h1 className={`my-auto font-light services-header`}>Services</h1>
         </div>
@@ -39,13 +39,13 @@ const Services = () => {
         </div>
       </div>
 
-      <div className="flex w-[900px] rounded-[10px] justify-center ">
+      <div className="flex w-[900px] rounded-[10px] justify-center">
         <div className="flex justify-center items-center">
           
           <h1 className="my-auto font-bold"> 
             Ready to try? <br />
             <HiOutlineCalendarDateRange size={50} />
-            <a href="/schedule" className="font-light hover:text-blue-500 underline decoration-1">Log in and book a session.</a>
+            <a href="/schedule" className="font-light hover:text-blue-500 underline decoration-1">Schedule now.</a>
           </h1>
         </div>
       </div>

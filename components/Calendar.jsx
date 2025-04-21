@@ -255,7 +255,7 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div id="calendar" className="w-[1500px] h-[auto] mx-auto p-5 max-sm:mt-[25%]">
+    <div id="calendar" className="w-[1500px] h-[auto] mx-auto p-5 max-sm:mt-[25%] border-1 border-gray-600 rounded-md">
       {!loading ? (
         <div>
           <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
