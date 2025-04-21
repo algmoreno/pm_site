@@ -39,10 +39,10 @@ Days Worked:
 2/21 (1), 2/24-2/28 (5), 3/3-3/7 (5), 3/10-3/12 (3), 3/17-3/19 (3), 3/24-3/29 (5), 3/31-4/3 (4), 4/7-4/9 (3), 4/14, 4/18, 
 
 Todos:
--customizable availability for admin
+-faster loading
+-proper loading ui for all pages
+-about section
 -EmailJs account for Paula -> assignment & appointment notification templates
 -enable calendar notification/email and zoom
--proper loading ui for all pages
--faster loading
--about section
--mobile responsive
+-customizable availability for admin
+-mobile responsive (once everything is final)

@@ -8,14 +8,14 @@ import "@/styles/globals.css"
 
 const Services = () => {
   return (
-    <div id="services" className={`grid grid-cols-2 p-5 gap-2`}>
-      <div className="flex w-[900px] rounded-[10px] justify-center bg-8">
+    <div id="services" className={`grid grid-cols-2 max-sm:grid-cols-1 p-5 gap-2`}>
+      <div className="flex w-full rounded-[10px] justify-center bg-8">
         <div className={`flex justify-center relative`}>
           <h1 className={`my-auto font-light services-header`}>Services</h1>
         </div>
       </div>
 
-      <div className={`bg-yoga-therapy-div border-1 border-blue-200`}>
+      <div className={`bg-yoga-therapy-div w-full border-1 border-blue-200`}>
         <div className={`bg-yoga-therapy-header-div `}>
           <h1 className={`bg-yoga-therapy-h1`}>Yoga Therapy</h1>
         </div>
@@ -27,7 +27,7 @@ const Services = () => {
         </span>
       </div>
 
-      <div className={`bg-yoga-div border-1 border-blue-200`}>
+      <div className={`bg-yoga-div w-full border-1 border-blue-200`}>
         <span className={`bg-yoga-span backdrop-blur-lg font-light`}>
           <p>Yoga is a holistic practice that combines physical postures (asanas), breath control (pranayama), and meditation (dhyana) to 
             connect the body, mind, and spirit. It aims to create a sense of balance and well-being by harmonizing these aspects. Yoga is often described as a union, 
@@ -39,7 +39,7 @@ const Services = () => {
         </div>
       </div>
 
-      <div className="flex w-[900px] rounded-[10px] justify-center">
+      <div className="flex w-full rounded-[10px] justify-center">
         <div className="flex justify-center items-center">
           
           <h1 className="my-auto font-bold"> 
@@ -49,6 +49,8 @@ const Services = () => {
           </h1>
         </div>
       </div>
+
+      
     </div>
   )
 }
