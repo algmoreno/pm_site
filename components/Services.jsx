@@ -41,7 +41,6 @@ const Services = () => {
 
       <div className="flex w-full rounded-[10px] justify-center">
         <div className="flex justify-center items-center">
-          
           <h1 className="my-auto font-bold"> 
             Ready to try? <br />
             <HiOutlineCalendarDateRange size={50} />
@@ -49,8 +48,6 @@ const Services = () => {
           </h1>
         </div>
       </div>
-
-      
     </div>
   )
 }

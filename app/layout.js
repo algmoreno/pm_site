@@ -6,7 +6,7 @@ import SessionProvider from "@/lib/SessionProvider";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Layout = async ({ children }) => {
-  const session = await getServerSession();
+  // const session = await getServerSession();
 
   return (
     <html lang="en">

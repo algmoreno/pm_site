@@ -20,7 +20,7 @@ const About = () => {
             numquam id ullam dolores odio voluptas dolore architecto magni quo debitis laboriosam nostrum?
           </p>
         </div>
-        </div>
+      </div>
     </div>
   )
 }

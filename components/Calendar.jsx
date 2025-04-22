@@ -67,10 +67,6 @@ const Calendar = ({ title }) => {
     }
   }, [session])
 
-  useEffect(() => {
-    console.log("highlight select", highlightSelect);
-  }, [highlightSelect])
-
   // get all appointments
   useEffect(() => {
     axios.get(`/api/auth/appointments/`)
