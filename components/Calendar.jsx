@@ -48,7 +48,6 @@ const Calendar = ({ title }) => {
   const userId = session?.user.id
   const name = session?.user.firstName + " " + session?.user.lastName
   const email = session?.user.email
-  const appointmentRef = useRef({ startDatetime: null, endDatetime: null });
   const [appointment, setAppointment] = useState({
     userId: userId,
     startDatetime: '',

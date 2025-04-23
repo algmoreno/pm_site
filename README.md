@@ -42,7 +42,7 @@ Todos:
 -faster loading
 -proper loading ui for all pages
 -about section
+-mobile responsive (once everything is final)
 -EmailJs account for Paula -> assignment & appointment notification templates
 -enable calendar notification/email and zoom
 -customizable availability for admin
--mobile responsive (once everything is final)

@@ -2,25 +2,26 @@
 import React from 'react'
 import * as THREE from "three"
 import "@/styles/globals.css"
-import { useState, useEffect, useRef } from "react"
+import { useState, Suspense, useRef } from "react"
 import { Html } from '@react-three/drei';
 import { Canvas, useFrame } from "@react-three/fiber"
-import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-three/drei";
+import { Clouds, Cloud, Sky as SkyImpl } from "@react-three/drei";
+import { Loader } from "@/components/index";
 
 const Landing = () => {
-
   return (
     <div id="canvas-container" className={`flex w-full h-[580px] relative max-sm:mt-[25%] text-center`}>
       <Canvas camera={{ position: [10, -10, 10], fov: 45 }}>
-        <Sky />
-        {/* <Words /> */}
-        <Html position={[-10, 12, 0]} className="w-[350px]">
-          <img className="m-auto w-[50%]" src="/assets/lotus1.png" alt="lotus logo" />
-          <p className="text-black font-light italic text-shadow-2xs text-shadow-sky-300">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. A autem suscipit maxime. 
-            Ex, quas commodi accusantium fugit praesentium quod nisi ratione ea earum esse expedita est non suscipit dignissimos. Reprehenderit.
-          </p>
-        </Html>
+        <Suspense fallback={<Loader />}>
+          <Sky />
+          <Html position={[-10, 12, 0]} className="w-[350px]">
+            <img className="m-auto w-[50%]" src="/assets/lotus1.png" alt="lotus logo" />
+            <p className="text-black font-light italic text-shadow-2xs text-shadow-sky-300">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. A autem suscipit maxime. 
+              Ex, quas commodi accusantium fugit praesentium quod nisi ratione ea earum esse expedita est non suscipit dignissimos. Reprehenderit.
+            </p>
+          </Html>
+        </Suspense>
         <ambientLight intensity={Math.PI / 1.5} />
         <spotLight position={[0, 40, 0]} decay={0} distance={45} penumbra={1} intensity={100} />
         <spotLight position={[-20, 0, 10]} color="white" angle={0.15} decay={0} penumbra={-1} intensity={30} />
