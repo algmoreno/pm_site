@@ -121,6 +121,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size:cover contain;
+  background-position: 20% 20%; 
 }
 
 .bg-yoga-header-div{
@@ -162,7 +163,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover contain;
-  background-position: top 100px; 
+  background-position: 2% 12%; 
 }
 
 .bg-yoga-therapy-header-div{
