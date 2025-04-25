@@ -1,6 +1,4 @@
 "use client";
-import React, { useRef, useEffect } from 'react'
-import * as motion from "motion/react-client"
 import "@/styles/globals.css";
 
 const About = () => {

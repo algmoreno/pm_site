@@ -1,12 +1,11 @@
 'use client';
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from 'next/link';
 import { navOptions } from '../constants';
 import { UserDropdown, NavbarMenu } from '@/components/index';
 import "@/styles/globals.css"
 
 const Navbar = () => {
-  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <div className="min-h-[250px] w-full gap-4 font-primary flex bg-white text-black">

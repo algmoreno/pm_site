@@ -31,8 +31,21 @@ const NavbarMenu = () => {
   };
 
   return (
-    <Popover className="relative">
-      {({ open, close }) => (
+    <Popover className="relative z-50">
+      {({ open, close }) => {
+        useEffect(() => {
+          if (open) {
+            document.body.style.overflowY = 'hidden';
+          } else {
+            document.body.style.overflowY = '';
+          }
+
+          return () => {
+            document.body.style.overflowY = '';
+          };
+        }, [open]);
+
+        return (
       <>
       <PopoverButton className="inline-flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 border-none ml-auto focus:outline-hidden">
           <CiMenuBurger className={`${!showMenu ? 'text-black' : 'text-slate-400'} h-auto w-[35px] m-auto`} onClick={() => setShowMenu((prevShowMenu) => !prevShowMenu)}/>
@@ -40,9 +53,12 @@ const NavbarMenu = () => {
       
       <PopoverPanel
         transition
-        className="fixed overflow-scroll left-1/2 z-100 mt-[30px] flex w-auto -translate-x-1/2 transition data-closed:translate-y-1 data-closed:opacity-0 
-                  data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in">
-        <div className="w-screen max-w-md flex-auto overflow-hidden rounded-b-2xl bg-white text-sm/6 ring-1 shadow-lg ring-gray-900/5">
+        className="fixed top-[150px] left-1/2 z-50 h-[calc(100vh-60px)] w-auto -translate-x-1/2 rounded-b-2xl border border-gray-400 overflow-y-auto bg-white pt-4 pb-24
+                  transition data-closed:translate-y-1 data-closed:opacity-0 
+                  data-enter:duration-200 data-enter:ease-out 
+                  data-leave:duration-150 data-leave:ease-in"
+      >
+        <div className="w-screen max-w-md flex-auto overflow-auto rounded-b-2xl  bg-white text-sm/6 ring-1 ring-gray-900/5">
           {!session ? (
             <div className="p-4 ">
               {navOptions.map((item) => (
@@ -163,7 +179,8 @@ const NavbarMenu = () => {
         </div>
       </PopoverPanel>
       </>
-       )}
+        );
+      }}
     </Popover>
   )
 }

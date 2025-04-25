@@ -1,8 +1,4 @@
 "use client";
-import { forwardRef, SVGProps, useState, useEffect } from "react"
-import { AnimatePresence, motion, } from "motion/react"
-import { SectionWrapper } from '@/hoc/index'
-import { fadeIn, textVariant, slideIn  } from '@/lib/motion.js';
 import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 import "@/styles/globals.css"
 

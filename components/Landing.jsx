@@ -10,7 +10,7 @@ import { Loader } from "@/components/index";
 
 const Landing = () => {
   return (
-    <div id="canvas-container" className={`flex w-full h-[580px] relative max-sm:mt-[25%] text-center`}>
+    <div id="canvas-container" className="relative z-0 flex w-full h-[580px] max-sm:mt-[25%] text-center">
       <Canvas camera={{ position: [10, -10, 10], fov: 45 }}>
         <Suspense fallback={<Loader />}>
           <Sky />
