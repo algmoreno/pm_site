@@ -1,12 +1,8 @@
 'use client';
-import * as THREE from "three"
 import { useState } from "react"
 import Link from 'next/link';
 import { navOptions } from '../constants';
 import { UserDropdown, NavbarMenu } from '@/components/index';
-import { Html } from '@react-three/drei';
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Clouds, Cloud, CameraControls, Sky as SkyImpl, StatsGl } from "@react-three/drei"
 import "@/styles/globals.css"
 
 const Navbar = () => {
@@ -38,7 +34,5 @@ const Navbar = () => {
     </div>
   )
 }
-
-
 
 export default Navbar;

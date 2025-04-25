@@ -1,6 +1,5 @@
 "use client"
 import { useState } from 'react';
-import axios from 'axios';
 import { toast } from "sonner";
 import emailjs from '@emailjs/browser';
 import { EnterAnimation } from '@/hoc/index';

@@ -5,21 +5,24 @@ import "@/styles/globals.css";
 
 const About = () => {
   return (
-    <div id="about" className="flex min-h-[700px] justify-items-center w-auto">
-      <div className="m-auto flex">
-        <div className="flex-wrap w-[50%]">
-          <img className="w-[50%] m-auto rounded-md border-l border-black" src="/assets/wellness.jpg" alt="yoga pose" />
-        </div>
-        <div className="flex-wrap m-auto w-[50%]">
-          <p className="w-[500px]">
-            Lorem ipsum dolor sit amet 
-            consectetur adipisicing elit. Iusto quia beatae quos, ipsam soluta iure! Perferendis, impedit, 
-            numquam id ullam dolores odio voluptas dolore architecto magni quo debitis laboriosam nostrum?
-            Lorem ipsum dolor sit amet 
-            consectetur adipisicing elit. Iusto quia beatae quos, ipsam soluta iure! Perferendis, impedit, 
-            numquam id ullam dolores odio voluptas dolore architecto magni quo debitis laboriosam nostrum?
-          </p>
-        </div>
+    <div id="about" className="flex flex-col md:flex-row min-h-[700px] justify-center items-center w-full p-4">
+      <div className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0">
+        <img 
+          className="w-full max-w-[500px] rounded-md border-l border-black" 
+          src="/assets/wellness.jpg" 
+          alt="yoga pose" 
+        />
+      </div>
+
+      <div className="w-full md:w-1/2 flex justify-center p-4">
+        <p className="w-full max-w-[500px] text-center md:text-left">
+          Lorem ipsum dolor sit amet 
+          consectetur adipisicing elit. Iusto quia beatae quos, ipsam soluta iure! Perferendis, impedit, 
+          numquam id ullam dolores odio voluptas dolore architecto magni quo debitis laboriosam nostrum?
+          Lorem ipsum dolor sit amet 
+          consectetur adipisicing elit. Iusto quia beatae quos, ipsam soluta iure! Perferendis, impedit, 
+          numquam id ullam dolores odio voluptas dolore architecto magni quo debitis laboriosam nostrum?
+        </p>
       </div>
     </div>
   )
