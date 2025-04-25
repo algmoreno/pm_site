@@ -8,18 +8,18 @@ import "@/styles/globals.css"
 
 const Services = () => {
   return (
-    <div id="services" className={`grid grid-cols-2 max-sm:grid-cols-1 p-5 gap-2`}>
+    <div id="services" className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
       <div className="flex w-full rounded-[10px] justify-center bg-8">
         <div className={`flex justify-center relative`}>
-          <h1 className={`my-auto font-light services-header`}>Services</h1>
+          <h1 className={`my-auto font-light services-header md:text-[140px] text-[80px]`}>Services</h1>
         </div>
       </div>
 
-      <div className={`bg-yoga-therapy-div w-full border-1 border-blue-200`}>
-        <div className={`bg-yoga-therapy-header-div `}>
+      <div className={`bg-yoga-therapy-div w-full flex justify-center rounded-[10px] border-1 border-blue-200`}>
+        <div className={`bg-yoga-therapy-header-div flex-wrap`}>
           <h1 className={`bg-yoga-therapy-h1`}>Yoga Therapy</h1>
         </div>
-        <span className={`bg-yoga-therapy-span backdrop-blur-lg font-light`}>
+        <span className={`bg-yoga-therapy-span backdrop-blur-lg font-light flex-wrap`}>
           <p>Yoga therapy is a mind-body practice that focuses on your physical, emotional and mental health. The practice uses movement, mindfulness, 
             meditation, relaxation and breathing exercises to help you relax, 
             relieve stress and manage underlying conditions or symptoms in addition to treatment by a healthcare provider.

@@ -98,7 +98,6 @@
 }
 
 .services-header{
-  font-size: 144px;
   background: -webkit-linear-gradient(#e6edf5, #e9f1ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -154,11 +153,11 @@
 }
 
 .bg-yoga-therapy-div {
-  display: flex;
+  /* display: flex;
   margin: auto 0px auto auto;
   justify-content: center;
   position: relative;
-  border-radius: 10px;
+  border-radius: 10px; */
   background-image: url("/assets/wellness.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
