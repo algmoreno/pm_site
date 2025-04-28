@@ -98,7 +98,7 @@
 }
 
 .services-header{
-  background: -webkit-linear-gradient(#ffffff, #f2f8ff);
+  background: -webkit-linear-gradient(#eaf7ff, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -142,7 +142,6 @@
 }
 
 .yoga-service-h1 {
-  margin: auto 0px 0px auto;
   background: -webkit-linear-gradient(#00417f, #000000);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

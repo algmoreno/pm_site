@@ -61,7 +61,6 @@ const YogaTherapyCard = () => {
   const [selectedYogaTherapyItem, setSelectedYogaTherapyItem] = useState(ytSlides[0])
 
   const nextYtSlide = () => {
-    console.log("nextYtslide");
     setIterateYogaTherapyIndex(prev => prev + 1)
     const nextItem = ytSlides[iterateYogaTherapyIndex % ytSlides.length]
     setSelectedYogaTherapyItem(nextItem)
@@ -69,19 +68,19 @@ const YogaTherapyCard = () => {
 
   return (
     <div className={`yoga-therapy-service-div ${serviceDiv}`}>
-      <div className={`${serviceHeaderDiv} md:border-r`}>
-        <h1 className="yoga-therapy-service-h1 opacity-90">Yoga Therapy</h1>
-      </div>
-      <span className={`${serviceSpan} text-white justify-center`}>
+      <span className={`${serviceSpan} text-white justify-center relative`}>
         <AnimatePresence
             custom={1}
             initial={false}
-            mode="popLayout">
+            mode="wait">
             <YtSlide key={selectedYogaTherapyItem} content={selectedYogaTherapyItem} color="white"/>
         </AnimatePresence>
+        <div onClick={nextYtSlide} className="absolute bottom-0 left-1/2 -translate-x-1/2 p-3">
+          <MdKeyboardArrowRight size={25} className='hover:scale-[120%]' />
+        </div>
       </span>
-      <div onClick={nextYtSlide} className="flex backdrop-blur-md rounded-tr-md rounded-br-lg">
-        <MdKeyboardArrowRight size={25} className='my-auto hover:scale-[120%]' />
+      <div className={`${serviceHeaderDiv} md:border-r text-center my-auto`}>
+        <h1 className="yoga-therapy-service-h1 opacity-90">Yoga Therapy</h1>
       </div>
     </div>
   )
@@ -97,7 +96,6 @@ const YogaCard = () => {
   const [selectedYogaItem, setSelectedYogaItem] = useState(yogaSlides[0])
 
   const nextYogaSlide = () => {
-    console.log("nextYogalide");
     setIterateYogaIndex(prev => prev + 1)
     const nextItem = yogaSlides[iterateYogaIndex % yogaSlides.length]
     setSelectedYogaItem(nextItem)
@@ -105,20 +103,20 @@ const YogaCard = () => {
 
   return (
     <div className={`yoga-service-div ${serviceDiv}`}>
-      <span className={`${serviceSpan} text-black`}>
+      <div className={`${serviceHeaderDiv} md:border-l text-center my-auto`}>
+        <h1 className={`yoga-service-h1 opacity-90`}>Yoga</h1>
+      </div>
+      <span className={`${serviceSpan} text-black relative`}>
         <AnimatePresence
           custom={1}
           initial={false}
           mode="popLayout">
           <YogaSlide key={selectedYogaItem} content={selectedYogaItem} color="white"/>
         </AnimatePresence>
+        <div onClick={nextYogaSlide} className="absolute bottom-0 left-1/2 -translate-x-1/2 p-3">
+          <MdKeyboardArrowRight size={25} className='hover:scale-[120%]' />
+        </div>
       </span>
-      <div className={`${serviceHeaderDiv} md:border-l text-right `}>
-        <h1 className={`yoga-service-h1 opacity-90`}>Yoga</h1>
-      </div>
-      <div onClick={nextYogaSlide} className="flex ">
-        <MdKeyboardArrowRight size={25} className='my-auto hover:scale-[120%] ' />
-      </div>
     </div>
   )
 }
