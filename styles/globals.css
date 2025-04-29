@@ -142,11 +142,11 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size:cover contain;
-  background-position: 20% 20%; 
+  background-position: 10% 80%; 
 }
 
 .yoga-service-h1 {
-  background: -webkit-linear-gradient(#00417f, #000000);
+  background: -webkit-linear-gradient(#004586, #000000);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

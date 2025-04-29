@@ -53,7 +53,7 @@ const YogaSlide = forwardRef(function Slide({ content, color }, ref) {
 
 const YogaTherapyCard = () => {
   const serviceDiv = "w-full min-h-[400px] flex flex-col md:flex-row justify-center rounded-[10px] border border-blue-200";
-  const serviceSpan = "flex md:w-1/2 w-full justify-center rounded-[10px] text-right text-[20px] font-light p-3 backdrop-blur-lg";
+  const serviceSpan = "flex md:w-1/2 w-full justify-center rounded-[10px] text-right text-[20px] font-light p-3 backdrop-blur-lg backdrop-brightness-[90%]";
   const serviceHeaderDiv = "flex-wrap xl:text-[500%] md:text-[250%] text-[60px] md:w-1/2 p-2";
 
   const ytSlides = ["Yoga therapy is a mind-body practice that focuses on your physical, emotional and mental health. The practice uses movement, mindfulness, meditation, relaxation and breathing exercises to help you relax, relieve stress and manage underlying conditions or symptoms in addition to treatment by a healthcare provider.", 
@@ -69,7 +69,7 @@ const YogaTherapyCard = () => {
 
   return (
     <div className={`yoga-therapy-service-div ${serviceDiv}`}>
-      <span className={`${serviceSpan} text-white justify-center relative`}>
+      <span className={`${serviceSpan} text-white justify-center relative `}>
         <AnimatePresence
             custom={1}
             initial={false}
@@ -89,7 +89,7 @@ const YogaTherapyCard = () => {
 
 const YogaCard = () => {
   const serviceDiv = "w-full min-h-[400px] flex flex-col md:flex-row justify-center rounded-[10px] border border-blue-200";
-  const serviceSpan = "flex md:w-1/2 w-full justify-center rounded-[10px] text-right text-[20px] font-light p-3 backdrop-blur-lg";
+  const serviceSpan = "flex md:w-1/2 w-full justify-center rounded-[10px] text-right text-[20px] font-light p-3 backdrop-blur-lg backdrop-brightness-[120%]";
   const serviceHeaderDiv = "flex-wrap xl:text-[104px] text-[60px] md:w-1/2 p-2";
 
   const yogaSlides = ["Yoga is a holistic practice that combines physical postures (asanas), breath control (pranayama), and meditation (dhyana) to connect the body, mind, and spirit. It aims to create a sense of balance and well-being by harmonizing these aspects. Yoga is often described as a union, or yoking together, of these three elements.", 
