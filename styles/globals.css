@@ -91,10 +91,14 @@
 }
 
 .bg-8 {
-  background-image: linear-gradient(to top, #ffffff 10%, #c5ddff 90%);
+  background-image: radial-gradient(
+    circle at center in hsl shorter hue,
+    rgb(219, 240, 255),
+    rgb(255, 255, 255)
+  );
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
 }
 
 .services-header{
@@ -121,7 +125,7 @@
 
 .yoga-therapy-service-h1 {
   margin: 0px auto;
-  background: -webkit-linear-gradient(#fff2da, #ffffff);
+  background: -webkit-linear-gradient(#fff9f3, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
