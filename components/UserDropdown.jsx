@@ -48,7 +48,7 @@ const UserDropdown = () => {
   return (
     <div className="m-auto">
       {!session ? (
-        <Link href="/login">
+        <Link className="no-underline text-black" href="/login">
           <CgProfile size={25} className="m-auto"/>
           Log In
         </Link>

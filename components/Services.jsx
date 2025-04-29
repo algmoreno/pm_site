@@ -62,9 +62,9 @@ const YogaTherapyCard = () => {
   const [selectedYogaTherapyItem, setSelectedYogaTherapyItem] = useState(ytSlides[0])
 
   const nextYtSlide = () => {
-    setIterateYogaTherapyIndex(prev => prev + 1)
-    const nextItem = ytSlides[iterateYogaTherapyIndex % ytSlides.length]
-    setSelectedYogaTherapyItem(nextItem)
+    const nextIndex = (iterateYogaTherapyIndex + 1) % ytSlides.length;
+    setIterateYogaTherapyIndex(nextIndex);
+    setSelectedYogaTherapyItem(ytSlides[nextIndex]);
   }
 
   return (
@@ -80,7 +80,7 @@ const YogaTherapyCard = () => {
           <MdKeyboardArrowRight size={20} className='text-white' />
         </div>
       </span>
-      <div className={`flex-wrap xl:text-[500%] md:text-[250%] text-[60px] md:w-1/2 p-2 md:border-r text-center my-auto`}>
+      <div className={`flex-wrap text-[60px] md:w-1/2 p-2 md:border-r text-center my-auto`}>
         <h1 className="yoga-therapy-service-h1 opacity-90 ">Yoga Therapy</h1>
       </div>
     </div>
@@ -98,14 +98,14 @@ const YogaCard = () => {
   const [selectedYogaItem, setSelectedYogaItem] = useState(yogaSlides[0])
 
   const nextYogaSlide = () => {
-    setIterateYogaIndex(prev => prev + 1)
-    const nextItem = yogaSlides[iterateYogaIndex % yogaSlides.length]
-    setSelectedYogaItem(nextItem)
+    const nextIndex = (iterateYogaIndex + 1) % yogaSlides.length;
+    setIterateYogaIndex(nextIndex);
+    setSelectedYogaItem(yogaSlides[nextIndex]);
   }
 
   return (
     <div className={`yoga-service-div ${serviceDiv}`}>
-      <div className={`flex-wrap xl:text-[104px] text-[60px] md:w-1/2 p-2 md:border-l text-center my-auto`}>
+      <div className={`flex-wrap text-[60px] md:w-1/2 p-2 md:border-l text-center my-auto`}>
         <h1 className={`yoga-service-h1 opacity-90`}>Yoga</h1>
       </div>
       <span className={`${serviceSpan} text-black relative`}>

@@ -20,7 +20,7 @@ const Navbar = () => {
         {navOptions.map((option) => (
         <div key={option.name} className="m-auto">
           {option.name === "Log In" 
-          && <p>{option.icon}</p>}
+          && <p className="no-underline text-black">{option.icon}</p>}
           <Link className="no-underline text-black" href={option.href}>{option.name}</Link>
         </div>
         ))}

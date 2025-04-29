@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { CiMenuBurger } from "react-icons/ci";
 import { RiLogoutBoxLine, RiAdminFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
