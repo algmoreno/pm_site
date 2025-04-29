@@ -220,8 +220,8 @@ const AppointmentList = ({ userId }) => {
       {!loading ? (
         orderedAppointments.length > 0 ? (
         <div>
-        <div className="text-[24px] border-b-2 border-gray-900">
-          <h1 className="mb-2 text-gray-900">Upcoming Appointments</h1>
+        <div className="text-[24px] border-b border-gray-300">
+          <h1 className="mb-2 text-gray-900 text-[24px]">Upcoming Appointments</h1>
         </div>
         <ul role="list" className="relative flex flex-wrap mt-5 gap-4 divide-y">
           {orderedAppointments.map((appointment, index) => (
@@ -262,7 +262,7 @@ const AppointmentList = ({ userId }) => {
         </div>
         ) : (
           <div className="flex justify-center align-middle w-full">
-            <h1 className="mx-auto">No upcoming appointments.</h1>
+            <h1 className="mx-auto text-[18px]">No upcoming appointments.</h1>
           </div>
         ) 
       ) : (

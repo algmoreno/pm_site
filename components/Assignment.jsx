@@ -372,7 +372,7 @@ const Assignment = ({ userId }) => {
       </div>
       ) : (
         <div className="flex justify-center align-middle">
-          <h1 className="mx-auto">
+          <h1 className="mx-auto text-[18px]">
             No assignments.
           </h1>
         </div>

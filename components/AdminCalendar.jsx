@@ -266,7 +266,7 @@ const AdminCalendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] mt-10 mx-auto mb-[5%] p-5" >
+    <div className="w-[1500px] mt-10 mx-auto mb-[5%] p-5 border-1 border-gray-300 rounded-md" >
       {!loading ? (
         <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
         <div className="md:pr-14">
