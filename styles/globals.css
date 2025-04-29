@@ -8,6 +8,11 @@
   width: 0px;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .font-primary {
   font-family: "Outfit", serif;
   font-optical-sizing: auto;
@@ -92,8 +97,8 @@
 
 .bg-8 {
   background-image: radial-gradient(
-    circle at center in hsl shorter hue,
-    rgb(219, 240, 255),
+    closest-side,
+    rgb(237, 248, 255),
     rgb(255, 255, 255)
   );
   background-size: cover;

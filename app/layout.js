@@ -1,6 +1,6 @@
 import React from 'react'
-import "../styles/globals.css";
-import { Navbar, Footer, Toaster, SkyCanvas } from '@/components/index';
+import "@/styles/globals.css";
+import { Navbar, Footer, Toaster } from '@/components/index';
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/lib/SessionProvider";
 import 'bootstrap/dist/css/bootstrap.min.css';

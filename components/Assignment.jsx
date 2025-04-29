@@ -331,7 +331,7 @@ const Assignment = ({ userId }) => {
           {assignments.length > 0 && assignments.map((assignment, index) => (
           <Accordion key={index} defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item eventKey={index} >
-              <Accordion.Header>{assignment.title}</Accordion.Header>
+              <Accordion.Header >{assignment.title}</Accordion.Header>
               <Accordion.Body className="p-5">
                 <p className="">{assignment.notes}</p>
                 <div className="flex">

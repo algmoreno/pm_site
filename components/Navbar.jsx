@@ -8,10 +8,10 @@ import "@/styles/globals.css"
 const Navbar = () => {
 
   return (
-    <div className="min-h-[250px] w-full gap-4 font-primary flex bg-white text-black">
+    <div className="min-h-[250px] w-full gap-4 font-primary flex bg-white text-black" style={{ textDecoration: 'none' }}>
       <div className="text-[30px] m-auto flex">
-        <h1 className="my-auto z-10 text-[38px] max-[860px]:hidden">
-          <Link href='/'>PMYT</Link>
+        <h1 className="my-auto z-10 text-[38px] max-[860px]:hidden ">
+          <Link className="no-underline text-black" href='/'>PMYT</Link>
         </h1>
 
       </div>
@@ -21,7 +21,7 @@ const Navbar = () => {
         <div key={option.name} className="m-auto">
           {option.name === "Log In" 
           && <p>{option.icon}</p>}
-          <Link href={option.href}>{option.name}</Link>
+          <Link className="no-underline text-black" href={option.href}>{option.name}</Link>
         </div>
         ))}
         <UserDropdown />
