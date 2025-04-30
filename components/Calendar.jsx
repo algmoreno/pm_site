@@ -250,12 +250,12 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div id="calendar" className="w-[1500px] h-[auto] mx-auto p-5 max-sm:mt-[25%] border-1 border-gray-300 rounded-md">
+    <div id="calendar" className="2xl:w-[1500px] lg:w-[1000px] sm:max-lg:w-[700px] max-sm:w-auto p-2 sm:p-5 mx-auto max-sm:mt-[25%] ">
       {!loading ? (
-        <div>
-          <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
-        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 max-md:flex-wrap">
-          <div className="md:pr-14">
+      <div>
+        <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
+        <div className="flex flex-wrap md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+          <div className="w-full md:w-auto md:pr-14">
             <div className="flex items-center">
               <h2 className="flex-auto text-sm font-semibold text-gray-900">
                 {format(firstDayCurrentMonth, 'MMMM yyyy')}
@@ -318,7 +318,7 @@ const Calendar = ({ title }) => {
               ))}
             </div>
           </div>
-          <section className="mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-5">
+          <section className="w-full md:w-auto mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-2 sm:p-5">
             <div className="flex">
               <h2 className="text-base font-semibold text-gray-900">
                 Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
@@ -340,7 +340,7 @@ const Calendar = ({ title }) => {
                     aria-hidden="true"
                     className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"/>
                 </div>
-}
+                }
               </div>
             </div>
 
@@ -363,8 +363,7 @@ const Calendar = ({ title }) => {
                 <button
                   onClick={handleConfirm}
                   type="submit"
-                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 f
-                              ocus-visible:outline-offset-2 focus-visible:outline-slate-600">
+                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">
                   Submit
                 </button>
               </div>
@@ -374,13 +373,11 @@ const Calendar = ({ title }) => {
           </section>
           <ConfirmModal />
         </div>
-          </div>
-        
+      </div>
       ) : (
         <PageLoader />
       ) }
     </div> 
-      
   )
 }
 
