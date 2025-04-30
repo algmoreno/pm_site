@@ -61,8 +61,8 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className="w-[800px] mx-auto mt-auto mb-20 max-md:mt-20">
-      <form className="w-[70%] my-20 mx-auto" onSubmit={handleSubmit}>
+    <div className="w-[600px] max-sm:w-[100%] mx-auto mt-auto mb-20 max-md:mt-20">
+      <form className="w-auto my-20 mx-auto" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Register</h2>

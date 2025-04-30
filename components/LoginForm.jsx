@@ -35,9 +35,9 @@ const LoginForm = () => {
   }
 
   return (
-    <div id="loginForm" className="w-[800px] h-auto mx-auto mt-auto mb-20 max-sm:mt-20">
+    <div id="loginForm" className="w-[600px] max-sm:w-[100%] h-auto mx-auto mt-auto mb-20 max-sm:mt-20">
 
-      <form onSubmit={handleSubmit} className="w-[70%] my-20 mx-auto">
+      <form onSubmit={handleSubmit} className="w-auto my-20 mx-auto">
         <div className="space-y-2">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-[24px] font-semibold text-gray-900">Sign In</h2>
