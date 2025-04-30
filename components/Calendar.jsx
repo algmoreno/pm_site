@@ -250,11 +250,11 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div id="calendar" className="2xl:w-[1500px] lg:w-[1000px] sm:max-lg:w-[700px] max-sm:w-auto p-2 sm:p-5 mx-auto max-sm:mt-[25%]">
+    <div id="calendar" className="w-full max-w-[1500px] mx-auto p-2 sm:p-5 max-sm:mt-[25%]">
       {!loading ? (
       <div>
         <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
-        <div className="flex flex-wrap md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+        <div className="flex flex-col md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
           <div className="w-full md:w-auto md:pr-14">
             <div className="flex items-center">
               <h2 className="flex-auto text-sm font-semibold text-gray-900">
@@ -307,19 +307,12 @@ const Calendar = ({ title }) => {
                       {format(day, 'd')}
                     </time>
                   </button>
-                  <div className="w-1 h-1 mx-auto mt-1">
-                    {availableHours.length > 0 && !isBefore(day, today) && !isToday(day) && (
-                      <div className="w-1 h-1 rounded-full bg-gray-400"></div>
-                    )}
-                  </div>
-                  
-                  
                 </div>
               ))}
             </div>
           </div>
-          <section className="w-full md:w-auto mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm sm:p-5 max-sm:p-2">
-            <div className="flex">
+          <section className="w-full md:w-auto mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-2 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <h2 className="text-base font-semibold text-gray-900">
                 Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
               </h2>
@@ -343,9 +336,7 @@ const Calendar = ({ title }) => {
                 }
               </div>
             </div>
-
-            
-            <div className="mt-4 grid grid-cols-2 gap-2 text-sm/6 text-gray-700">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm/6 text-gray-700">
               {availableHours.length > 0 && !isBeforeToday ? (
                 availableHours.map((hour, index) => (
                   <Slot key={index} hour={hour}/>
@@ -353,7 +344,6 @@ const Calendar = ({ title }) => {
               ) : (
                 <p>No availability today.</p>
               )}
-                
             </div>
             {availableHours.length > 0 && !isBeforeToday ? (
               <div className="mt-6 flex items-center justify-end gap-x-6">
@@ -376,7 +366,7 @@ const Calendar = ({ title }) => {
       </div>
       ) : (
         <PageLoader />
-      ) }
+      )}
     </div> 
   )
 }

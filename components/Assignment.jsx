@@ -216,7 +216,7 @@ const Assignment = ({ userId }) => {
   }
 
   return (
-    <div className="block w-[80%] h-auto mx-auto  max-sm:mt-[35%] p-10 mb-20 flex-wrap">
+    <div className="block w-[80%] max-sm:w-full h-auto mx-auto max-sm:mt-[35%] p-10 max-sm:p-2 mb-20 flex-wrap">
       {isAdmin && <AddAssignmentDivider />}
       {showAdd && 
       <form onSubmit={uploadAssignment} className="p-5 bg-slate-200 mb-10">
@@ -268,41 +268,42 @@ const Assignment = ({ userId }) => {
                 </div>
               </div>
 
-              <div className="flex sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+              <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                 <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-gray-900 sm:pt-1.5">
                   Files
                 </label>
-                <div className="flex flex-wrap gap-2 mt-2 sm:col-span-2 sm:mt-0">
-                  <div className="flex w-[200px] justify-center rounded-lg border border-dashed bg-white border-gray-900/25 px-6 py-10">
-                    <div className="text-center">
-                      <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
-                      <div className="mt-4 flex text-sm/6 text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-mdfont-semibold text-green-600 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 
-                            focus-within:outline-hidden hover:text-green-500">
-                          <span>Upload a file</span>
-                          <input multiple onChange={handleFileChange} id="file-upload" name="file-upload" type="file" className="sr-only" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  {files.length > 0 && (
-                    files.map((file, index) => (
-                    <div key={index} className="relative w-[200px] justify-center rounded-lg border border-gray-600 bg-gray-400 px-6 py-10">
+                <div className="mt-2 sm:col-span-2 sm:mt-0">
+                  <div className="flex flex-wrap gap-2">
+                    <div className="flex w-full sm:w-[200px] justify-center rounded-lg border border-dashed bg-white border-gray-900/25 px-6 py-10">
                       <div className="text-center">
-                        <CiFileOn aria-hidden="true" className="mx-auto size-12 text-gray-300" />
-                        <div className="block mt-4 text-sm/6 text-gray-600">
-                          <p className="mx-auto text-gray-700 text-sm text-center truncate">
-                            {file.name}
-                          </p>
-                          <CiSquareRemove onClick={(e) => removeFile(index)} size={25} className="absolute top-0 right-0 text-red-800 hover:text-red-600"/>
+                        <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
+                        <div className="mt-4 flex text-sm/6 text-gray-600">
+                          <label
+                            htmlFor="file-upload"
+                            className="relative cursor-pointer rounded-mdfont-semibold text-green-600 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 
+                              focus-within:outline-hidden hover:text-green-500">
+                            <span>Upload a file</span>
+                            <input multiple onChange={handleFileChange} id="file-upload" name="file-upload" type="file" className="sr-only" />
+                          </label>
                         </div>
                       </div>
                     </div>
-                    ))
-                  )}
-
+                    {files.length > 0 && (
+                      files.map((file, index) => (
+                      <div key={index} className="relative w-full sm:w-[200px] justify-center rounded-lg border border-gray-600 bg-gray-400 px-6 py-10">
+                        <div className="text-center">
+                          <CiFileOn aria-hidden="true" className="mx-auto size-12 text-gray-300" />
+                          <div className="block mt-4 text-sm/6 text-gray-600">
+                            <p className="mx-auto text-gray-700 text-sm text-center truncate">
+                              {file.name}
+                            </p>
+                            <CiSquareRemove onClick={(e) => removeFile(index)} size={25} className="absolute top-0 right-0 text-red-800 hover:text-red-600"/>
+                          </div>
+                        </div>
+                      </div>
+                      ))
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

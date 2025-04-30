@@ -72,7 +72,7 @@ const ProfileTabs = () => {
           </nav>
         </div>
       </div>
-      <div className="mt-[90px] grid grid-cols-1 sm:hidden">
+      <div className="mt-[10px] grid grid-cols-1 sm:hidden">
         {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
         <select
           onChange={(e) => tabRedirect(e.target.value)}
