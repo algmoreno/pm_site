@@ -266,10 +266,10 @@ const AdminCalendar = ({ title }) => {
   }
 
   return (
-    <div className="w-[1500px] mt-10 mx-auto mb-[5%] p-5 border-1 border-gray-300 rounded-md" >
+    <div className="2xl:w-[1500px] lg:w-[1000px] sm:max-lg:w-[700px] max-sm:w-auto p-2 sm:p-5 mx-auto mt-10 mb-[5%]">
       {!loading ? (
-        <div className="md:grid md:grid-cols-2 max-md:flex-wrap md:divide-x md:divide-gray-200">
-        <div className="md:pr-14">
+        <div className="flex flex-wrap md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+        <div className="w-full md:w-auto md:pr-14">
           <div className="flex items-center">
             <h2 className="flex-auto text-sm font-semibold text-gray-900">
               {format(firstDayCurrentMonth, 'MMMM yyyy')}
@@ -331,7 +331,7 @@ const AdminCalendar = ({ title }) => {
             ))}
           </div>
         </div>
-        <section className="mt-12 md:mt-0 md:pl-14 max-md:my-5 bg-orange-100 rounded-sm p-5">
+        <section className="w-full md:w-auto mt-12 md:mt-0 md:pl-14 max-md:my-5 bg-orange-100 rounded-sm p-5">
           <h2 className="text-base font-semibold text-gray-900">
             Schedule for <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
           </h2>

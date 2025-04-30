@@ -250,7 +250,7 @@ const Calendar = ({ title }) => {
   }
 
   return (
-    <div id="calendar" className="2xl:w-[1500px] lg:w-[1000px] sm:max-lg:w-[700px] max-sm:w-auto p-2 sm:p-5 mx-auto max-sm:mt-[25%] ">
+    <div id="calendar" className="2xl:w-[1500px] lg:w-[1000px] sm:max-lg:w-[700px] max-sm:w-auto p-2 sm:p-5 mx-auto max-sm:mt-[25%]">
       {!loading ? (
       <div>
         <h2 className="text-[24px] text-gray-900 mb-5 border-b">Book A Session</h2>
@@ -318,7 +318,7 @@ const Calendar = ({ title }) => {
               ))}
             </div>
           </div>
-          <section className="w-full md:w-auto mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm p-2 sm:p-5">
+          <section className="w-full md:w-auto mt-12 md:mt-0 md:pl-14 bg-2 rounded-sm sm:p-5 max-sm:p-2">
             <div className="flex">
               <h2 className="text-base font-semibold text-gray-900">
                 Available Sessions on <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
