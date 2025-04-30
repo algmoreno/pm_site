@@ -107,7 +107,7 @@ a {
 }
 
 .services-header{
-  background: -webkit-linear-gradient(#eaf7ff, #ffffff);
+  background: -webkit-linear-gradient(#ffffff, #ecf4ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
