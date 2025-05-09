@@ -36,7 +36,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 Days Worked:
-2/21 (1), 2/24-2/28 (5), 3/3-3/7 (5), 3/10-3/12 (3), 3/17-3/19 (3), 3/24-3/29 (5), 3/31-4/3 (4), 4/7-4/9 (3), 4/14, 4/18, 
+2/21 (1), 2/24-2/28 (5), 3/3-3/7 (5), 3/10-3/12 (3), 3/17-3/19 (3), 3/24-3/29 (5), 3/31-4/3 (4), 4/7-4/9 (3), 4/14, 4/18, 4/30
 
 Todos:
 -double check proper loading ui for all pages
